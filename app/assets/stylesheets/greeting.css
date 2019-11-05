@@ -1,0 +1,46 @@
+main {
+    font-family: sans-serif;
+    font-family: 'Dosis', sans-serif;
+}
+
+.greeting-div {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    background-color: #FFFFFF;
+}
+
+.rh-logo {
+    display: flex;
+    align-items: center;
+    margin: 20px;
+    /* font-weight: bold; */
+    font-size: 25px;
+}
+
+.rh-logo:hover {
+    color: #20CE99;
+}
+
+.signup-login-buttons {
+    display: flex;
+}
+
+.signup-button, .login-button {
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    width: 75px;
+    height: 30px;
+    border-radius: 8px;
+    border: 2px solid #20CE99;
+    color: black
+}
+
+.signup-button:hover, .login-button:hover {
+    background-color: darkgreen;
+    color: white;
+    transition: 1.5s;
+}

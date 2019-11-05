@@ -27,26 +27,35 @@ class SessionForm extends React.Component {
 
     render() {
         const { errors, formType, navLink } = this.props;
+        const formLabel = formType[0].toUpperCase() + formType.slice(1).toLowerCase();
+        const navLinkLabel = navLink[0].toUpperCase() + navLink.slice(1).toLowerCase();
         return (
-            <div>
+            <div className='session-form-div'>
                 <form onSubmit={this.handleSubmit}>
-                    <h1>{formType} Form</h1>
-                    <label>Username:
-                        <input 
+                    <h1 className='form-h1'>Welcome to Robinhood</h1>
+                    <h2 className='form-h2'>Robinhood lets you invest in companies you love, commission-free</h2>
+                    <div className='session-inputs-div'>
+                        <input
+                            className='session-input'
                             type="text"
                             onChange={this.update('username')}
                             value={this.state.username}
+                            placeholder="Username"
                         />
-                    </label>
-                    <label>Password:
                         <input 
+                            className='session-input'
                             type="password"
                             onChange={this.update('password')}
                             value={this.state.password}
+                            placeholder="Password"
                         />
-                    </label>
-                    <button type="submit">{formType}</button>
-                    <Link to={`/${navLink}`}>{navLink}</Link>
+                        <button className='session-button' type="submit">{formLabel}</button>
+                        <p className='session-link-p'>
+                            Already started? <Link className='session-nav-link' to={`/${navLink}`}>
+                                                {navLinkLabel} to complete your application
+                                            </Link>
+                        </p>
+                    </div>
                 </form>
                 {/* <ul>
                     {errors.map((error, i) => {

@@ -23,9 +23,12 @@ class Greeting extends React.Component {
             ) 
         } else {
             return (
-                <div>
-                    <Link to='/signup'>Sign Up</Link>
-                    <Link to='/login'>Log In</Link>
+                <div className='greeting-div'>
+                    <h2 className='rh-logo'>Robinhood Clone</h2>
+                    <div className='signup-login-buttons'>
+                        <div><Link className='signup-button' to='/signup'>Sign Up</Link></div>
+                        <div><Link className='login-button' to='/login'>Log In</Link></div>
+                    </div>
                 </div>
             )
         }

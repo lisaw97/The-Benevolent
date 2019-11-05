@@ -1,0 +1,53 @@
+.session-form-div {
+    display: flex;
+    justify-content: center;
+    margin: 50px;
+}
+
+.form-h1 {
+    font-size: 50px;
+    margin: 20px;
+}
+
+.form-h2 {
+    font-size: 20px;
+}
+
+.session-inputs-div {
+    width: 400px;
+    height: 200px;
+    margin: 20px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.session-input, .session-button {
+    width: 240px;
+    height: 30px;
+    font-size: 18px;
+    border-radius: 5px;
+    border: 1px solid lightgrey;
+    margin: 10px;
+}
+::placeholder {
+    color: lightgrey;
+    padding: 10px;
+    font-size: 15px;
+}
+.session-button {
+    background-color: #20CE99;
+    color: white;
+    font-family: 'Dosis', sans-serif;
+    font-size: 17px;
+}
+
+.session-link-p {
+    color: lightgrey;
+}
+
+.session-nav-link {
+    color: #20CE99;
+}
