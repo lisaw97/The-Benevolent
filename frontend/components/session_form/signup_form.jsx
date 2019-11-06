@@ -29,6 +29,7 @@ class SignupForm extends React.Component {
     }
 
     renderErrors() {
+        // debugger
         return (
             <ul>
                 {this.props.errors.map((error, i) => (
@@ -41,15 +42,16 @@ class SignupForm extends React.Component {
     }
 
     render() {
-        const { errors, formType, navLink } = this.props;
+        const { formType, navLink } = this.props;
         const formLabel = formType[0].toUpperCase() + formType.slice(1).toLowerCase();
         const navLinkLabel = navLink[0].toUpperCase() + navLink.slice(1).toLowerCase();
+        // debugger
         return (
             <div className='signup-form-div'>
                 <form onSubmit={this.handleSubmit}>
                     <h1 className='form-h1'>Make Your Money Move</h1>
                     <h2 className='form-h2'>Robinhood lets you invest in companies you love, commission-free</h2>
-                    {/* {this.renderErrors()} */}
+                    {this.renderErrors()}
                     <div className='signup-inputs-div'>
                         <div className='name'>
                             <input
@@ -57,14 +59,14 @@ class SignupForm extends React.Component {
                                 onChange={this.update('first_name')}
                                 value={this.state.first_name}
                                 placeholder="First name"
-                                required
+                                // required
                             />
                             <input
                                 type="text"
                                 onChange={this.update('last_name')}
                                 value={this.state.last_name}
                                 placeholder="Last Name"
-                                required
+                                // required
                             />
                         </div>
                         <input
@@ -73,7 +75,7 @@ class SignupForm extends React.Component {
                             onChange={this.update('email')}
                             value={this.state.email}
                             placeholder="Email address"
-                            required
+                            // required
                         />
                         <input
                             className='signup-input'
@@ -81,7 +83,7 @@ class SignupForm extends React.Component {
                             onChange={this.update('username')}
                             value={this.state.username}
                             placeholder="Username"
-                            required
+                            // required
                         />
                         <input 
                             className='signup-input'
@@ -89,7 +91,7 @@ class SignupForm extends React.Component {
                             onChange={this.update('password')}
                             value={this.state.password}
                             placeholder="Password [min. 6 characters]"
-                            required
+                            // required
                         />
                         <button className='signup-form-button' type="submit">{formLabel}</button>
                         <p className='session-link-p'>
@@ -99,11 +101,6 @@ class SignupForm extends React.Component {
                         </p>
                     </div>
                 </form>
-                {/* <ul>
-                    {errors.map((error, i) => {
-                        <li key={`error-${i}`}>{error}</li>
-                    })}
-                </ul> */}
             </div>
         )
     }

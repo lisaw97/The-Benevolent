@@ -48,7 +48,7 @@ main {
     align-items: center;
 }
 
-.signup-button, .login-button, .logout-button {
+.signup-button, .login-button, .logout-button, .demo-button {
     text-decoration: none;
     display: flex;
     justify-content: center;
@@ -61,10 +61,19 @@ main {
     color: black
 }
 
-.signup-button:hover, .login-button:hover, .logout-button:hover {
+.demo-button {
+    background-color: darkgreen;
+    color: white;
+}
+.signup-button:hover, .login-button:hover, .logout-button:hover, .demo-button:hover {
     background-color: darkgreen;
     color: white;
     transition: 1.5s;
+}
+
+.demo-button:hover {
+    background-color:  #20CE99;
+    color: black;
 }
 
 .welcome-msg {

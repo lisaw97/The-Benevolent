@@ -40,7 +40,7 @@
     font-size: 15px;
 }
 
-.session-input, .session-button {
+.session-input, .session-button, .session-demo-button {
     width: 507px;
     height: 40px;
     font-size: 18px;
@@ -60,8 +60,16 @@
     font-size: 17px;
 }
 
+.session-demo-button {
+    background-color: darkgreen;
+    color: white;
+    font-family: 'Dosis', sans-serif;
+    font-size: 17px;
+}
+
 .session-link-p {
     color: lightgrey;
+    margin-bottom: 15px;
 }
 
 .session-nav-link {

@@ -1,10 +1,11 @@
 import React from 'react';
-const images = ['./phone.png'];
+const media = ['./phone.png', './credit-card-video.mp4'];
 class Splash extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            phoneImg: images[0]
+            phoneImg: media[0],
+            cardVid: media[1]
         }
     }
     render() {
@@ -24,11 +25,12 @@ class Splash extends React.Component {
                     <p className='splash-description-2'>Make unlimited commission-free trades in stocks, funds, and options with Robinhood Financial. The same goes for buying and selling cryptocurrencies with Robinhood Crypto. Zero commission fees.</p>
                 </div>
                 <div className='splash-section-3'>
-                    <h1 className='splash-h1-3'>Introducing Cash Management</h1>
-                    <p className='splash-description-3'>Invest, spend, and earn 1.80% APY*—all through your brokerage account.</p>
-                    {/* <img className="splash-image-3" src="https://cdn.robinhood.com/assets/robinhood/brand/ee3e0eec2d0e96b8848282f716b94d3c-1x.png"></img> */}
-                    <video width='320' height='240' autoplay>
-                        <source src="app/assets/images/credit-card-video.mp4" type="video/mp4" />
+                    <div className='splash-body-3'>
+                        <h1 className='splash-h1-3'>Introducing Cash Management</h1>
+                        <p className='splash-description-3'>Invest, spend, and earn 1.80% APY*—all through your brokerage account.</p>
+                    </div>
+                    <video width='400' height='300' autoPlay={true} loop>
+                        <source src={this.state.cardVid} type="video/mp4" />
                     </video>
                 </div>
             </div>

@@ -9,6 +9,7 @@ class LoginForm extends React.Component {
             password: ''
         };
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDemo = this.handleDemo.bind(this);
     }
 
     update(field) {
@@ -37,16 +38,42 @@ class LoginForm extends React.Component {
         );
     }
 
+    handleDemo(e) {
+        e.preventDefault();
+        this.displayDemoUser('guest', 0);
+    }
+
+    displayDemoUser(username, n) {
+        if (n < username.length) {
+            let curr = username.substring(0, n + 1);
+            this.setState({ username: curr });
+            n++;
+            setTimeout( () => { this.displayDemoUser(username, n) }, 100);
+        } else {
+            this.displayDemoPassword('password', 0);
+        }
+    }
+
+    displayDemoPassword(password, n) {
+        if (n < password.length) {
+            let curr = password.substring(0, n + 1);
+            this.setState({ password: curr });
+            n++;
+            setTimeout(() => { this.displayDemoPassword(password, n) }, 100);
+        } else {
+            const demoUser = { username: 'guest', password: 'password' };
+            this.props.processForm(demoUser);
+        }
+    }
+
     render() {
-        const { errors, formType, navLink } = this.props;
+        const { formType, navLink } = this.props;
         const formLabel = formType[0].toUpperCase() + formType.slice(1).toLowerCase();
         const navLinkLabel = navLink[0].toUpperCase() + navLink.slice(1).toLowerCase();
         return (
             <div className='session-form-div'>
                 <form className='transparent-background' onSubmit={this.handleSubmit}>
                     <h1 className='login-form-h1'>Welcome to Robinhood</h1>
-                    {/* {this.renderErrors()} */}
-                    {/* <h2 className='form-h2'>Robinhood lets you invest in companies you love, commission-free</h2> */}
                     <div className='session-inputs-div'>
                         <label className='login-label'>Username</label>
                         <input
@@ -54,7 +81,6 @@ class LoginForm extends React.Component {
                             type="text"
                             onChange={this.update('username')}
                             value={this.state.username}
-                            // placeholder="Username"
                             // required
                         />
                         <label className='login-label'>Password</label>
@@ -63,22 +89,19 @@ class LoginForm extends React.Component {
                             type="password"
                             onChange={this.update('password')}
                             value={this.state.password}
-                            // placeholder="Password"
                             // required
                         />
-                        <button className='session-button' type="submit">{formLabel}</button>
                         <p className='session-link-p'>
                             New to Robinhood? <Link className='session-nav-link' to={`/${navLink}`}>
                                 {navLinkLabel} to complete your application
                                             </Link>
                         </p>
+                        <button className='session-button' type="submit">{formLabel}</button>
+                        <button className='session-demo-button' onClick={this.handleDemo}>Demo</button>
                     </div>
+                    {this.renderErrors()}
                 </form>
-                {/* <ul>
-                    {errors.map((error, i) => {
-                        <li key={`error-${i}`}>{error}</li>
-                    })}
-                </ul> */}
+                
             </div>
         )
     }

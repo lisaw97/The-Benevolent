@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import SVGIcon from '../svg/svg_icons';
 
 class Greeting extends React.Component {
@@ -12,6 +12,11 @@ class Greeting extends React.Component {
         e.preventDefault();
         this.props.logout();
     }
+
+    // handleDemo(e) {
+    //     e.preventDefault();
+    //     <Redirect to='/login' />
+    // }
 
     render() {
         const { currentUser } = this.props;
@@ -32,6 +37,8 @@ class Greeting extends React.Component {
                     <div className='signup-login-buttons'>
                         <div><Link className='signup-button' to='/signup'>Sign Up</Link></div>
                         <div><Link className='login-button' to='/login'>Log In</Link></div>
+                        {/* <button className='demo-button' onClick={this.handleDemo}>Demo</button> */}
+                        <div><Link className='demo-button' to='/login'>Demo</Link></div>
                     </div>
                 </div>
             )

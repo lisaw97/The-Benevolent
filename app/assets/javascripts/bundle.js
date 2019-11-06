@@ -255,7 +255,11 @@ function (_React$Component) {
     value: function handleSubmit(e) {
       e.preventDefault();
       this.props.logout();
-    }
+    } // handleDemo(e) {
+    //     e.preventDefault();
+    //     <Redirect to='/login' />
+    // }
+
   }, {
     key: "render",
     value: function render() {
@@ -296,7 +300,10 @@ function (_React$Component) {
         }, "Sign Up")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
           className: "login-button",
           to: "/login"
-        }, "Log In"))));
+        }, "Log In")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+          className: "demo-button",
+          to: "/login"
+        }, "Demo"))));
       }
     }
   }]);
@@ -423,6 +430,7 @@ function (_React$Component) {
       password: ''
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handleDemo = _this.handleDemo.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -452,10 +460,55 @@ function (_React$Component) {
       }));
     }
   }, {
+    key: "handleDemo",
+    value: function handleDemo(e) {
+      e.preventDefault();
+      this.displayDemoUser('guest', 0);
+    }
+  }, {
+    key: "displayDemoUser",
+    value: function displayDemoUser(username, n) {
+      var _this3 = this;
+
+      if (n < username.length) {
+        var curr = username.substring(0, n + 1);
+        this.setState({
+          username: curr
+        });
+        n++;
+        setTimeout(function () {
+          _this3.displayDemoUser(username, n);
+        }, 100);
+      } else {
+        this.displayDemoPassword('password', 0);
+      }
+    }
+  }, {
+    key: "displayDemoPassword",
+    value: function displayDemoPassword(password, n) {
+      var _this4 = this;
+
+      if (n < password.length) {
+        var curr = password.substring(0, n + 1);
+        this.setState({
+          password: curr
+        });
+        n++;
+        setTimeout(function () {
+          _this4.displayDemoPassword(password, n);
+        }, 100);
+      } else {
+        var demoUser = {
+          username: 'guest',
+          password: 'password'
+        };
+        this.props.processForm(demoUser);
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this$props = this.props,
-          errors = _this$props.errors,
           formType = _this$props.formType,
           navLink = _this$props.navLink;
       var formLabel = formType[0].toUpperCase() + formType.slice(1).toLowerCase();
@@ -475,8 +528,7 @@ function (_React$Component) {
         className: "session-input",
         type: "text",
         onChange: this.update('username'),
-        value: this.state.username // placeholder="Username"
-        // required
+        value: this.state.username // required
 
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         className: "login-label"
@@ -484,18 +536,20 @@ function (_React$Component) {
         className: "session-input",
         type: "password",
         onChange: this.update('password'),
-        value: this.state.password // placeholder="Password"
-        // required
+        value: this.state.password // required
 
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "session-button",
-        type: "submit"
-      }, formLabel), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "session-link-p"
       }, "New to Robinhood? ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         className: "session-nav-link",
         to: "/".concat(navLink)
-      }, navLinkLabel, " to complete your application")))));
+      }, navLinkLabel, " to complete your application")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "session-button",
+        type: "submit"
+      }, formLabel), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "session-demo-button",
+        onClick: this.handleDemo
+      }, "Demo")), this.renderErrors()));
     }
   }]);
 
@@ -618,6 +672,7 @@ function (_React$Component) {
   }, {
     key: "renderErrors",
     value: function renderErrors() {
+      // debugger
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.props.errors.map(function (error, i) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           key: "error-".concat(i)
@@ -628,11 +683,11 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       var _this$props = this.props,
-          errors = _this$props.errors,
           formType = _this$props.formType,
           navLink = _this$props.navLink;
       var formLabel = formType[0].toUpperCase() + formType.slice(1).toLowerCase();
-      var navLinkLabel = navLink[0].toUpperCase() + navLink.slice(1).toLowerCase();
+      var navLinkLabel = navLink[0].toUpperCase() + navLink.slice(1).toLowerCase(); // debugger
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "signup-form-div"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
@@ -641,7 +696,7 @@ function (_React$Component) {
         className: "form-h1"
       }, "Make Your Money Move"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
         className: "form-h2"
-      }, "Robinhood lets you invest in companies you love, commission-free"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Robinhood lets you invest in companies you love, commission-free"), this.renderErrors(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "signup-inputs-div"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "name"
@@ -649,35 +704,35 @@ function (_React$Component) {
         type: "text",
         onChange: this.update('first_name'),
         value: this.state.first_name,
-        placeholder: "First name",
-        required: true
+        placeholder: "First name" // required
+
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         onChange: this.update('last_name'),
         value: this.state.last_name,
-        placeholder: "Last Name",
-        required: true
+        placeholder: "Last Name" // required
+
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         className: "signup-input",
         type: "text",
         onChange: this.update('email'),
         value: this.state.email,
-        placeholder: "Email address",
-        required: true
+        placeholder: "Email address" // required
+
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         className: "signup-input",
         type: "text",
         onChange: this.update('username'),
         value: this.state.username,
-        placeholder: "Username",
-        required: true
+        placeholder: "Username" // required
+
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         className: "signup-input",
         type: "password",
         onChange: this.update('password'),
         value: this.state.password,
-        placeholder: "Password [min. 6 characters]",
-        required: true
+        placeholder: "Password [min. 6 characters]" // required
+
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "signup-form-button",
         type: "submit"
@@ -763,7 +818,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 
-var images = ['./phone.png'];
+var media = ['./phone.png', './credit-card-video.mp4'];
 
 var Splash =
 /*#__PURE__*/
@@ -777,7 +832,8 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Splash).call(this, props));
     _this.state = {
-      phoneImg: images[0]
+      phoneImg: media[0],
+      cardVid: media[1]
     };
     return _this;
   }
@@ -806,16 +862,19 @@ function (_React$Component) {
         className: "splash-description-2"
       }, "Make unlimited commission-free trades in stocks, funds, and options with Robinhood Financial. The same goes for buying and selling cryptocurrencies with Robinhood Crypto. Zero commission fees.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "splash-section-3"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "splash-body-3"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
         className: "splash-h1-3"
       }, "Introducing Cash Management"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "splash-description-3"
-      }, "Invest, spend, and earn 1.80% APY*\u2014all through your brokerage account."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
-        width: "320",
-        height: "240",
-        autoplay: true
+      }, "Invest, spend, and earn 1.80% APY*\u2014all through your brokerage account.")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
+        width: "400",
+        height: "300",
+        autoPlay: true,
+        loop: true
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("source", {
-        src: "app/assets/images/credit-card-video.mp4",
+        src: this.state.cardVid,
         type: "video/mp4"
       }))));
     }
@@ -1024,7 +1083,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var SessionErrorsReducer = function SessionErrorsReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments.length > 1 ? arguments[1] : undefined;
   Object.freeze(state);
 
