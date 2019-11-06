@@ -75,3 +75,16 @@
 .session-nav-link {
     color: #20CE99;
 }
+
+.login-errors {
+    color: red;
+    text-align: left;
+    width: 95%;
+    border: 1px solid red;
+    margin: 10px;
+
+}
+
+.login-errors li {
+    margin: 8px;
+}

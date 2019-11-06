@@ -64,3 +64,16 @@
 .session-nav-link {
     color: #20CE99;
 }
+
+.signup-errors {
+    color: red;
+    text-align: left;
+    width: 85%;
+    border: 1px solid red;
+    margin: 10px;
+
+}
+
+.signup-errors li {
+    margin: 8px;
+}

@@ -453,11 +453,15 @@ function (_React$Component) {
   }, {
     key: "renderErrors",
     value: function renderErrors() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.props.errors.map(function (error, i) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          key: "error-".concat(i)
-        }, error);
-      }));
+      if (this.props.errors.length > 0) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+          className: "login-errors"
+        }, this.props.errors.map(function (error, i) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+            key: "error-".concat(i)
+          }, error);
+        }));
+      }
     }
   }, {
     key: "handleDemo",
@@ -549,7 +553,7 @@ function (_React$Component) {
       }, formLabel), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "session-demo-button",
         onClick: this.handleDemo
-      }, "Demo")), this.renderErrors()));
+      }, "Demo"), this.renderErrors())));
     }
   }]);
 
@@ -673,11 +677,15 @@ function (_React$Component) {
     key: "renderErrors",
     value: function renderErrors() {
       // debugger
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.props.errors.map(function (error, i) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          key: "error-".concat(i)
-        }, error);
-      }));
+      if (this.props.errors.length > 0) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+          className: "signup-errors"
+        }, this.props.errors.map(function (error, i) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+            key: "error-".concat(i)
+          }, error);
+        }));
+      }
     }
   }, {
     key: "render",
@@ -696,7 +704,7 @@ function (_React$Component) {
         className: "form-h1"
       }, "Make Your Money Move"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
         className: "form-h2"
-      }, "Robinhood lets you invest in companies you love, commission-free"), this.renderErrors(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Robinhood lets you invest in companies you love, commission-free"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "signup-inputs-div"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "name"
@@ -741,7 +749,7 @@ function (_React$Component) {
       }, "Already started? ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         className: "session-nav-link",
         to: "/".concat(navLink)
-      }, navLinkLabel, " to complete your application")))));
+      }, navLinkLabel, " to complete your application")), this.renderErrors())));
     }
   }]);
 

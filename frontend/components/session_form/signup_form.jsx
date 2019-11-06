@@ -30,15 +30,17 @@ class SignupForm extends React.Component {
 
     renderErrors() {
         // debugger
-        return (
-            <ul>
-                {this.props.errors.map((error, i) => (
-                    <li key={`error-${i}`}>
-                        {error}
-                    </li>
-                ))}
-            </ul>
-        );
+        if (this.props.errors.length > 0) {
+            return (
+                <ul className='signup-errors'>
+                    {this.props.errors.map((error, i) => (
+                        <li key={`error-${i}`}>
+                            {error}
+                        </li>
+                    ))}
+                </ul>
+            );
+        }
     }
 
     render() {
@@ -51,7 +53,6 @@ class SignupForm extends React.Component {
                 <form onSubmit={this.handleSubmit}>
                     <h1 className='form-h1'>Make Your Money Move</h1>
                     <h2 className='form-h2'>Robinhood lets you invest in companies you love, commission-free</h2>
-                    {this.renderErrors()}
                     <div className='signup-inputs-div'>
                         <div className='name'>
                             <input
@@ -99,6 +100,7 @@ class SignupForm extends React.Component {
                                                 {navLinkLabel} to complete your application
                                             </Link>
                         </p>
+                        {this.renderErrors()}
                     </div>
                 </form>
             </div>

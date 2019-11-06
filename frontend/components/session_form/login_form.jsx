@@ -27,15 +27,17 @@ class LoginForm extends React.Component {
     }
 
     renderErrors() {
-        return (
-            <ul>
-                {this.props.errors.map((error, i) => (
-                    <li key={`error-${i}`}>
-                        {error}
-                    </li>
-                ))}
-            </ul>
-        );
+        if (this.props.errors.length > 0) {
+            return (
+                <ul className='login-errors'>
+                    {this.props.errors.map((error, i) => (
+                        <li key={`error-${i}`}>
+                            {error}
+                        </li>
+                    ))}
+                </ul>
+            );
+        }
     }
 
     handleDemo(e) {
@@ -98,10 +100,9 @@ class LoginForm extends React.Component {
                         </p>
                         <button className='session-button' type="submit">{formLabel}</button>
                         <button className='session-demo-button' onClick={this.handleDemo}>Demo</button>
+                        {this.renderErrors()}
                     </div>
-                    {this.renderErrors()}
                 </form>
-                
             </div>
         )
     }
