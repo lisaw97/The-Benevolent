@@ -1,7 +1,8 @@
-.session-form-div {
+.signup-form-div {
     display: flex;
     justify-content: center;
-    margin: 50px;
+    margin: 200px;
+    text-align: center;
 }
 
 .form-h1 {
@@ -13,9 +14,9 @@
     font-size: 20px;
 }
 
-.session-inputs-div {
-    width: 400px;
-    height: 200px;
+.signup-inputs-div {
+    width: 600px;
+    height: 400px;
     margin: 20px;
     background-color: white;
     display: flex;
@@ -24,20 +25,32 @@
     align-items: center;
 }
 
-.session-input, .session-button {
+.name {
+    display: flex;
+}
+
+.name input {
     width: 240px;
-    height: 30px;
+    height: 40px;
     font-size: 18px;
     border-radius: 5px;
-    border: 1px solid lightgrey;
+    border: 1px solid#C0C0C0;
+    margin: 10px;
+}
+.signup-input, .signup-form-button {
+    width: 507px;
+    height: 40px;
+    font-size: 18px;
+    border-radius: 5px;
+    border: 1px solid 	#C0C0C0;
     margin: 10px;
 }
 ::placeholder {
-    color: lightgrey;
+    color: 	#C0C0C0;
     padding: 10px;
     font-size: 15px;
 }
-.session-button {
+.signup-form-button {
     background-color: #20CE99;
     color: white;
     font-family: 'Dosis', sans-serif;
@@ -45,7 +58,7 @@
 }
 
 .session-link-p {
-    color: lightgrey;
+    color: 	#C0C0C0;
 }
 
 .session-nav-link {

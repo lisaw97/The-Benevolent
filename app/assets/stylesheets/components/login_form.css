@@ -1,0 +1,69 @@
+.session-form-div {
+    display: flex;
+    justify-content: flex-end;
+    padding: 200px;
+    padding-right: 10%;
+    text-align: center;
+    background-image: url("../login_background.png");
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-size: 45% 100%;
+}
+
+.transparent-background {
+    opacity: 1;
+}
+
+.login-form-h1 {
+    font-size: 30px;
+    margin: 40px;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.form-h2 {
+    font-size: 20px;
+}
+
+.session-inputs-div {
+    opacity: 1;
+    margin: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.login-label {
+    width: 95%;
+    text-align: left;
+    font-size: 15px;
+}
+
+.session-input, .session-button {
+    width: 507px;
+    height: 40px;
+    font-size: 18px;
+    border-radius: 5px;
+    border: 1px solid 	#C0C0C0;
+    margin: 10px;
+}
+::placeholder {
+    color: lightgrey;
+    padding: 10px;
+    font-size: 15px;
+}
+.session-button {
+    background-color: #20CE99;
+    color: white;
+    font-family: 'Dosis', sans-serif;
+    font-size: 17px;
+}
+
+.session-link-p {
+    color: lightgrey;
+}
+
+.session-nav-link {
+    color: #20CE99;
+}
