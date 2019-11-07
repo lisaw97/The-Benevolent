@@ -13,7 +13,7 @@ class SignupForm extends React.Component {
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-    
+
     update(field) {
         return e => {
             this.setState({
@@ -29,7 +29,6 @@ class SignupForm extends React.Component {
     }
 
     renderErrors() {
-        // debugger
         if (this.props.errors.length > 0) {
             return (
                 <ul className='signup-errors'>
@@ -47,7 +46,6 @@ class SignupForm extends React.Component {
         const { formType, navLink } = this.props;
         const formLabel = formType[0].toUpperCase() + formType.slice(1).toLowerCase();
         const navLinkLabel = navLink[0].toUpperCase() + navLink.slice(1).toLowerCase();
-        // debugger
         return (
             <div className='signup-form-div'>
                 <form onSubmit={this.handleSubmit}>

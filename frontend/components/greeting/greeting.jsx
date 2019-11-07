@@ -5,7 +5,11 @@ import SVGIcon from '../svg/svg_icons';
 class Greeting extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            demoUser: false
+        }
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDemo = this.handleDemo.bind(this);
     }
 
     handleSubmit(e) {
@@ -13,10 +17,10 @@ class Greeting extends React.Component {
         this.props.logout();
     }
 
-    // handleDemo(e) {
-    //     e.preventDefault();
-    //     <Redirect to='/login' />
-    // }
+    handleDemo() {
+        this.props.loginDemoUser( {demoUser: true}) ;
+        window.location.hash = '/login';
+    }
 
     render() {
         const { currentUser } = this.props;
@@ -37,12 +41,13 @@ class Greeting extends React.Component {
                     <div className='signup-login-buttons'>
                         <div><Link className='signup-button' to='/signup'>Sign Up</Link></div>
                         <div><Link className='login-button' to='/login'>Log In</Link></div>
-                        {/* <button className='demo-button' onClick={this.handleDemo}>Demo</button> */}
-                        <div><Link className='demo-button' to='/login'>Demo</Link></div>
+                        <div><button className='demo-button' onClick={this.handleDemo}>Demo</button></div>
+                        {/* <div><Link className='demo-button' to='/login'>Demo</Link></div> */}
                     </div>
                 </div>
             )
         }
+        
     }
 }
 

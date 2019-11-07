@@ -5,7 +5,8 @@ import LoginForm from './login_form';
 const mapStateToProps = state => ({
     errors: state.errors.session,
     formType: 'login',
-    navLink: 'signup'
+    navLink: 'signup',
+    demoUser: state.ui.demoUser
 });
 
 const mapDispatchToProps = dispatch => ({

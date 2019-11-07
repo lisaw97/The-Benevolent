@@ -12,6 +12,12 @@ class LoginForm extends React.Component {
         this.handleDemo = this.handleDemo.bind(this);
     }
 
+    componentDidMount() {
+        if (this.props.demoUser) {   
+            this.displayDemoUser('guest', 0);
+        }
+    }
+
     update(field) {
         return e => {
             this.setState({
