@@ -16,7 +16,7 @@ main {
              0.3em 0.3em 1em rgba(0,0,0,0.3);
     display: flex;
     justify-content: space-between;
-    align-content: center;
+    align-items: center;
     background-color: #FFFFFF;
 }
 
@@ -25,8 +25,9 @@ main {
     color: #000000;
     display: flex;
     align-items: center;
-    margin: 10px;
+    /* margin: 10px;
     margin-right: 0;
+    margin-left: */
     font-size: 25px;
 }
 
@@ -92,5 +93,14 @@ main {
 }
 
 .logout-button {
+    margin: 10px;
     margin-right: 50px;
+    width: 80px;
+    height: 35px;
+    font-size: 17px;
+    font-family: 'Dosis';
+}
+
+.hide {
+    visibility: hidden;
 }

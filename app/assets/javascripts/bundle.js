@@ -323,17 +323,14 @@ function (_React$Component) {
       if (currentUser) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
           className: "greeting-div"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "welcome"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+          className: "rh-logo",
           to: "/"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_svg_svg_icons__WEBPACK_IMPORTED_MODULE_2__["default"], {
           name: "icon",
-          width: 80,
-          height: 50
-        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
-          className: "welcome-msg"
-        }, "Welcome, ", currentUser.username)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          width: 35,
+          height: 30
+        }), "Welcome, ", currentUser.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "logout-button",
           onClick: this.handleSubmit
         }, "Log Out"));
@@ -345,8 +342,8 @@ function (_React$Component) {
           to: "/"
         }, "Robinhood Clone", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_svg_svg_icons__WEBPACK_IMPORTED_MODULE_2__["default"], {
           name: "icon",
-          width: 80,
-          height: 50
+          width: 35,
+          height: 30
         })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "signup-login-buttons"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
@@ -500,6 +497,7 @@ function (_React$Component) {
   _createClass(LoginForm, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      // document.getElementsByClassName('demo-button').style.display = 'none';
       this.props.clearErrors([]);
 
       if (this.props.demoUser) {
@@ -1037,7 +1035,7 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 var getViewBox = function getViewBox(name) {
   switch (name) {
     case 'icon':
-      return '15 -7 40 50';
+      return '0 0 100% 100%';
 
     default:
       return '0 0 32 32';

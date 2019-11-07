@@ -27,22 +27,18 @@ class Greeting extends React.Component {
         if (currentUser) {
             return (
                 <form className='greeting-div'>
-                    <div className='welcome'>
-                        <Link to='/'><SVGIcon name='icon' width={80} height={50} /></Link>
-                        <h1 className='welcome-msg'>Welcome, {currentUser.username}</h1>
-                    </div>
+                    <Link className='rh-logo' to='/'><SVGIcon name='icon' width={35} height={30} />Welcome, {currentUser.username}</Link>
                     <button className='logout-button' onClick={this.handleSubmit}>Log Out</button>
                 </form>
             ) 
         } else {
             return (
                 <div className='greeting-div'>
-                    <Link className='rh-logo' to='/'>Robinhood Clone<SVGIcon name='icon' width={80} height={50}/></Link>
+                    <Link className='rh-logo' to='/'>Robinhood Clone<SVGIcon name='icon' width={35} height={30}/></Link>
                     <div className='signup-login-buttons'>
                         <div><Link className='signup-button' to='/signup'>Sign Up</Link></div>
                         <div><Link className='login-button' to='/login'>Log In</Link></div>
                         <div><button className='demo-button' onClick={this.handleDemo}>Demo</button></div>
-                        {/* <div><Link className='demo-button' to='/login'>Demo</Link></div> */}
                     </div>
                 </div>
             )

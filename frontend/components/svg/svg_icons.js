@@ -3,7 +3,7 @@ import React from 'react';
 const getViewBox = name => {
     switch (name) {
         case 'icon':
-            return '15 -7 40 50';
+            return '0 0 100% 100%';
         default:
             return '0 0 32 32';
     }
