@@ -13,6 +13,7 @@ class LoginForm extends React.Component {
     }
 
     componentDidMount() {
+        this.props.clearErrors([]);
         if (this.props.demoUser) {   
             this.props.logoutDemoUser( {demoUser: false} );
             this.displayDemoUser('guest', 0);
