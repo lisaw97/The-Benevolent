@@ -23,7 +23,12 @@
     "lib": "lib",
     "test": "test"
   },
+  "engines": {
+    "node": "12.9.1",
+    "npm": "6.10.2"
+  },
   "scripts": {
+    "postinstall": "webpack",
     "start": "webpack --mode=development --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
