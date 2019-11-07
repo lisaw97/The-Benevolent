@@ -172,30 +172,26 @@ var RECEIVE_DEMO_USER = 'RECEIVE_DEMO_USER';
 var REMOVE_DEMO_USER = 'REMOVE_DEMO_USER';
 
 var receiveDemoUser = function receiveDemoUser(demoUser) {
-  debugger;
+  // debugger
   return {
     type: RECEIVE_DEMO_USER,
     demoUser: demoUser
   };
 };
 
-var removeDemoUser = function removeDemoUser(_boolean) {
+var removeDemoUser = function removeDemoUser(demoUser) {
   return {
-    type: RECEIVE_DEMO_USER,
-    "boolean": _boolean
+    type: REMOVE_DEMO_USER,
+    demoUser: demoUser
   };
 };
 
 var loginDemoUser = function loginDemoUser(demoUser) {
-  debugger;
+  // debugger
   return dispatch(receiveDemoUser(demoUser));
 };
-var logoutDemoUser = function logoutDemoUser(_boolean2) {
-  return function (dispatch) {
-    return function (_boolean3) {
-      return dispatch(removeDemoUser(_boolean3));
-    };
-  };
+var logoutDemoUser = function logoutDemoUser(demoUser) {
+  return dispatch(removeDemoUser(demoUser));
 };
 
 /***/ }),
@@ -499,6 +495,9 @@ function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       if (this.props.demoUser) {
+        this.props.logoutDemoUser({
+          demoUser: false
+        });
         this.displayDemoUser('guest', 0);
       }
     }
@@ -644,6 +643,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _login_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./login_form */ "./frontend/components/session_form/login_form.jsx");
+/* harmony import */ var _actions_ui_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/ui_actions */ "./frontend/actions/ui_actions.js");
+
 
 
 
@@ -661,6 +662,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     processForm: function processForm(user) {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["login"])(user));
+    },
+    logoutDemoUser: function logoutDemoUser(demoUser) {
+      return dispatch(Object(_actions_ui_actions__WEBPACK_IMPORTED_MODULE_3__["logoutDemoUser"])(demoUser));
     }
   };
 };
@@ -1267,11 +1271,11 @@ var UIReducer = function UIReducer() {
 
   switch (action.type) {
     case _actions_ui_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_DEMO_USER"]:
-      debugger;
+      // debugger
       return action.demoUser;
 
     case _actions_ui_actions__WEBPACK_IMPORTED_MODULE_0__["REMOVE_DEMO_USER"]:
-      return state;
+      return action.demoUser;
 
     default:
       return state;
