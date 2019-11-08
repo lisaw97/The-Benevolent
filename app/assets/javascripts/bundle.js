@@ -150,10 +150,10 @@ var signup = function signup(user) {
   return function (dispatch) {
     // debugger
     return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["signup"](user).then(function (user) {
-      // debugger
+      debugger;
       return dispatch(receieveCurrentUser(user));
     }, function (err) {
-      // debugger
+      debugger;
       return dispatch(receiveSessionErrors(err.responseJSON));
     });
   };
