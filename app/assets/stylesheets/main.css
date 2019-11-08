@@ -1,0 +1,9 @@
+html {
+    --font-family: 'Dosis';
+    --rh-green: #20CE99;
+    
+}
+
+main {
+    font-family: var(--font-family);
+}

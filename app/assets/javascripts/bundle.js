@@ -148,15 +148,50 @@ var logout = function logout() {
 };
 var signup = function signup(user) {
   return function (dispatch) {
+    // debugger
     return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["signup"](user).then(function (user) {
+      debugger;
       return dispatch(receieveCurrentUser(user));
     }, function (err) {
+      debugger;
       return dispatch(receiveSessionErrors(err.responseJSON));
     });
   };
 };
 var clearErrors = function clearErrors(errors) {
   return dispatch(receiveSessionErrors(errors));
+};
+
+/***/ }),
+
+/***/ "./frontend/actions/stock_actions.js":
+/*!*******************************************!*\
+  !*** ./frontend/actions/stock_actions.js ***!
+  \*******************************************/
+/*! exports provided: RECEIVE_STOCK, fetchStock */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_STOCK", function() { return RECEIVE_STOCK; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchStock", function() { return fetchStock; });
+/* harmony import */ var _util_stock_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/stock_api_util */ "./frontend/util/stock_api_util.js");
+
+var RECEIVE_STOCK = 'RECEIVE_STOCK';
+
+var receiveStock = function receiveStock(stock) {
+  return {
+    type: RECEIVE_STOCK,
+    stock: stock
+  };
+};
+
+var fetchStock = function fetchStock(ticker) {
+  return function (dispatch) {
+    return _util_stock_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchStock"](ticker).then(function (stock) {
+      return dispatch(receiveStock(stock));
+    });
+  };
 };
 
 /***/ }),
@@ -1099,12 +1134,47 @@ var SVGIcon = function SVGIcon(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _users_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./users_reducer */ "./frontend/reducers/entities/users_reducer.js");
+/* harmony import */ var _stocks_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./stocks_reducer */ "./frontend/reducers/entities/stocks_reducer.js");
+
 
 
 var EntitiesReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
-  users: _users_reducer__WEBPACK_IMPORTED_MODULE_1__["default"]
+  users: _users_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
+  stocks: _stocks_reducer__WEBPACK_IMPORTED_MODULE_2__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (EntitiesReducer);
+
+/***/ }),
+
+/***/ "./frontend/reducers/entities/stocks_reducer.js":
+/*!******************************************************!*\
+  !*** ./frontend/reducers/entities/stocks_reducer.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_stock_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/stock_actions */ "./frontend/actions/stock_actions.js");
+
+
+var StocksReducer = function StocksReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+  var nextState = Object.assign({}, state);
+
+  switch (action.type) {
+    case _actions_stock_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_STOCK"]:
+      nextState[action.stock.symbol] = action.stock;
+      return nextState;
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (StocksReducer);
 
 /***/ }),
 
@@ -1322,7 +1392,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store/store */ "./frontend/store/store.js");
 /* harmony import */ var _components_root__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/root */ "./frontend/components/root.jsx");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _actions_stock_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./actions/stock_actions */ "./frontend/actions/stock_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -1353,6 +1425,7 @@ document.addEventListener("DOMContentLoaded", function () {
   window.logout = _actions_session_actions__WEBPACK_IMPORTED_MODULE_4__["logout"];
   window.getState = store.getState;
   window.dispatch = store.dispatch;
+  window.fetchStock = _actions_stock_actions__WEBPACK_IMPORTED_MODULE_5__["fetchStock"];
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_3__["default"], {
     store: store
   }), root);
@@ -1466,6 +1539,25 @@ var logout = function logout() {
   return $.ajax({
     url: '/api/session',
     method: 'DELETE'
+  });
+};
+
+/***/ }),
+
+/***/ "./frontend/util/stock_api_util.js":
+/*!*****************************************!*\
+  !*** ./frontend/util/stock_api_util.js ***!
+  \*****************************************/
+/*! exports provided: fetchStock */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchStock", function() { return fetchStock; });
+var fetchStock = function fetchStock(ticker) {
+  return $.ajax({
+    url: "https://cloud.iexapis.com/stable/stock/".concat(ticker, "/company/?token=pk_d9fc28e6b9594efa97b112ac9c920c87"),
+    method: 'GET'
   });
 };
 

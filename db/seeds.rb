@@ -7,6 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 User.delete_all
+Stock.delete_all
 
 User.create!(
     username: 'guest',
@@ -14,4 +15,9 @@ User.create!(
     first_name: 'Guest',
     last_name: '1',
     password: 'password'
+)
+
+Stock.create!(
+    company_name: 'Apple',
+    symbol: 'AAPL'
 )

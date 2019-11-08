@@ -31,12 +31,19 @@ export const logout = () => dispatch => (
         .then(() => dispatch(logoutCurrentUser()))
 );
 
-export const signup = user => dispatch => (
-    SessionApiUtil.signup(user).then(
-        user => dispatch(receieveCurrentUser(user)),
-        err => dispatch(receiveSessionErrors(err.responseJSON))
+export const signup = user => dispatch => {
+    // debugger
+    return SessionApiUtil.signup(user).then(
+        user => { 
+            debugger
+            return dispatch(receieveCurrentUser(user))
+        },
+        err => {
+            debugger
+            return dispatch(receiveSessionErrors(err.responseJSON))
+        }
     )
-)
+};
 
 export const clearErrors = errors => (
     dispatch(receiveSessionErrors(errors))
