@@ -17,10 +17,9 @@ ActiveRecord::Schema.define(version: 20191108015147) do
 
   create_table "stocks", force: :cascade do |t|
     t.string "company_name", null: false
-    t.string "symbol", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["symbol"], name: "index_stocks_on_symbol", unique: true
+    t.string "symbol", null: false
   end
 
   create_table "users", force: :cascade do |t|
