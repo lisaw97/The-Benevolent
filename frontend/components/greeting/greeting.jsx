@@ -18,7 +18,7 @@ class Greeting extends React.Component {
     }
 
     handleDemo() {
-        this.props.loginDemoUser( {demoUser: true}) ;
+        this.props.demoStateOn( {demoUser: true}) ;
         window.location.hash = '/login';
     }
 
@@ -28,7 +28,8 @@ class Greeting extends React.Component {
             return (
                 <form className='greeting-div'>
                     <Link className='rh-logo' to='/'><SVGIcon name='icon' width={35} height={30} />Welcome, {currentUser.username}</Link>
-                    <button className='logout-button' onClick={this.handleSubmit}>Log Out</button>
+                    <div onClick={this.handleSubmit}><Link className='logout-button' to='/'>Log Out</Link></div>
+                    {/* <button className='logout-button' onClick={this.handleSubmit}>Log Out</button> */}
                 </form>
             ) 
         } else {

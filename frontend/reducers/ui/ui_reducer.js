@@ -8,10 +8,9 @@ const UIReducer = (state = _defaultDemoUser, action) => {
     Object.freeze(state);
     switch (action.type) {
         case RECEIVE_DEMO_USER:
-            // debugger
             return action.demoUser;
         case REMOVE_DEMO_USER:
-            return action.demoUser;
+            return _defaultDemoUser;
         default:
             return state;
     }

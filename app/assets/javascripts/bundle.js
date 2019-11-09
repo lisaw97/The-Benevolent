@@ -90,7 +90,7 @@
 /*!*********************************************!*\
   !*** ./frontend/actions/session_actions.js ***!
   \*********************************************/
-/*! exports provided: RECEIVE_CURRENT_USER, LOGOUT_CURRENT_USER, RECEIVE_SESSION_ERRORS, CLEAR_ERRORS, login, logout, signup, clearErrors */
+/*! exports provided: RECEIVE_CURRENT_USER, LOGOUT_CURRENT_USER, RECEIVE_SESSION_ERRORS, CLEAR_ERRORS, clearErrors, login, logout, signup */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -99,10 +99,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOGOUT_CURRENT_USER", function() { return LOGOUT_CURRENT_USER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_SESSION_ERRORS", function() { return RECEIVE_SESSION_ERRORS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CLEAR_ERRORS", function() { return CLEAR_ERRORS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearErrors", function() { return clearErrors; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "login", function() { return login; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logout", function() { return logout; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "signup", function() { return signup; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "clearErrors", function() { return clearErrors; });
 /* harmony import */ var _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/session_api_util */ "./frontend/util/session_api_util.js");
 
 var RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
@@ -130,6 +130,11 @@ var receiveSessionErrors = function receiveSessionErrors(errors) {
   };
 };
 
+var clearErrors = function clearErrors() {
+  return {
+    type: CLEAR_ERRORS
+  };
+};
 var login = function login(user) {
   return function (dispatch) {
     return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["login"](user).then(function (user) {
@@ -148,18 +153,12 @@ var logout = function logout() {
 };
 var signup = function signup(user) {
   return function (dispatch) {
-    // debugger
     return _util_session_api_util__WEBPACK_IMPORTED_MODULE_0__["signup"](user).then(function (user) {
-      debugger;
       return dispatch(receieveCurrentUser(user));
     }, function (err) {
-      debugger;
       return dispatch(receiveSessionErrors(err.responseJSON));
     });
   };
-};
-var clearErrors = function clearErrors(errors) {
-  return dispatch(receiveSessionErrors(errors));
 };
 
 /***/ }),
@@ -168,16 +167,26 @@ var clearErrors = function clearErrors(errors) {
 /*!*******************************************!*\
   !*** ./frontend/actions/stock_actions.js ***!
   \*******************************************/
-/*! exports provided: RECEIVE_STOCK, fetchStock */
+/*! exports provided: RECEIVE_STOCKS, RECEIVE_STOCK, fetchStocks, fetchStock */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_STOCKS", function() { return RECEIVE_STOCKS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_STOCK", function() { return RECEIVE_STOCK; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchStocks", function() { return fetchStocks; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchStock", function() { return fetchStock; });
 /* harmony import */ var _util_stock_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/stock_api_util */ "./frontend/util/stock_api_util.js");
 
+var RECEIVE_STOCKS = 'RECEIVE_STOCKS';
 var RECEIVE_STOCK = 'RECEIVE_STOCK';
+
+var receiveStocks = function receiveStocks(stocks) {
+  return {
+    type: RECEIVE_STOCKS,
+    stocks: stocks
+  };
+};
 
 var receiveStock = function receiveStock(stock) {
   return {
@@ -186,10 +195,74 @@ var receiveStock = function receiveStock(stock) {
   };
 };
 
-var fetchStock = function fetchStock(ticker) {
+var fetchStocks = function fetchStocks() {
   return function (dispatch) {
-    return _util_stock_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchStock"](ticker).then(function (stock) {
+    return _util_stock_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchStocks"]().then(function (stocks) {
+      return dispatch(receiveStocks(stocks));
+    });
+  };
+};
+var fetchStock = function fetchStock(symbol) {
+  return function (dispatch) {
+    return _util_stock_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchStock"](symbol).then(function (stock) {
       return dispatch(receiveStock(stock));
+    });
+  };
+};
+
+/***/ }),
+
+/***/ "./frontend/actions/transaction_actions.js":
+/*!*************************************************!*\
+  !*** ./frontend/actions/transaction_actions.js ***!
+  \*************************************************/
+/*! exports provided: RECEIEVE_TRANSACTIONS, RECEIEVE_TRANSACTION, fetchTransactions, fetchTransaction, createTransaction */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIEVE_TRANSACTIONS", function() { return RECEIEVE_TRANSACTIONS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIEVE_TRANSACTION", function() { return RECEIEVE_TRANSACTION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTransactions", function() { return fetchTransactions; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTransaction", function() { return fetchTransaction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createTransaction", function() { return createTransaction; });
+/* harmony import */ var _util_transaction_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/transaction_api_util */ "./frontend/util/transaction_api_util.js");
+
+var RECEIEVE_TRANSACTIONS = 'RECEIEVE_TRANSACTIONS';
+var RECEIEVE_TRANSACTION = 'RECEIEVE_TRANSACTION';
+
+var receieveTransactions = function receieveTransactions(transactions) {
+  return {
+    type: RECEIEVE_TRANSACTIONS,
+    transactions: transactions
+  };
+};
+
+var receieveTransaction = function receieveTransaction(transaction) {
+  return {
+    type: RECEIEVE_TRANSACTION,
+    transaction: transaction
+  };
+};
+
+var fetchTransactions = function fetchTransactions() {
+  return function (dispatch) {
+    return _util_transaction_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchTransactions"]().then(function (transactions) {
+      return dispatch(receieveTransactions(transactions));
+    });
+  };
+};
+var fetchTransaction = function fetchTransaction(transaction) {
+  return function (dispatch) {
+    return _util_transaction_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchTransaction"](transaction).then(function (transaction) {
+      return dispatch(receieveTransaction(transaction));
+    });
+  };
+};
+var createTransaction = function createTransaction(transaction) {
+  return function (dispatch) {
+    return _util_transaction_api_util__WEBPACK_IMPORTED_MODULE_0__["createTransaction"](transaction).then(function (transaction) {
+      return dispatch(receiveTransaction(transaction));
     });
   };
 };
@@ -200,39 +273,28 @@ var fetchStock = function fetchStock(ticker) {
 /*!****************************************!*\
   !*** ./frontend/actions/ui_actions.js ***!
   \****************************************/
-/*! exports provided: RECEIVE_DEMO_USER, REMOVE_DEMO_USER, loginDemoUser, logoutDemoUser */
+/*! exports provided: RECEIVE_DEMO_USER, REMOVE_DEMO_USER, demoStateOn, demoStateOff */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_DEMO_USER", function() { return RECEIVE_DEMO_USER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REMOVE_DEMO_USER", function() { return REMOVE_DEMO_USER; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loginDemoUser", function() { return loginDemoUser; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logoutDemoUser", function() { return logoutDemoUser; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "demoStateOn", function() { return demoStateOn; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "demoStateOff", function() { return demoStateOff; });
 var RECEIVE_DEMO_USER = 'RECEIVE_DEMO_USER';
 var REMOVE_DEMO_USER = 'REMOVE_DEMO_USER';
-
-var receiveDemoUser = function receiveDemoUser(demoUser) {
-  // debugger
+var demoStateOn = function demoStateOn(demoUser) {
   return {
     type: RECEIVE_DEMO_USER,
     demoUser: demoUser
   };
 };
-
-var removeDemoUser = function removeDemoUser(demoUser) {
+var demoStateOff = function demoStateOff(demoUser) {
   return {
     type: REMOVE_DEMO_USER,
     demoUser: demoUser
   };
-};
-
-var loginDemoUser = function loginDemoUser(demoUser) {
-  // debugger
-  return dispatch(receiveDemoUser(demoUser));
-};
-var logoutDemoUser = function logoutDemoUser(demoUser) {
-  return dispatch(removeDemoUser(demoUser));
 };
 
 /***/ }),
@@ -254,6 +316,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _splash_splash_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./splash/splash_container */ "./frontend/components/splash/splash_container.js");
 /* harmony import */ var _session_form_login_form_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./session_form/login_form_container */ "./frontend/components/session_form/login_form_container.js");
 /* harmony import */ var _session_form_signup_form_container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./session_form/signup_form_container */ "./frontend/components/session_form/signup_form_container.js");
+/* harmony import */ var _stock_stock_details_container__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./stock/stock_details_container */ "./frontend/components/stock/stock_details_container.js");
+
 
 
 
@@ -269,6 +333,10 @@ var App = function App() {
     exact: true,
     path: "/",
     component: _splash_splash_container__WEBPACK_IMPORTED_MODULE_4__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    exact: true,
+    path: "/stocks",
+    component: _stock_stock_details_container__WEBPACK_IMPORTED_MODULE_7__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_2__["AuthRoute"], {
     path: "/login",
     component: _session_form_login_form_container__WEBPACK_IMPORTED_MODULE_5__["default"]
@@ -345,7 +413,7 @@ function (_React$Component) {
   }, {
     key: "handleDemo",
     value: function handleDemo() {
-      this.props.loginDemoUser({
+      this.props.demoStateOn({
         demoUser: true
       });
       window.location.hash = '/login';
@@ -365,10 +433,12 @@ function (_React$Component) {
           name: "icon",
           width: 35,
           height: 30
-        }), "Welcome, ", currentUser.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          className: "logout-button",
+        }), "Welcome, ", currentUser.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           onClick: this.handleSubmit
-        }, "Log Out"));
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+          className: "logout-button",
+          to: "/"
+        }, "Log Out")));
       } else {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "greeting-div"
@@ -434,8 +504,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     logout: function logout() {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["logout"])());
     },
-    loginDemoUser: function loginDemoUser(demoUser) {
-      return dispatch(Object(_actions_ui_actions__WEBPACK_IMPORTED_MODULE_3__["loginDemoUser"])(demoUser));
+    demoStateOn: function demoStateOn(demoUser) {
+      return dispatch(Object(_actions_ui_actions__WEBPACK_IMPORTED_MODULE_3__["demoStateOn"])(demoUser));
     }
   };
 };
@@ -525,18 +595,28 @@ function (_React$Component) {
       password: ''
     };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
-    _this.handleDemo = _this.handleDemo.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(LoginForm, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      // document.getElementsByClassName('demo-button').style.display = 'none';
-      this.props.clearErrors([]);
+      if (this.props.errors.length > 0) {
+        this.props.clearErrors();
+      }
 
       if (this.props.demoUser) {
-        this.props.logoutDemoUser({
+        this.props.demoStateOff({
+          demoUser: false
+        });
+        this.displayDemoUser('guest', 0);
+      }
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      if (this.props.demoUser) {
+        this.props.demoStateOff({
           demoUser: false
         });
         this.displayDemoUser('guest', 0);
@@ -555,6 +635,7 @@ function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
+      debugger;
       var user = Object.assign({}, this.state);
       this.props.processForm(user);
     }
@@ -570,12 +651,6 @@ function (_React$Component) {
           }, error);
         }));
       }
-    }
-  }, {
-    key: "handleDemo",
-    value: function handleDemo(e) {
-      e.preventDefault();
-      this.displayDemoUser('guest', 0);
     }
   }, {
     key: "displayDemoUser",
@@ -658,10 +733,7 @@ function (_React$Component) {
       }, navLinkLabel, " to complete your application")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "session-button",
         type: "submit"
-      }, formLabel), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "session-demo-button",
-        onClick: this.handleDemo
-      }, "Demo"), this.renderErrors())));
+      }, formLabel), this.renderErrors())));
     }
   }]);
 
@@ -700,15 +772,16 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  debugger;
   return {
     processForm: function processForm(user) {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["login"])(user));
     },
-    logoutDemoUser: function logoutDemoUser(demoUser) {
-      return dispatch(Object(_actions_ui_actions__WEBPACK_IMPORTED_MODULE_3__["logoutDemoUser"])(demoUser));
+    demoStateOff: function demoStateOff(demoUser) {
+      return dispatch(Object(_actions_ui_actions__WEBPACK_IMPORTED_MODULE_3__["demoStateOff"])(demoUser));
     },
-    clearErrors: function clearErrors(errors) {
-      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["clearErrors"])(errors));
+    clearErrors: function clearErrors() {
+      return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["clearErrors"])());
     }
   };
 };
@@ -1052,6 +1125,118 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
+/***/ "./frontend/components/stock/stock_details.jsx":
+/*!*****************************************************!*\
+  !*** ./frontend/components/stock/stock_details.jsx ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var StockDetails =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(StockDetails, _React$Component);
+
+  function StockDetails(props) {
+    var _this;
+
+    _classCallCheck(this, StockDetails);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(StockDetails).call(this, props)); // this.state = this.props.stock;
+
+    var symbol = _this.props.match.params.ticker;
+    return _this;
+  }
+
+  _createClass(StockDetails, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {// this.props.fetchStocks();
+      // this.props.fetchTransactions();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var stock = this.props.stock;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "stock-details-div"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Stock Details Page"));
+    }
+  }]);
+
+  return StockDetails;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (StockDetails);
+
+/***/ }),
+
+/***/ "./frontend/components/stock/stock_details_container.js":
+/*!**************************************************************!*\
+  !*** ./frontend/components/stock/stock_details_container.js ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_stock_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/stock_actions */ "./frontend/actions/stock_actions.js");
+/* harmony import */ var _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/transaction_actions */ "./frontend/actions/transaction_actions.js");
+/* harmony import */ var _stock_details__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./stock_details */ "./frontend/components/stock/stock_details.jsx");
+
+
+
+
+
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+  return {
+    stock: state.entities.stocks[ownProps.match.params.symbol]
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    fetchStock: function fetchStock(symbol) {
+      return dispatch(Object(_actions_stock_actions__WEBPACK_IMPORTED_MODULE_1__["fetchStock"])(symbol));
+    },
+    fetchStocks: function fetchStocks() {
+      return dispatch(Object(_actions_stock_actions__WEBPACK_IMPORTED_MODULE_1__["fetchStocks"])());
+    },
+    fetchTransactions: function fetchTransactions() {
+      return dispatch(Object(_actions_transaction_actions__WEBPACK_IMPORTED_MODULE_2__["fetchTransactions"])());
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_stock_details__WEBPACK_IMPORTED_MODULE_3__["default"]));
+
+/***/ }),
+
 /***/ "./frontend/components/svg/svg_icons.js":
 /*!**********************************************!*\
   !*** ./frontend/components/svg/svg_icons.js ***!
@@ -1135,12 +1320,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _users_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./users_reducer */ "./frontend/reducers/entities/users_reducer.js");
 /* harmony import */ var _stocks_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./stocks_reducer */ "./frontend/reducers/entities/stocks_reducer.js");
+/* harmony import */ var _transactions_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./transactions_reducer */ "./frontend/reducers/entities/transactions_reducer.js");
+
 
 
 
 var EntitiesReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   users: _users_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
-  stocks: _stocks_reducer__WEBPACK_IMPORTED_MODULE_2__["default"]
+  stocks: _stocks_reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
+  transactions: _transactions_reducer__WEBPACK_IMPORTED_MODULE_3__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (EntitiesReducer);
 
@@ -1156,6 +1344,8 @@ var EntitiesReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_stock_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/stock_actions */ "./frontend/actions/stock_actions.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+
 
 
 var StocksReducer = function StocksReducer() {
@@ -1165,6 +1355,17 @@ var StocksReducer = function StocksReducer() {
   var nextState = Object.assign({}, state);
 
   switch (action.type) {
+    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_CURRENT_USER"]:
+      return action.currentUser.stock;
+
+    case _actions_stock_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_STOCKS"]:
+      // let nextState = action.stocks.map(stock => {
+      //     let key = Object.keys(stock)[1];
+      //     stock.key;
+      // });
+      // debugger
+      return action.stocks.stock;
+
     case _actions_stock_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_STOCK"]:
       nextState[action.stock.symbol] = action.stock;
       return nextState;
@@ -1175,6 +1376,43 @@ var StocksReducer = function StocksReducer() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (StocksReducer);
+
+/***/ }),
+
+/***/ "./frontend/reducers/entities/transactions_reducer.js":
+/*!************************************************************!*\
+  !*** ./frontend/reducers/entities/transactions_reducer.js ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/transaction_actions */ "./frontend/actions/transaction_actions.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+
+
+
+var TransactionsReducer = function TransactionsReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+  var nextState = Object.assign({}, state);
+
+  switch (action.type) {
+    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_CURRENT_USER"]:
+      return action.currentUser.transaction;
+
+    case _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIEVE_TRANSACTION"]:
+      nextState[action.transaction.id] = action.transaction;
+      return nextState;
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (TransactionsReducer);
 
 /***/ }),
 
@@ -1201,8 +1439,8 @@ var UsersReducer = function UsersReducer() {
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
-      nextState[action.currentUser.id] = action.currentUser;
-      return nextState;
+      // nextState[action.currentUser.id] = action.currentUser;
+      return action.currentUser.user;
 
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["LOGOUT_CURRENT_USER"]:
       return _nullUser;
@@ -1361,11 +1599,10 @@ var UIReducer = function UIReducer() {
 
   switch (action.type) {
     case _actions_ui_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_DEMO_USER"]:
-      // debugger
       return action.demoUser;
 
     case _actions_ui_actions__WEBPACK_IMPORTED_MODULE_0__["REMOVE_DEMO_USER"]:
-      return action.demoUser;
+      return _defaultDemoUser;
 
     default:
       return state;
@@ -1426,6 +1663,7 @@ document.addEventListener("DOMContentLoaded", function () {
   window.getState = store.getState;
   window.dispatch = store.dispatch;
   window.fetchStock = _actions_stock_actions__WEBPACK_IMPORTED_MODULE_5__["fetchStock"];
+  window.fetchStocks = _actions_stock_actions__WEBPACK_IMPORTED_MODULE_5__["fetchStocks"];
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_3__["default"], {
     store: store
   }), root);
@@ -1489,7 +1727,7 @@ var Auth = function Auth(_ref) {
     exact: exact,
     render: function render(props) {
       return loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Redirect"], {
-        to: "/"
+        to: "/stocks"
       }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Component, props);
     }
   });
@@ -1548,16 +1786,59 @@ var logout = function logout() {
 /*!*****************************************!*\
   !*** ./frontend/util/stock_api_util.js ***!
   \*****************************************/
-/*! exports provided: fetchStock */
+/*! exports provided: fetchStocks, fetchStock */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchStocks", function() { return fetchStocks; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchStock", function() { return fetchStock; });
-var fetchStock = function fetchStock(ticker) {
+var fetchStocks = function fetchStocks() {
   return $.ajax({
-    url: "https://cloud.iexapis.com/stable/stock/".concat(ticker, "/company/?token=pk_d9fc28e6b9594efa97b112ac9c920c87"),
+    url: '/api/stocks',
     method: 'GET'
+  });
+};
+var fetchStock = function fetchStock(symbol) {
+  return $.ajax({
+    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/company/?token=pk_d9fc28e6b9594efa97b112ac9c920c87"),
+    method: 'GET'
+  });
+};
+
+/***/ }),
+
+/***/ "./frontend/util/transaction_api_util.js":
+/*!***********************************************!*\
+  !*** ./frontend/util/transaction_api_util.js ***!
+  \***********************************************/
+/*! exports provided: fetchTransactions, fetchTransaction, createTransaction */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTransactions", function() { return fetchTransactions; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTransaction", function() { return fetchTransaction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createTransaction", function() { return createTransaction; });
+var fetchTransactions = function fetchTransactions() {
+  return $.ajax({
+    url: '/api/transactions',
+    method: 'GET'
+  });
+};
+var fetchTransaction = function fetchTransaction(transaction) {
+  return $.ajax({
+    url: "/api/transactions/".concat(transaction.id),
+    method: 'GET'
+  });
+};
+var createTransaction = function createTransaction(transaction) {
+  return $.ajax({
+    url: "/api/transactions",
+    method: 'POST',
+    data: {
+      transaction: transaction
+    }
   });
 };
 

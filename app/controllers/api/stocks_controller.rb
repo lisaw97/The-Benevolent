@@ -1,7 +1,7 @@
 class Api::StocksController < ApplicationController
 
     def index
-        @stocks = Stock.all
+        @stocks = current_user.stocks.includes(:transactions)
     end
 
     def show 

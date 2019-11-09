@@ -8,8 +8,9 @@
 
 User.delete_all
 Stock.delete_all
+Transaction.delete_all
 
-User.create!(
+guest = User.create!(
     username: 'guest',
     email: 'guest@gmail.com',
     first_name: 'Guest',
@@ -17,7 +18,43 @@ User.create!(
     password: 'password'
 )
 
-Stock.create!(
-    company_name: 'Apple',
+lisa = User.create!(
+    username: 'lisa',
+    email: 'lisa@gmail.com',
+    first_name: 'Lisa',
+    last_name: 'Wen',
+    password: 'password'
+)
+
+tsla = Stock.create!(
+    company_name: 'Tesla, Inc.',
+    symbol: 'TSLA'
+)
+
+aapl = Stock.create!(
+    company_name: 'Apple, Inc.',
     symbol: 'AAPL'
 )
+
+Transaction.create!(
+    user_id: guest.id,
+    stock_id: tsla.id,
+    shares: 2,
+    cost: 234.54
+)
+
+Transaction.create!(
+    user_id: guest.id,
+    stock_id: aapl.id,
+    shares: 2,
+    cost: 234.54
+)
+
+Transaction.create!(
+    user_id: lisa.id,
+    stock_id: aapl.id,
+    shares: 5,
+    cost: 234.54
+)
+
+

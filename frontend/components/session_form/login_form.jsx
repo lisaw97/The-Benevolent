@@ -9,14 +9,21 @@ class LoginForm extends React.Component {
             password: ''
         };
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleDemo = this.handleDemo.bind(this);
     }
 
     componentDidMount() {
-        // document.getElementsByClassName('demo-button').style.display = 'none';
-        this.props.clearErrors([]);
+        if (this.props.errors.length > 0) {
+            this.props.clearErrors();
+        }
         if (this.props.demoUser) {   
-            this.props.logoutDemoUser( {demoUser: false} );
+            this.props.demoStateOff( {demoUser: false} );
+            this.displayDemoUser('guest', 0);
+        }
+    }
+
+    componentDidUpdate() {
+        if (this.props.demoUser) {
+            this.props.demoStateOff({ demoUser: false });
             this.displayDemoUser('guest', 0);
         }
     }
@@ -31,6 +38,7 @@ class LoginForm extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        debugger
         const user = Object.assign({}, this.state);
         this.props.processForm(user);
     }
@@ -47,11 +55,6 @@ class LoginForm extends React.Component {
                 </ul>
             );
         }
-    }
-
-    handleDemo(e) {
-        e.preventDefault();
-        this.displayDemoUser('guest', 0);
     }
 
     displayDemoUser(username, n) {
@@ -108,7 +111,7 @@ class LoginForm extends React.Component {
                                             </Link>
                         </p>
                         <button className='session-button' type="submit">{formLabel}</button>
-                        <button className='session-demo-button' onClick={this.handleDemo}>Demo</button>
+                        {/* <button className='session-demo-button' onClick={this.displayDemoUser('guest', 0)}>Demo</button> */}
                         {this.renderErrors()}
                     </div>
                 </form>
