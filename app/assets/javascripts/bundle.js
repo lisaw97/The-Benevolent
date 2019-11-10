@@ -86,6 +86,38 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./frontend/actions/news_actions.js":
+/*!******************************************!*\
+  !*** ./frontend/actions/news_actions.js ***!
+  \******************************************/
+/*! exports provided: RECEIVE_NEWS, fetchNews */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_NEWS", function() { return RECEIVE_NEWS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchNews", function() { return fetchNews; });
+/* harmony import */ var _util_stock_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/stock_api_util */ "./frontend/util/stock_api_util.js");
+
+var RECEIVE_NEWS = 'RECEIVE_NEWS';
+
+var receiveNews = function receiveNews(news) {
+  return {
+    type: RECEIVE_NEWS,
+    news: news
+  };
+};
+
+var fetchNews = function fetchNews(symbol, last) {
+  return function (dispatch) {
+    return _util_stock_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchNews"](symbol, last).then(function (news) {
+      return dispatch(receiveNews(news));
+    });
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/actions/session_actions.js":
 /*!*********************************************!*\
   !*** ./frontend/actions/session_actions.js ***!
@@ -197,6 +229,7 @@ var receiveStock = function receiveStock(stock) {
 
 var fetchStocks = function fetchStocks() {
   return function (dispatch) {
+    // debugger
     return _util_stock_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchStocks"]().then(function (stocks) {
       return dispatch(receiveStocks(stocks));
     });
@@ -317,6 +350,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _session_form_login_form_container__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./session_form/login_form_container */ "./frontend/components/session_form/login_form_container.js");
 /* harmony import */ var _session_form_signup_form_container__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./session_form/signup_form_container */ "./frontend/components/session_form/signup_form_container.js");
 /* harmony import */ var _stock_stock_details_container__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./stock/stock_details_container */ "./frontend/components/stock/stock_details_container.js");
+/* harmony import */ var _portfolio_portfolio_container__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./portfolio/portfolio_container */ "./frontend/components/portfolio/portfolio_container.js");
+
 
 
 
@@ -333,6 +368,10 @@ var App = function App() {
     exact: true,
     path: "/",
     component: _splash_splash_container__WEBPACK_IMPORTED_MODULE_4__["default"]
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    exact: true,
+    path: "/portfolio",
+    component: _portfolio_portfolio_container__WEBPACK_IMPORTED_MODULE_8__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     exact: true,
     path: "/stocks",
@@ -514,6 +553,180 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
 /***/ }),
 
+/***/ "./frontend/components/portfolio/portfolio.jsx":
+/*!*****************************************************!*\
+  !*** ./frontend/components/portfolio/portfolio.jsx ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var Portfolio =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Portfolio, _React$Component);
+
+  function Portfolio(props) {
+    _classCallCheck(this, Portfolio);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Portfolio).call(this, props));
+  }
+
+  _createClass(Portfolio, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.fetchStocks(); // let symbols = Object.keys(this.props.stocks);
+      // debugger
+      // for (let i = 0; i < symbols.length; i++) {
+      // debugger
+
+      this.props.fetchNews('aapl', 3); // }
+      // debugger
+    }
+  }, {
+    key: "renderStocks",
+    value: function renderStocks() {
+      var _this = this;
+
+      // debugger
+      var symbols = Object.keys(this.props.stocks);
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "stocks-list"
+      }, symbols.map(function (symbol, i) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          className: "stock",
+          key: "stock-".concat(i)
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, symbol), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, _this.calculateShares(_this.props.stocks[symbol].id), " shares"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, _this.props.stocks[symbol].company_name));
+      }));
+    }
+  }, {
+    key: "calculateShares",
+    value: function calculateShares(stock_id) {
+      var transactions = this.props.transactions;
+      var shares = 0;
+      var trans = Object.values(transactions);
+      trans.forEach(function (transaction) {
+        if (transaction.stock_id === stock_id) {
+          shares = shares + transaction.shares;
+        }
+      });
+      return shares;
+    }
+  }, {
+    key: "renderNews",
+    value: function renderNews() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "general-news-list"
+      }, this.props.news.map(function (article, i) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          className: "news-article",
+          key: "article-".concat(i)
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          href: article.url
+        }, article.headline), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, article.summary)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          src: article.image
+        }));
+      }));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          stocks = _this$props.stocks,
+          news = _this$props.news;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "portfolio-main-div"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "portfolio-info-div"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "portfolio-div"
+      }, "graph"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "news-div"
+      }, "news", this.renderNews())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "stocks-div"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "userStocks-div"
+      }, "Stocks Owned", this.renderStocks()), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "watchlist-div"
+      }, "Watchlist")));
+    }
+  }]);
+
+  return Portfolio;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (Portfolio);
+
+/***/ }),
+
+/***/ "./frontend/components/portfolio/portfolio_container.js":
+/*!**************************************************************!*\
+  !*** ./frontend/components/portfolio/portfolio_container.js ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_stock_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/stock_actions */ "./frontend/actions/stock_actions.js");
+/* harmony import */ var _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/transaction_actions */ "./frontend/actions/transaction_actions.js");
+/* harmony import */ var _actions_news_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/news_actions */ "./frontend/actions/news_actions.js");
+/* harmony import */ var _portfolio__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./portfolio */ "./frontend/components/portfolio/portfolio.jsx");
+
+
+
+
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    stocks: state.entities.stocks,
+    news: state.entities.news,
+    transactions: state.entities.transactions
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    fetchStocks: function fetchStocks() {
+      return dispatch(Object(_actions_stock_actions__WEBPACK_IMPORTED_MODULE_1__["fetchStocks"])());
+    },
+    // fetchStock: symbol => dispatch(fetchStock(symbol)),
+    fetchNews: function fetchNews(symbol, last) {
+      return dispatch(Object(_actions_news_actions__WEBPACK_IMPORTED_MODULE_3__["fetchNews"])(symbol, last));
+    } // fetchTransactions: () => dispatch(fetchTransactions())
+
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_portfolio__WEBPACK_IMPORTED_MODULE_4__["default"]));
+
+/***/ }),
+
 /***/ "./frontend/components/root.jsx":
 /*!**************************************!*\
   !*** ./frontend/components/root.jsx ***!
@@ -634,8 +847,8 @@ function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
-      e.preventDefault();
-      debugger;
+      e.preventDefault(); // debugger
+
       var user = Object.assign({}, this.state);
       this.props.processForm(user);
     }
@@ -772,7 +985,7 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  debugger;
+  // debugger
   return {
     processForm: function processForm(user) {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["login"])(user));
@@ -1174,8 +1387,8 @@ function (_React$Component) {
 
   _createClass(StockDetails, [{
     key: "componentDidMount",
-    value: function componentDidMount() {// this.props.fetchStocks();
-      // this.props.fetchTransactions();
+    value: function componentDidMount() {
+      this.props.fetchStocks(); // this.props.fetchTransactions();
     }
   }, {
     key: "render",
@@ -1215,7 +1428,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   return {
-    stock: state.entities.stocks[ownProps.match.params.symbol]
+    stock: state.entities.stocks[ownProps.match.params.symbol],
+    stocks: state.entities.stocks.stock
   };
 };
 
@@ -1321,6 +1535,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _users_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./users_reducer */ "./frontend/reducers/entities/users_reducer.js");
 /* harmony import */ var _stocks_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./stocks_reducer */ "./frontend/reducers/entities/stocks_reducer.js");
 /* harmony import */ var _transactions_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./transactions_reducer */ "./frontend/reducers/entities/transactions_reducer.js");
+/* harmony import */ var _news_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./news_reducer */ "./frontend/reducers/entities/news_reducer.js");
+
 
 
 
@@ -1328,9 +1544,41 @@ __webpack_require__.r(__webpack_exports__);
 var EntitiesReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   users: _users_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
   stocks: _stocks_reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
-  transactions: _transactions_reducer__WEBPACK_IMPORTED_MODULE_3__["default"]
+  transactions: _transactions_reducer__WEBPACK_IMPORTED_MODULE_3__["default"],
+  news: _news_reducer__WEBPACK_IMPORTED_MODULE_4__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (EntitiesReducer);
+
+/***/ }),
+
+/***/ "./frontend/reducers/entities/news_reducer.js":
+/*!****************************************************!*\
+  !*** ./frontend/reducers/entities/news_reducer.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_news_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/news_actions */ "./frontend/actions/news_actions.js");
+
+
+var NewsReducer = function NewsReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+  var nextState = Object.assign([], state);
+
+  switch (action.type) {
+    case _actions_news_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_NEWS"]:
+      return action.news;
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (NewsReducer);
 
 /***/ }),
 
@@ -1344,9 +1592,7 @@ var EntitiesReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_stock_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/stock_actions */ "./frontend/actions/stock_actions.js");
-/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
-
-
+ // import { RECEIVE_CURRENT_USER } from '../../actions/session_actions';
 
 var StocksReducer = function StocksReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -1355,16 +1601,17 @@ var StocksReducer = function StocksReducer() {
   var nextState = Object.assign({}, state);
 
   switch (action.type) {
-    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_CURRENT_USER"]:
-      return action.currentUser.stock;
-
+    // case RECEIVE_CURRENT_USER:
+    //     return action.currentUser.stock;
     case _actions_stock_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_STOCKS"]:
-      // let nextState = action.stocks.map(stock => {
-      //     let key = Object.keys(stock)[1];
-      //     stock.key;
-      // });
       // debugger
-      return action.stocks.stock;
+      if (action.stocks.hasOwnProperty('stock')) {
+        nextState = action.stocks.stock;
+      } else {
+        nextState = action.stocks;
+      }
+
+      return nextState;
 
     case _actions_stock_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_STOCK"]:
       nextState[action.stock.symbol] = action.stock;
@@ -1390,6 +1637,8 @@ var StocksReducer = function StocksReducer() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/transaction_actions */ "./frontend/actions/transaction_actions.js");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+/* harmony import */ var _actions_stock_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/stock_actions */ "./frontend/actions/stock_actions.js");
+
 
 
 
@@ -1400,8 +1649,16 @@ var TransactionsReducer = function TransactionsReducer() {
   var nextState = Object.assign({}, state);
 
   switch (action.type) {
-    case _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_CURRENT_USER"]:
-      return action.currentUser.transaction;
+    // case RECEIVE_CURRENT_USER:
+    //     return action.currentUser.transaction;
+    case _actions_stock_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_STOCKS"]:
+      if (action.stocks.hasOwnProperty('transaction')) {
+        nextState = action.stocks.transaction;
+      } else {
+        nextState = action.stocks;
+      }
+
+      return nextState;
 
     case _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIEVE_TRANSACTION"]:
       nextState[action.transaction.id] = action.transaction;
@@ -1439,8 +1696,9 @@ var UsersReducer = function UsersReducer() {
 
   switch (action.type) {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
-      // nextState[action.currentUser.id] = action.currentUser;
-      return action.currentUser.user;
+      nextState[action.currentUser.id] = action.currentUser;
+      return nextState;
+    // return Object.assign({}, state, {[action.currentUser.user.id]: action.currentUser.user});
 
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["LOGOUT_CURRENT_USER"]:
       return _nullUser;
@@ -1564,6 +1822,7 @@ var SessionReducer = function SessionReducer() {
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_CURRENT_USER"]:
       nextState.id = action.currentUser.id;
       return nextState;
+    // return { id: action.currentUser.user.id };
 
     case _actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["LOGOUT_CURRENT_USER"]:
       return _nullUser;
@@ -1727,7 +1986,7 @@ var Auth = function Auth(_ref) {
     exact: exact,
     render: function render(props) {
       return loggedIn ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Redirect"], {
-        to: "/stocks"
+        to: "/portfolio"
       }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Component, props);
     }
   });
@@ -1786,13 +2045,14 @@ var logout = function logout() {
 /*!*****************************************!*\
   !*** ./frontend/util/stock_api_util.js ***!
   \*****************************************/
-/*! exports provided: fetchStocks, fetchStock */
+/*! exports provided: fetchStocks, fetchStock, fetchNews */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchStocks", function() { return fetchStocks; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchStock", function() { return fetchStock; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchNews", function() { return fetchNews; });
 var fetchStocks = function fetchStocks() {
   return $.ajax({
     url: '/api/stocks',
@@ -1802,6 +2062,12 @@ var fetchStocks = function fetchStocks() {
 var fetchStock = function fetchStock(symbol) {
   return $.ajax({
     url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/company/?token=pk_d9fc28e6b9594efa97b112ac9c920c87"),
+    method: 'GET'
+  });
+};
+var fetchNews = function fetchNews(symbol, last) {
+  return $.ajax({
+    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/news/last/").concat(last, "/?token=pk_d9fc28e6b9594efa97b112ac9c920c87"),
     method: 'GET'
   });
 };

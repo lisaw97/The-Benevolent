@@ -13,11 +13,12 @@ const receiveStock = stock => ({
     stock
 });
 
-export const fetchStocks = () => dispatch => (
-    StockApiUtil.fetchStocks().then(
+export const fetchStocks = () => dispatch => {
+    // debugger
+    return StockApiUtil.fetchStocks().then(
         stocks => dispatch(receiveStocks(stocks))
     )
-);
+};
 
 export const fetchStock = symbol => dispatch => (
     StockApiUtil.fetchStock(symbol).then(

@@ -1,9 +1,20 @@
 html {
     --font-family: 'Dosis';
     --rh-green: #20CE99;
-    
+    height: 100%;
+    margin: 0;
 }
 
 main {
     font-family: var(--font-family);
+    height: 100%;
+}
+
+body, .main-div {
+    height: 100%;
+}
+
+header {
+    width: 100%;
+    height: 10%;
 }

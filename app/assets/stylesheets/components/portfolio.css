@@ -1,0 +1,84 @@
+.portfolio-main-div {
+    background-color: lightblue;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.portfolio-info-div {
+    background-color: thistle;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    width: 70%;
+    margin: 1%;
+}
+
+.stocks-div {
+    background-color: thistle;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30%;
+    margin: 1%;
+}
+
+.portfolio-div {
+    background-color: yellow;
+    height: 30%;
+    margin: 5%;
+}
+
+.news-div {
+    background-color: yellow;
+    height: 30%;
+    margin: 5%;
+}
+
+.general-news-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.news-article {
+    margin: 2%;
+    background-color: wheat;
+    display: flex;
+    justify-content: space-between;
+}
+
+.news-article div {
+    width: 50%;
+}
+
+.news-article a {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.news-article img {
+    width: 40%;
+    height: 100%;
+    border: 2px solid black;
+
+}
+
+.new-article p {
+    font-size: 5px;
+}
+
+.userStocks-div {
+    background-color: yellow;
+    height: 30%;
+    margin: 5%;
+}
+
+.watchlist-div {
+    background-color: yellow;
+    height: 30%;
+    margin: 5%;
+}
+
+
+

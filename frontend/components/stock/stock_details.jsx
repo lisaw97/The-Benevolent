@@ -8,7 +8,7 @@ class StockDetails extends React.Component {
     }
 
     componentDidMount() {
-        // this.props.fetchStocks();
+        this.props.fetchStocks();
         // this.props.fetchTransactions();
     }
 

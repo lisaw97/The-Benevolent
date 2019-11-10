@@ -57,4 +57,11 @@ Transaction.create!(
     cost: 234.54
 )
 
+Transaction.create!(
+    user_id: lisa.id,
+    stock_id: aapl.id,
+    shares: 3,
+    cost: 234.54
+)
+
 

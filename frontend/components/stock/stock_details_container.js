@@ -6,7 +6,8 @@ import { fetchTransactions } from '../../actions/transaction_actions';
 import StockDetails from './stock_details';
 
 const mapStateToProps = (state, ownProps) => ({
-    stock: state.entities.stocks[ownProps.match.params.symbol]
+    stock: state.entities.stocks[ownProps.match.params.symbol],
+    stocks: state.entities.stocks.stock
 });
 
 const mapDispatchToProps = dispatch => ({
