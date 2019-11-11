@@ -118,6 +118,38 @@ var fetchNews = function fetchNews(symbol, last) {
 
 /***/ }),
 
+/***/ "./frontend/actions/price_actions.js":
+/*!*******************************************!*\
+  !*** ./frontend/actions/price_actions.js ***!
+  \*******************************************/
+/*! exports provided: RECEIVE_PRICES, fetchPrices */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_PRICES", function() { return RECEIVE_PRICES; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchPrices", function() { return fetchPrices; });
+/* harmony import */ var _util_stock_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/stock_api_util */ "./frontend/util/stock_api_util.js");
+
+var RECEIVE_PRICES = 'RECEIVE_PRICES';
+
+var receivePrices = function receivePrices(prices) {
+  return {
+    type: RECEIVE_PRICES,
+    prices: prices
+  };
+};
+
+var fetchPrices = function fetchPrices(symbol) {
+  return function (dispatch) {
+    return _util_stock_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchPrices"](symbol).then(function (prices) {
+      return dispatch(receivePrices(prices));
+    });
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/actions/session_actions.js":
 /*!*********************************************!*\
   !*** ./frontend/actions/session_actions.js ***!
@@ -1568,6 +1600,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _stocks_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./stocks_reducer */ "./frontend/reducers/entities/stocks_reducer.js");
 /* harmony import */ var _transactions_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./transactions_reducer */ "./frontend/reducers/entities/transactions_reducer.js");
 /* harmony import */ var _news_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./news_reducer */ "./frontend/reducers/entities/news_reducer.js");
+/* harmony import */ var _prices_reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./prices_reducer */ "./frontend/reducers/entities/prices_reducer.js");
+
 
 
 
@@ -1577,7 +1611,8 @@ var EntitiesReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers
   users: _users_reducer__WEBPACK_IMPORTED_MODULE_1__["default"],
   stocks: _stocks_reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
   transactions: _transactions_reducer__WEBPACK_IMPORTED_MODULE_3__["default"],
-  news: _news_reducer__WEBPACK_IMPORTED_MODULE_4__["default"]
+  news: _news_reducer__WEBPACK_IMPORTED_MODULE_4__["default"],
+  prices: _prices_reducer__WEBPACK_IMPORTED_MODULE_5__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (EntitiesReducer);
 
@@ -1611,6 +1646,37 @@ var NewsReducer = function NewsReducer() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (NewsReducer);
+
+/***/ }),
+
+/***/ "./frontend/reducers/entities/prices_reducer.js":
+/*!******************************************************!*\
+  !*** ./frontend/reducers/entities/prices_reducer.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_price_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/price_actions */ "./frontend/actions/price_actions.js");
+
+
+var PricesReducer = function PricesReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+  var nextState = Object.assign({}, state);
+
+  switch (action.type) {
+    case _actions_price_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_PRICES"]:
+      return action.prices;
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (PricesReducer);
 
 /***/ }),
 
@@ -1921,7 +1987,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_root__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/root */ "./frontend/components/root.jsx");
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./actions/session_actions */ "./frontend/actions/session_actions.js");
 /* harmony import */ var _actions_stock_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./actions/stock_actions */ "./frontend/actions/stock_actions.js");
+/* harmony import */ var _actions_price_actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./actions/price_actions */ "./frontend/actions/price_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -1955,6 +2023,7 @@ document.addEventListener("DOMContentLoaded", function () {
   window.dispatch = store.dispatch;
   window.fetchStock = _actions_stock_actions__WEBPACK_IMPORTED_MODULE_5__["fetchStock"];
   window.fetchStocks = _actions_stock_actions__WEBPACK_IMPORTED_MODULE_5__["fetchStocks"];
+  window.fetchPrices = _actions_price_actions__WEBPACK_IMPORTED_MODULE_6__["fetchPrices"];
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_3__["default"], {
     store: store
   }), root);

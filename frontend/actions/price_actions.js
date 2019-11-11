@@ -4,7 +4,7 @@ export const RECEIVE_PRICES = 'RECEIVE_PRICES';
 
 const receivePrices = prices => ({
     type: RECEIVE_PRICES,
-    graph
+    prices
 });
 
 export const fetchPrices = symbol => dispatch => (

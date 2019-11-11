@@ -5,6 +5,7 @@ import Root from './components/root';
 
 import { signup, login, logout } from './actions/session_actions';
 import { fetchStock, fetchStocks } from './actions/stock_actions';
+import { fetchPrices } from './actions/price_actions';
 
 document.addEventListener("DOMContentLoaded", () => {
     const root = document.getElementById('root');
@@ -29,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.dispatch = store.dispatch;
     window.fetchStock = fetchStock;
     window.fetchStocks = fetchStocks;
-
+    window.fetchPrices = fetchPrices;
+    
     ReactDOM.render(<Root store={store} />, root);
 });
