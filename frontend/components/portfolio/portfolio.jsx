@@ -27,9 +27,14 @@ class Portfolio extends React.Component {
                 {symbols.map((symbol, i) => {
                     return (
                         <li className='stock' key={`stock-${i}`}>
-                            <div>{symbol}</div>
-                            <div>{this.calculateShares(this.props.stocks[symbol].id)} shares</div>
-                            <div>{this.props.stocks[symbol].company_name}</div>
+                            <div className='stock-left'>
+                                <div className='symbol'>{symbol}</div>
+                                <div className='shares'>{this.calculateShares(this.props.stocks[symbol].id)} shares</div>
+                            </div>
+                            {/* <div className='stock-right'> */}
+                                <div className='small-graph'>graph</div>
+                                <div className='price'>price</div>
+                            {/* </div> */}
                         </li>
                     )
                 })}
@@ -72,19 +77,25 @@ class Portfolio extends React.Component {
         return (
             <div className='portfolio-main-div'>
                 <div className='portfolio-info-div'>
-                    <div className='portfolio-div'>graph</div>
+                    <div className='portfolio-div'>
+                        <h2>Balance</h2>
+                        <div>[Insert Graph Here]</div>
+                    </div>
                     <div className='news-div'>
-                        news
+                        <h2>Recent News</h2>
+                        <hr/>
                         {this.renderNews()}
                     </div>
                 </div>
                 <div className='stocks-div'>
                     <div className='userStocks-div'>
-                        Stocks Owned
+                        <h2>Stocks Owned</h2>
+                        <hr/>
                         {this.renderStocks()}
                     </div>
                     <div className='watchlist-div'>
-                        Watchlist
+                        <h2>Watchlist</h2>
+                        <hr/>
                     </div>
                 </div>
             </div>

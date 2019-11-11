@@ -619,7 +619,17 @@ function (_React$Component) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
           className: "stock",
           key: "stock-".concat(i)
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, symbol), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, _this.calculateShares(_this.props.stocks[symbol].id), " shares"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, _this.props.stocks[symbol].company_name));
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "stock-left"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "symbol"
+        }, symbol), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "shares"
+        }, _this.calculateShares(_this.props.stocks[symbol].id), " shares")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "small-graph"
+        }, "graph"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "price"
+        }, "price"));
       }));
     }
   }, {
@@ -663,15 +673,15 @@ function (_React$Component) {
         className: "portfolio-info-div"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "portfolio-div"
-      }, "graph"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Balance"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "[Insert Graph Here]")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "news-div"
-      }, "news", this.renderNews())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Recent News"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), this.renderNews())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "stocks-div"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "userStocks-div"
-      }, "Stocks Owned", this.renderStocks()), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Stocks Owned"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), this.renderStocks()), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "watchlist-div"
-      }, "Watchlist")));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Watchlist"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null))));
     }
   }]);
 

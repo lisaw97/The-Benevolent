@@ -6,35 +6,95 @@
     justify-content: space-between;
 }
 
+.portfolio-main-div h2 {
+    margin: 1%;
+    font-weight: bold;
+    font-size: 25px;
+    /* text-decoration: underline; */
+}
+
 .portfolio-info-div {
     background-color: thistle;
     display: flex;
     flex-direction: column;
     /* justify-content: space-between; */
-    width: 70%;
+    width: 75%;
     margin: 1%;
 }
 
 .stocks-div {
-    background-color: thistle;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 30%;
+    width: 20%;
+    height: 80%;
     margin: 1%;
+    position: fixed;
+    top: 40;
+    right: 0;
+    padding: 5px 5px 10px 5px;
+    border: 1px solid #BFBFBF;
+    background-color: white;
+    box-shadow: 10px 10px 5px #aaaaaa;
+}
+
+.stocks-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.stock {
+    margin: 3%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.stock div {
+    background-color: white;
+    margin: 2%;
+    /* height: 100%; */
+}
+
+.stock-left {
+    width: 20%;
+}
+
+.symbol {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.shares {
+    font-size: 12px;
+    color: grey;
+}
+
+.small-graph {
+    width: 50%;
+}
+
+.price {
+    width: 20%;
 }
 
 .portfolio-div {
     background-color: yellow;
     height: 30%;
-    margin: 5%;
+    margin: 1%;
 }
 
 .news-div {
     background-color: yellow;
-    height: 30%;
-    margin: 5%;
+    height: 50%;
+    margin: 1%;
 }
+
+/* .news-div h2 {
+    font-weight: bold;
+    font-size: 30px;
+    margin: 8px;
+} */
 
 .general-news-list {
     display: flex;
@@ -42,7 +102,7 @@
 }
 
 .news-article {
-    margin: 2%;
+    margin: 1%;
     background-color: wheat;
     display: flex;
     justify-content: space-between;
@@ -69,15 +129,15 @@
 }
 
 .userStocks-div {
-    background-color: yellow;
-    height: 30%;
-    margin: 5%;
+    /* background-color: yellow; */
+    height: 50%;
+    margin: 1%;
 }
 
 .watchlist-div {
     background-color: yellow;
-    height: 30%;
-    margin: 5%;
+    height: 50%;
+    margin: 1%;
 }
 
 
