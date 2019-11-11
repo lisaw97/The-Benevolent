@@ -12,16 +12,9 @@ export const fetchStock = symbol => (
     })
 );
 
-export const fetchNews = (symbol, last) => (
+export const fetchIntradayPrices = symbol => (
     $.ajax({
-        url: `https://cloud.iexapis.com/stable/stock/${symbol}/news/last/${last}/?token=pk_d9fc28e6b9594efa97b112ac9c920c87`,
-        method: 'GET'
-    })
-);
-
-export const fetchPrices = symbol => (
-    $.ajax({
-        url: `https://cloud.iexapis.com/stable/stock/${symbol}/chart/dynamic/?token=pk_d9fc28e6b9594efa97b112ac9c920c87`,
+        url: `https://cloud.iexapis.com/stable/stock/${symbol}/intraday-prices/?chartInterval=5&token=pk_d9fc28e6b9594efa97b112ac9c920c87`,
         method: 'GET'
     })
 )

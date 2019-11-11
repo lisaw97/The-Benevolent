@@ -8,7 +8,8 @@ class Portfolio extends React.Component {
 
     componentDidMount() {     
         this.props.fetchStocks();
-        this.props.fetchNews('aapl', 3);
+        // this.props.fetchStockNews('aapl', 3);
+        this.props.fetchGeneralNews();
     }
     
     renderStocks() {
@@ -51,21 +52,27 @@ class Portfolio extends React.Component {
     }
 
     renderNews() {
-        return (
+        // debugger
+        if (!this.props.news) {
+            return null;
+        } else {
+            return (
             <ul className='general-news-list'>
                 {this.props.news.map((article, i) => {
                     return (
                         <li className='news-article' key={`article-${i}`}>
                             <div>
-                                <a href={article.url}>{article.headline}</a>
-                                <p>{article.summary}</p>
+                                <a href={article.url}>{article.title}</a>
+                                <p>{article.description}</p>
                             </div>
-                            <img src={article.image}/>
+                            <img src={article.urlToImage}/>
                         </li>
                     )
                 })}
             </ul>
         );
+        }
+        
     }
 
     render() {

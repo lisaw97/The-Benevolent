@@ -1,4 +1,5 @@
 import React from 'react';
+import Graph from '../graph/graph';
 
 class StockDetails extends React.Component {
     constructor(props) {
@@ -6,8 +7,9 @@ class StockDetails extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetchStock(this.props.stock.symbol);
-        this.props.fetchNews(this.props.stock.symbol, 3);
+        this.props.fetchStock(this.props.match.params.symbol);
+        this.props.fetchStockNews(this.props.match.params.symbol, 3);
+        this.props.fetchIntradayPrices(this.props.match.params.symbol);
     }
 
     renderNews() {
@@ -30,13 +32,18 @@ class StockDetails extends React.Component {
 
     render() {
         // debugger
+
         const { stock } = this.props;
-        return (
+
+        if (!stock) {
+            return null;
+        } else {
+            return (
             <div className='stock-details-div'>
                 <div className='stock-details-left'>
                     <div className='stock-graph'>
                         <h2>{stock.companyName}</h2>
-                        <div>[Insert Graph Here]</div>
+                        <Graph data={this.props.prices}/>
                     </div>
                     <div className='stock-about'>
                         <h2>About</h2>
@@ -59,7 +66,9 @@ class StockDetails extends React.Component {
                     <hr/>
                 </div>
             </div>
-        )
+            )
+        }
+        
     }
 }
 
