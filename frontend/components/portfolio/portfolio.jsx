@@ -1,46 +1,42 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class Portfolio extends React.Component {
     constructor(props) {
         super(props);
     }
 
-    componentDidMount() {
-        
+    componentDidMount() {     
         this.props.fetchStocks();
-        // let symbols = Object.keys(this.props.stocks);
-        // debugger
-        // for (let i = 0; i < symbols.length; i++) {
-            // debugger
-            this.props.fetchNews('aapl', 3);
-            
-        // }
-        // debugger
+        this.props.fetchNews('aapl', 3);
     }
     
     renderStocks() {
-        // debugger
         let symbols = Object.keys(this.props.stocks);
         
         return (
             <ul className='stocks-list'>
                 {symbols.map((symbol, i) => {
                     return (
-                        <li className='stock' key={`stock-${i}`}>
+                        <li key={`stock-${i}`}>
+                            <Link className='stock' to={`/stocks/${symbol}`}>
                             <div className='stock-left'>
                                 <div className='symbol'>{symbol}</div>
                                 <div className='shares'>{this.calculateShares(this.props.stocks[symbol].id)} shares</div>
                             </div>
-                            {/* <div className='stock-right'> */}
-                                <div className='small-graph'>graph</div>
-                                <div className='price'>price</div>
-                            {/* </div> */}
+                            <div className='small-graph'>graph</div>
+                            <div className='price'>price</div>
+                            </Link>
                         </li>
                     )
                 })}
             </ul>
         );
     }
+
+    // handleClick(symbol) {
+    //     window.location.hash = `/stocks/${symbol}`
+    // }
 
     calculateShares(stock_id) {
         const { transactions } = this.props;

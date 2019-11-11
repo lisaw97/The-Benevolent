@@ -19,3 +19,9 @@ export const fetchNews = (symbol, last) => (
     })
 );
 
+export const fetchPrices = symbol => (
+    $.ajax({
+        url: `https://cloud.iexapis.com/stable/stock/${symbol}/chart/dynamic/?token=pk_d9fc28e6b9594efa97b112ac9c920c87`,
+        method: 'GET'
+    })
+)

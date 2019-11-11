@@ -374,7 +374,7 @@ var App = function App() {
     component: _portfolio_portfolio_container__WEBPACK_IMPORTED_MODULE_8__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     exact: true,
-    path: "/stocks",
+    path: "/stocks/:symbol",
     component: _stock_stock_details_container__WEBPACK_IMPORTED_MODULE_7__["default"]
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_util_route_util__WEBPACK_IMPORTED_MODULE_2__["AuthRoute"], {
     path: "/login",
@@ -467,7 +467,7 @@ function (_React$Component) {
           className: "greeting-div"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
           className: "rh-logo",
-          to: "/"
+          to: "/portfolio"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_svg_svg_icons__WEBPACK_IMPORTED_MODULE_2__["default"], {
           name: "icon",
           width: 35,
@@ -564,6 +564,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -584,6 +585,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var Portfolio =
 /*#__PURE__*/
 function (_React$Component) {
@@ -598,27 +600,23 @@ function (_React$Component) {
   _createClass(Portfolio, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchStocks(); // let symbols = Object.keys(this.props.stocks);
-      // debugger
-      // for (let i = 0; i < symbols.length; i++) {
-      // debugger
-
-      this.props.fetchNews('aapl', 3); // }
-      // debugger
+      this.props.fetchStocks();
+      this.props.fetchNews('aapl', 3);
     }
   }, {
     key: "renderStocks",
     value: function renderStocks() {
       var _this = this;
 
-      // debugger
       var symbols = Object.keys(this.props.stocks);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "stocks-list"
       }, symbols.map(function (symbol, i) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          className: "stock",
           key: "stock-".concat(i)
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+          className: "stock",
+          to: "/stocks/".concat(symbol)
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "stock-left"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -629,9 +627,12 @@ function (_React$Component) {
           className: "small-graph"
         }, "graph"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "price"
-        }, "price"));
+        }, "price")));
       }));
-    }
+    } // handleClick(symbol) {
+    //     window.location.hash = `/stocks/${symbol}`
+    // }
+
   }, {
     key: "calculateShares",
     value: function calculateShares(stock_id) {
@@ -1385,28 +1386,53 @@ function (_React$Component) {
   _inherits(StockDetails, _React$Component);
 
   function StockDetails(props) {
-    var _this;
-
     _classCallCheck(this, StockDetails);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(StockDetails).call(this, props)); // this.state = this.props.stock;
-
-    var symbol = _this.props.match.params.ticker;
-    return _this;
+    return _possibleConstructorReturn(this, _getPrototypeOf(StockDetails).call(this, props));
   }
 
   _createClass(StockDetails, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchStocks(); // this.props.fetchTransactions();
+      this.props.fetchStock(this.props.stock.symbol);
+      this.props.fetchNews(this.props.stock.symbol, 3);
+    }
+  }, {
+    key: "renderNews",
+    value: function renderNews() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "company-news-list"
+      }, this.props.news.map(function (article, i) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          className: "company-news-article",
+          key: "article-".concat(i)
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          href: article.url
+        }, article.headline), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, article.summary)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          src: article.image
+        }));
+      }));
     }
   }, {
     key: "render",
     value: function render() {
+      // debugger
       var stock = this.props.stock;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "stock-details-div"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Stock Details Page"));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "stock-details-left"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "stock-graph"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, stock.companyName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "[Insert Graph Here]")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "stock-about"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "About"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, stock.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "company-info"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "CEO ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, stock.CEO)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Employees ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, stock.employees)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Headquarters ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, stock.city, ", ", stock.state)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "recent-news"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Recent News"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), this.renderNews())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "stock-orders"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Buy/Sell"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)));
     }
   }]);
 
@@ -1427,10 +1453,9 @@ function (_React$Component) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _actions_stock_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/stock_actions */ "./frontend/actions/stock_actions.js");
-/* harmony import */ var _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/transaction_actions */ "./frontend/actions/transaction_actions.js");
+/* harmony import */ var _actions_news_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/news_actions */ "./frontend/actions/news_actions.js");
+/* harmony import */ var _actions_stock_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/stock_actions */ "./frontend/actions/stock_actions.js");
 /* harmony import */ var _stock_details__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./stock_details */ "./frontend/components/stock/stock_details.jsx");
-
 
 
 
@@ -1439,20 +1464,17 @@ __webpack_require__.r(__webpack_exports__);
 var mapStateToProps = function mapStateToProps(state, ownProps) {
   return {
     stock: state.entities.stocks[ownProps.match.params.symbol],
-    stocks: state.entities.stocks.stock
+    news: state.entities.news
   };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     fetchStock: function fetchStock(symbol) {
-      return dispatch(Object(_actions_stock_actions__WEBPACK_IMPORTED_MODULE_1__["fetchStock"])(symbol));
+      return dispatch(Object(_actions_stock_actions__WEBPACK_IMPORTED_MODULE_2__["fetchStock"])(symbol));
     },
-    fetchStocks: function fetchStocks() {
-      return dispatch(Object(_actions_stock_actions__WEBPACK_IMPORTED_MODULE_1__["fetchStocks"])());
-    },
-    fetchTransactions: function fetchTransactions() {
-      return dispatch(Object(_actions_transaction_actions__WEBPACK_IMPORTED_MODULE_2__["fetchTransactions"])());
+    fetchNews: function fetchNews(symbol, last) {
+      return dispatch(Object(_actions_news_actions__WEBPACK_IMPORTED_MODULE_1__["fetchNews"])(symbol, last));
     }
   };
 };
@@ -2055,7 +2077,7 @@ var logout = function logout() {
 /*!*****************************************!*\
   !*** ./frontend/util/stock_api_util.js ***!
   \*****************************************/
-/*! exports provided: fetchStocks, fetchStock, fetchNews */
+/*! exports provided: fetchStocks, fetchStock, fetchNews, fetchPrices */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2063,6 +2085,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchStocks", function() { return fetchStocks; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchStock", function() { return fetchStock; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchNews", function() { return fetchNews; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchPrices", function() { return fetchPrices; });
 var fetchStocks = function fetchStocks() {
   return $.ajax({
     url: '/api/stocks',
@@ -2078,6 +2101,12 @@ var fetchStock = function fetchStock(symbol) {
 var fetchNews = function fetchNews(symbol, last) {
   return $.ajax({
     url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/news/last/").concat(last, "/?token=pk_d9fc28e6b9594efa97b112ac9c920c87"),
+    method: 'GET'
+  });
+};
+var fetchPrices = function fetchPrices(symbol) {
+  return $.ajax({
+    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/chart/dynamic/?token=pk_d9fc28e6b9594efa97b112ac9c920c87"),
     method: 'GET'
   });
 };

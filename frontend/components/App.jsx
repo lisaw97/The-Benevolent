@@ -16,7 +16,7 @@ const App = () => (
         </header>
         <Route exact path='/' component={SplashContainer} />
         <Route exact path='/portfolio' component={PortfolioContainer} />
-        <Route exact path='/stocks' component={StockDetailsContainer} />
+        <Route exact path='/stocks/:symbol' component={StockDetailsContainer} />
         <AuthRoute path='/login' component={LoginFormContainer} />
         <AuthRoute path='/signup' component={SignupFormContainer} />
     </div>

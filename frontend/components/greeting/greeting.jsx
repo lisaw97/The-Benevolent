@@ -27,7 +27,7 @@ class Greeting extends React.Component {
         if (currentUser) {
             return (
                 <form className='greeting-div'>
-                    <Link className='rh-logo' to='/'><SVGIcon name='icon' width={35} height={30} />Welcome, {currentUser.username}</Link>
+                    <Link className='rh-logo' to='/portfolio'><SVGIcon name='icon' width={35} height={30} />Welcome, {currentUser.username}</Link>
                     <div onClick={this.handleSubmit}><Link className='logout-button' to='/'>Log Out</Link></div>
                     {/* <button className='logout-button' onClick={this.handleSubmit}>Log Out</button> */}
                 </form>
