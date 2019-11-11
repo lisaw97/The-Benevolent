@@ -9,6 +9,7 @@
 User.delete_all
 Stock.delete_all
 Transaction.delete_all
+WatchlistItem.delete_all
 
 guest = User.create!(
     username: 'guest',
@@ -34,6 +35,11 @@ tsla = Stock.create!(
 aapl = Stock.create!(
     company_name: 'Apple, Inc.',
     symbol: 'AAPL'
+)
+
+msft = Stock.create!(
+    company_name: 'Microsoft Corp.',
+    symbol: 'MSFT'
 )
 
 Transaction.create!(
@@ -62,6 +68,21 @@ Transaction.create!(
     stock_id: aapl.id,
     shares: 3,
     cost: 234.54
+)
+
+WatchlistItem.create!(
+    user_id: guest.id,
+    stock_id: msft.id,
+)
+
+WatchlistItem.create!(
+    user_id: lisa.id,
+    stock_id: tsla.id,
+)
+
+WatchlistItem.create!(
+    user_id: lisa.id,
+    stock_id: msft.id,
 )
 
 
