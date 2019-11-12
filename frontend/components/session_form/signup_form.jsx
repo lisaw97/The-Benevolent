@@ -102,8 +102,8 @@ class SignupForm extends React.Component {
                                                 {navLinkLabel} to complete your application
                                             </Link>
                         </p>
-                        {this.renderErrors()}
                     </div>
+                    {this.renderErrors()}
                 </form>
             </div>
         )

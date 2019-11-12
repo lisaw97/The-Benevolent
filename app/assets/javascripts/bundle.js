@@ -151,19 +151,20 @@ __webpack_require__.r(__webpack_exports__);
 
 var RECEIVE_INTRADAY_PRICES = 'RECEIVE_INTRADAY_PRICES';
 
-var receiveIntradayPrices = function receiveIntradayPrices(prices) {
+var receiveIntradayPrices = function receiveIntradayPrices(symbol, prices) {
   // debugger
   return {
     type: RECEIVE_INTRADAY_PRICES,
+    symbol: symbol,
     prices: prices
   };
 };
 
 var fetchIntradayPrices = function fetchIntradayPrices(symbol) {
   return function (dispatch) {
-    debugger;
+    // debugger
     return _util_stock_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchIntradayPrices"](symbol).then(function (prices) {
-      return dispatch(receiveIntradayPrices(prices));
+      return dispatch(receiveIntradayPrices(symbol, prices));
     });
   };
 };
@@ -435,8 +436,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var Graph = function Graph(_ref) {
   var data = _ref.data,
-      name = _ref.name,
-      fetchIntradayPrices = _ref.fetchIntradayPrices;
+      name = _ref.name;
+  // debugger
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: name
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["ResponsiveContainer"], {
@@ -470,12 +471,44 @@ var Graph = function Graph(_ref) {
     dot: false,
     stroke: "#82ca9d",
     dataKey: "close"
-  }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-    className: "time-list"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1D"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1W"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "3M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1Y"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "5Y")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null));
+  }))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Graph);
+
+/***/ }),
+
+/***/ "./frontend/components/graph/graph_container.js":
+/*!******************************************************!*\
+  !*** ./frontend/components/graph/graph_container.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _graph__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./graph */ "./frontend/components/graph/graph.jsx");
+/* harmony import */ var _actions_price_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/price_actions */ "./frontend/actions/price_actions.js");
+
+
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    prices: state.entities.prices
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    fetchIntradayPrices: function fetchIntradayPrices(symbol) {
+      return dispatch(Object(_actions_price_actions__WEBPACK_IMPORTED_MODULE_2__["fetchIntradayPrices"])(symbol));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_graph__WEBPACK_IMPORTED_MODULE_1__["default"]));
 
 /***/ }),
 
@@ -655,7 +688,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _graph_graph__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../graph/graph */ "./frontend/components/graph/graph.jsx");
+/* harmony import */ var _graph_graph_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../graph/graph_container */ "./frontend/components/graph/graph_container.js");
+/* harmony import */ var _stock_stock_item_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../stock/stock_item_container */ "./frontend/components/stock/stock_item_container.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -673,6 +707,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -703,35 +738,31 @@ function (_React$Component) {
       var symbols = Object.values(this.props.transactions);
       symbols = symbols.map(function (item) {
         return item.symbol;
-      }); // debugger
-      // if (symbols.length === 0) {
-      //     return null;
-      // } else { 
+      });
+      return symbols.map(function (symbol, i) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stock_stock_item_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          key: i,
+          symbol: symbol,
+          shares: _this.calculateShares(symbol)
+        });
+      });
+    }
+  }, {
+    key: "renderWatchlist",
+    value: function renderWatchlist() {
+      var _this2 = this;
 
-      var prices = this.props.fetchIntradayPrices('TSLA');
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "stocks-list"
-      }, symbols.map(function (symbol, i) {
-        var data = _this.props.fetchIntradayPrices(symbol);
-
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          key: "stock-".concat(i)
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-          className: "stock",
-          to: "/stocks/".concat(symbol)
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "stock-left"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "symbol"
-        }, symbol), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "shares"
-        }, _this.calculateShares(symbol), " shares")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_graph_graph__WEBPACK_IMPORTED_MODULE_2__["default"], {
-          data: data,
-          name: "small-graph"
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "price"
-        }, "price")));
-      })); // }
+      var symbols = Object.values(this.props.watchlist);
+      symbols = symbols.map(function (item) {
+        return item.symbol;
+      });
+      return symbols.map(function (symbol, i) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stock_stock_item_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          key: i,
+          symbol: symbol,
+          shares: _this2.calculateShares(symbol)
+        });
+      });
     }
   }, {
     key: "calculateShares",
@@ -745,33 +776,6 @@ function (_React$Component) {
         }
       });
       return shares;
-    }
-  }, {
-    key: "renderWatchlist",
-    value: function renderWatchlist() {
-      var symbols = Object.values(this.props.watchlist);
-      symbols = symbols.map(function (item) {
-        return item.symbol;
-      }); // debugger
-
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-        className: "stocks-list"
-      }, symbols.map(function (symbol, i) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          key: "stock-".concat(i)
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-          className: "stock",
-          to: "/stocks/".concat(symbol)
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "stock-left"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "symbol"
-        }, symbol)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "small-graph"
-        }, "graph"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "price"
-        }, "price")));
-      }));
     }
   }, {
     key: "renderNews",
@@ -796,9 +800,6 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          stocks = _this$props.stocks,
-          news = _this$props.news;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "portfolio-main-div"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1297,7 +1298,7 @@ function (_React$Component) {
       }, "Already started? ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         className: "session-nav-link",
         to: "/".concat(navLink)
-      }, navLinkLabel, " to complete your application")), this.renderErrors())));
+      }, navLinkLabel, " to complete your application"))), this.renderErrors()));
     }
   }]);
 
@@ -1564,7 +1565,9 @@ function (_React$Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, stock.companyName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_graph_graph__WEBPACK_IMPORTED_MODULE_1__["default"], {
           data: this.props.prices,
           name: "intraday-stock-graph"
-        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+          className: "time-list"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1D"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1W"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "3M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1Y"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "5Y")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "stock-about"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "About"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, stock.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "company-info"
@@ -1627,6 +1630,129 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_stock_details__WEBPACK_IMPORTED_MODULE_4__["default"]));
+
+/***/ }),
+
+/***/ "./frontend/components/stock/stock_item.jsx":
+/*!**************************************************!*\
+  !*** ./frontend/components/stock/stock_item.jsx ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _graph_graph_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../graph/graph_container */ "./frontend/components/graph/graph_container.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var StockItem =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(StockItem, _React$Component);
+
+  function StockItem(props) {
+    _classCallCheck(this, StockItem);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(StockItem).call(this, props));
+  }
+
+  _createClass(StockItem, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      // debugger
+      this.props.fetchIntradayPrices(this.props.symbol);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          symbol = _this$props.symbol,
+          prices = _this$props.prices,
+          key = _this$props.key,
+          shares = _this$props.shares; // debugger
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        key: key
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+        className: "stock",
+        to: "/stocks/".concat(symbol)
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "stock-left"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "symbol"
+      }, symbol), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "shares"
+      }, shares, " shares")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_graph_graph_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        data: prices,
+        name: "small-graph"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "price"
+      }, "price")));
+    }
+  }]);
+
+  return StockItem;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (StockItem);
+
+/***/ }),
+
+/***/ "./frontend/components/stock/stock_item_container.js":
+/*!***********************************************************!*\
+  !*** ./frontend/components/stock/stock_item_container.js ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_price_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/price_actions */ "./frontend/actions/price_actions.js");
+/* harmony import */ var _stock_item__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./stock_item */ "./frontend/components/stock/stock_item.jsx");
+
+
+
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+  return {
+    // prices: state.entities.prices
+    prices: state.entities.stocks[ownProps.symbol].prices
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    fetchIntradayPrices: function fetchIntradayPrices(symbol) {
+      return dispatch(Object(_actions_price_actions__WEBPACK_IMPORTED_MODULE_1__["fetchIntradayPrices"])(symbol));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_stock_item__WEBPACK_IMPORTED_MODULE_2__["default"]));
 
 /***/ }),
 
@@ -1810,7 +1936,10 @@ var PricesReducer = function PricesReducer() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_stock_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/stock_actions */ "./frontend/actions/stock_actions.js");
+/* harmony import */ var _actions_price_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/price_actions */ "./frontend/actions/price_actions.js");
  // import { RECEIVE_CURRENT_USER } from '../../actions/session_actions';
+
+
 
 var StocksReducer = function StocksReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -1821,6 +1950,11 @@ var StocksReducer = function StocksReducer() {
   switch (action.type) {
     // case RECEIVE_CURRENT_USER:
     //     return action.currentUser.stock;
+    case _actions_price_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_INTRADAY_PRICES"]:
+      // debugger
+      nextState[action.symbol].prices = action.prices;
+      return nextState;
+
     case _actions_stock_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_STOCKS"]:
       if (action.stocks.hasOwnProperty('stock')) {
         nextState = action.stocks.stock;

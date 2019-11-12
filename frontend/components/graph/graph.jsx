@@ -1,7 +1,8 @@
 import React from 'react';
-import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer} from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer} from 'recharts';
 
-const Graph = ({data, name, fetchIntradayPrices}) => {
+const Graph = ({ data, name }) => {
+    // debugger
     return (
         <div className={name}>
             <ResponsiveContainer width='100%' height='100%'>
@@ -15,7 +16,7 @@ const Graph = ({data, name, fetchIntradayPrices}) => {
                     <Line type="linear" connectNulls={true} dot={false} stroke="#82ca9d" dataKey='close'/>
                 </LineChart>
             </ ResponsiveContainer>
-            <ul className='time-list'>
+            {/* <ul className='time-list'>
                 <li>1D</li>
                 <li>1W</li>
                 <li>1M</li>
@@ -23,7 +24,7 @@ const Graph = ({data, name, fetchIntradayPrices}) => {
                 <li>1Y</li>
                 <li>5Y</li>
             </ul>
-            <hr/> 
+            <hr/>  */}
         </div>
     )
 }

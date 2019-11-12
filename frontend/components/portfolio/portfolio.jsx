@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Graph from '../graph/graph';
+import GraphContainer from '../graph/graph_container';
+import StockItemContainer from '../stock/stock_item_container';
 
 class Portfolio extends React.Component {
     constructor(props) {
@@ -12,37 +13,20 @@ class Portfolio extends React.Component {
         this.props.fetchGeneralNews();
     }
     
-
     renderStocks() {
         let symbols = Object.values(this.props.transactions);
         symbols = symbols.map(item => item.symbol);
-        // debugger
-        // if (symbols.length === 0) {
-        //     return null;
-        // } else { 
-        let prices = this.props.fetchIntradayPrices('TSLA');
-        return (
-            <ul className='stocks-list'>
-                {symbols.map((symbol, i) => {
-                    let data = this.props.fetchIntradayPrices(symbol);
-                    return (
-                        <li key={`stock-${i}`}>
-                            <Link className='stock' to={`/stocks/${symbol}`}>
-                            <div className='stock-left'>
-                                <div className='symbol'>{symbol}</div>
-                                <div className='shares'>{this.calculateShares(symbol)} shares</div>
-                            </div>
-                            <Graph data={data} name='small-graph'/>
-                            {/* <div className='small-graph'>graph</div> */}
-                            <div className='price'>price</div>
-                            </Link>
-                        </li>
-                    )
-                })}
-            </ul>
-        );
-    // }
-        
+        return (symbols.map( (symbol, i) => {
+            return (<StockItemContainer key={i} symbol={symbol} shares={this.calculateShares(symbol)}/>)
+        }) )    
+    }
+
+    renderWatchlist() {
+        let symbols = Object.values(this.props.watchlist);
+        symbols = symbols.map(item => item.symbol);
+        return (symbols.map((symbol, i) => {
+            return (<StockItemContainer key={i} symbol={symbol} shares={this.calculateShares(symbol)} />)
+        }))
     }
 
     calculateShares(symbol) {
@@ -55,31 +39,6 @@ class Portfolio extends React.Component {
             }
         });
         return shares;
-    }
-
-    renderWatchlist() {
-        let symbols = Object.values(this.props.watchlist);
-        symbols = symbols.map(item => item.symbol);
-
-        // debugger
-        return (
-            <ul className='stocks-list'>
-                {symbols.map((symbol, i) => {
-                    return (
-                        <li key={`stock-${i}`}>
-                            <Link className='stock' to={`/stocks/${symbol}`}>
-                                <div className='stock-left'>
-                                    <div className='symbol'>{symbol}</div>
-                                    {/* <div className='shares'>{this.calculateShares(symbol)} shares</div> */}
-                                </div>
-                                <div className='small-graph'>graph</div>
-                                <div className='price'>price</div>
-                            </Link>
-                        </li>
-                    )
-                })}
-            </ul>
-        );
     }
 
     renderNews() {
@@ -101,12 +60,10 @@ class Portfolio extends React.Component {
                 })}
             </ul>
         );
-        }
-        
+        } 
     }
 
     render() {
-        const { stocks, news } = this.props;
         return (
             <div className='portfolio-main-div'>
                 <div className='portfolio-info-div'>

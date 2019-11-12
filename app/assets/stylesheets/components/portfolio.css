@@ -1,5 +1,4 @@
 .portfolio-main-div {
-    /* background-color: lightblue; */
     width: 100%;
     height: 100%;
     display: flex;
@@ -9,11 +8,10 @@
 .portfolio-main-div h2 {
     margin: 1%;
     font-weight: bold;
-    font-size: 25px;
+    font-size: 28px;
 }
 
 .portfolio-info-div {
-    /* background-color: thistle; */
     display: flex;
     flex-direction: column;
     width: 75%;
@@ -43,26 +41,29 @@
 }
 
 .stock {
-    margin: 3%;
+    margin: 15px;
     display: flex;
     justify-content: space-between;
     text-decoration: none;
+    align-items: center;
     color: black;
+    height: 50px;
 }
 
 .stock div {
     background-color: white;
-    margin: 2%;
-    /* height: 100%; */
+    /* margin: 2%; */
 }
 
 .stock-left {
+    margin-top: 12px;
+    /* margin-left: 15px; */
     width: 20%;
 }
 
 .symbol {
     font-weight: bold;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 .shares {
@@ -72,11 +73,11 @@
 
 .small-graph {
     width: 100px;
-    height: 100px
+    height: 55px
 }
 
 .price {
-    width: 20%;
+    text-align: right;
 }
 
 .portfolio-div {
@@ -111,23 +112,23 @@
 
 .news-article a {
     font-weight: bold;
-    font-size: 15px;
+    font-size: 25px;
     text-decoration: none;
     color: black;
     font-weight: bold;
     margin: 2%;
+    margin-bottom: 10px;
     display: flex;
 }
 
 .news-article img {
     width: 40%;
     height: 80%;
-    /* border: 2px solid black; */
-
 }
 
 .news-article p {
-    font-size: 12px;
+    font-size: 18px;
+    color: grey;
     margin: 2%;
 }
 
@@ -137,7 +138,6 @@
 }
 
 .watchlist-div {
-    /* background-color: yellow; */
     height: 50%;
     margin: 1%;
 }

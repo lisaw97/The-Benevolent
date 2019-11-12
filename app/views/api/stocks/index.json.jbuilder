@@ -1,7 +1,7 @@
 json.stock do 
     @stocks.each do |stock|
         json.set! stock.symbol do 
-            json.partial! 'api/stocks/stock', stock: stock 
+            json.extract! stock, :id, :company_name, :symbol
         end
     end
 end
@@ -9,7 +9,7 @@ end
 json.transaction do
     current_user.transactions.each do |transaction|
         json.set! transaction.id do 
-            json.partial! 'api/transactions/transaction', transaction: transaction
+            json.extract! transaction, :id, :user_id, :symbol, :shares, :cost
         end
     end
 end

@@ -1,1 +1,1 @@
-json.partial! 'api/stocks/stock', stock: @stock
+# json.partial! 'api/stocks/stock', stock: @stock

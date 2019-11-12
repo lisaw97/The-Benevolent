@@ -42,6 +42,15 @@ class StockDetails extends React.Component {
                     <div className='stock-graph'>
                         <h2>{stock.companyName}</h2>
                             <Graph data={this.props.prices} name='intraday-stock-graph'/>
+                            <ul className='time-list'>
+                                <li>1D</li>
+                                <li>1W</li>
+                                <li>1M</li>
+                                <li>3M</li>
+                                <li>1Y</li>
+                                <li>5Y</li>
+                            </ul>
+                            <hr /> 
                     </div>
                     <div className='stock-about'>
                         <h2>About</h2>

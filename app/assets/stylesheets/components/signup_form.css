@@ -68,10 +68,10 @@
 .signup-errors {
     color: red;
     text-align: left;
-    width: 85%;
+    width: 507px;
     border: 1px solid red;
     margin: 10px;
-
+    margin-left: 63px;
 }
 
 .signup-errors li {
