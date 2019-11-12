@@ -1,5 +1,4 @@
 .stock-details-div {
-    /* background-color: lightblue; */
     width: 100%;
     height: 100%;
     display: flex;
@@ -9,11 +8,10 @@
 .stock-details-div h2 {
     margin: 1%;
     font-weight: bold;
-    font-size: 25px;
+    font-size: 30px;
 }
 
 .stock-details-left {
-    /* background-color: thistle; */
     display: flex;
     flex-direction: column;
     width: 75%;
@@ -32,22 +30,29 @@
     right: 0;
     padding: 5px 5px 10px 5px;
     border: 1px solid #BFBFBF;
-    /* background-color: white; */
     box-shadow: 10px 10px 5px #aaaaaa;
     background-color: yellow;
 }
 
 .stock-graph {
-    /* background-color: yellow; */
-    /* height: 60%; */
     margin: 1%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
+.comp-name {
+    font-size: 20px;
+    margin-left: 1%;
+}
+
+.stock-graph h1 {
+    font-size: 40px;
+    margin-left: 1%;
+    font-weight: bold;
+}
+
 .stock-about {
-    /* background-color: yellow; */
     height: 30%;
     margin: 1%;
     margin-top: 0;
@@ -55,27 +60,27 @@
 
 .stock-about p {
     margin: 1%;
-    font-size: 15px;
+    font-size: 17px;
 }
 
 .company-info {
     display: flex;
-    margin: 2%;
+    margin: 3%;
+    margin-left: 1%;
     justify-content: space-between;
 }
 
 .company-info label {
     font-weight: bold;
     color: teal;
-    /* margin: 2%; */
 }
 
 .company-info label div {
     color: grey;
+    margin-top: 6px;
 }
 
 .recent-news {
-    /* background-color: yellow; */
     height: 30%;
     margin: 1%;
 }
@@ -96,13 +101,11 @@
 
 .company-news-article div {
     width: 50%;
-    /* margin: 1%; */
-/* background-color: tomato; */
 }
 
 .company-news-article a {
     font-weight: bold;
-    font-size: 15px;
+    font-size: 20px;
     text-decoration: none;
     color: black;
     font-weight: bold;
@@ -111,14 +114,13 @@
 }
 
 .company-news-article p {
-    font-size: 12px;
+    font-size: 15px;
+    color: grey;
     margin: 2%;
 }
 
 .company-news-article img {
     width: 40%;
     height: 80%;
-    /* border: 2px solid black; */
-    
 }
 

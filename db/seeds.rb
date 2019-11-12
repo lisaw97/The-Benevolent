@@ -42,6 +42,31 @@ msft = Stock.create!(
     symbol: 'MSFT'
 )
 
+fb = Stock.create!(
+    company_name: 'Facebook, Inc.',
+    symbol: 'FB'
+)
+
+twtr = Stock.create!(
+    company_name: 'Twitter, Inc.',
+    symbol: 'TWTR'
+)
+
+v = Stock.create!(
+    company_name: 'Visa, Inc.',
+    symbol: 'V'
+)
+
+c = Stock.create!(
+    company_name: 'Citigroup, Inc.',
+    symbol: 'C'
+)
+
+baba = Stock.create!(
+    company_name: 'Alibaba Group Holding Ltd.',
+    symbol: 'BABA'
+)
+
 Transaction.create(
     user_id: guest.id,
     shares: 2,
@@ -54,6 +79,20 @@ Transaction.create(
     symbol: aapl.symbol,
     shares: 2,
     cost: 234.54
+)
+
+Transaction.create(
+    user_id: guest.id,
+    shares: 4,
+    cost: 234.54,
+    symbol: tsla.symbol
+)
+
+Transaction.create(
+    user_id: guest.id,
+    shares: 7,
+    cost: 186.62,
+    symbol: baba.symbol
 )
 
 Transaction.create(
@@ -70,9 +109,31 @@ Transaction.create(
     cost: 234.54
 )
 
+Transaction.create(
+    user_id: lisa.id,
+    symbol: v.symbol,
+    shares: 4,
+    cost: 179.74
+)
+
 WatchlistItem.create(
     user_id: guest.id,
     symbol: msft.symbol
+)
+
+WatchlistItem.create(
+    user_id: guest.id,
+    symbol: c.symbol
+)
+
+WatchlistItem.create(
+    user_id: guest.id,
+    symbol: fb.symbol
+)
+
+WatchlistItem.create(
+    user_id: guest.id,
+    symbol: twtr.symbol
 )
 
 WatchlistItem.create(
@@ -83,6 +144,21 @@ WatchlistItem.create(
 WatchlistItem.create(
     user_id: lisa.id,
     symbol: msft.symbol,
+)
+
+WatchlistItem.create(
+    user_id: lisa.id,
+    symbol: twtr.symbol,
+)
+
+WatchlistItem.create(
+    user_id: lisa.id,
+    symbol: baba.symbol,
+)
+
+WatchlistItem.create(
+    user_id: lisa.id,
+    symbol: c.symbol,
 )
 
 

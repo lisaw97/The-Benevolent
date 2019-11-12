@@ -16,6 +16,8 @@ class Portfolio extends React.Component {
     renderStocks() {
         let symbols = Object.values(this.props.transactions);
         symbols = symbols.map(item => item.symbol);
+        let uniqueSymbols = new Set(symbols);
+        symbols = [...uniqueSymbols];
         return (symbols.map( (symbol, i) => {
             return (<StockItemContainer key={i} symbol={symbol} shares={this.calculateShares(symbol)}/>)
         }) )    
@@ -24,6 +26,8 @@ class Portfolio extends React.Component {
     renderWatchlist() {
         let symbols = Object.values(this.props.watchlist);
         symbols = symbols.map(item => item.symbol);
+        let uniqueSymbols = new Set(symbols);
+        symbols = [...uniqueSymbols];
         return (symbols.map((symbol, i) => {
             return (<StockItemContainer key={i} symbol={symbol} shares={this.calculateShares(symbol)} />)
         }))

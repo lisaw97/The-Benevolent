@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import SVGIcon from '../svg/svg_icons';
 
 class Greeting extends React.Component {
@@ -27,9 +27,8 @@ class Greeting extends React.Component {
         if (currentUser) {
             return (
                 <form className='greeting-div'>
-                    <Link className='rh-logo' to='/portfolio'><SVGIcon name='icon' width={35} height={30} />Welcome, {currentUser.username}</Link>
+                    <Link className='rh-logo' to='/portfolio'><SVGIcon name='icon' width={35} height={30} />Welcome, {currentUser.first_name}</Link>
                     <div onClick={this.handleSubmit}><Link className='logout-button' to='/'>Log Out</Link></div>
-                    {/* <button className='logout-button' onClick={this.handleSubmit}>Log Out</button> */}
                 </form>
             ) 
         } else {
@@ -47,6 +46,5 @@ class Greeting extends React.Component {
         
     }
 }
-
 
 export default Greeting;

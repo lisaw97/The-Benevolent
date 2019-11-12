@@ -595,7 +595,7 @@ function (_React$Component) {
           name: "icon",
           width: 35,
           height: 30
-        }), "Welcome, ", currentUser.username), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }), "Welcome, ", currentUser.first_name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           onClick: this.handleSubmit
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
           className: "logout-button",
@@ -692,6 +692,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _stock_stock_item_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../stock/stock_item_container */ "./frontend/components/stock/stock_item_container.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -739,6 +747,8 @@ function (_React$Component) {
       symbols = symbols.map(function (item) {
         return item.symbol;
       });
+      var uniqueSymbols = new Set(symbols);
+      symbols = _toConsumableArray(uniqueSymbols);
       return symbols.map(function (symbol, i) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stock_stock_item_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
           key: i,
@@ -756,6 +766,8 @@ function (_React$Component) {
       symbols = symbols.map(function (item) {
         return item.symbol;
       });
+      var uniqueSymbols = new Set(symbols);
+      symbols = _toConsumableArray(uniqueSymbols);
       return symbols.map(function (symbol, i) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stock_stock_item_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
           key: i,
@@ -1551,18 +1563,28 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var stock = this.props.stock;
+      var _this$props = this.props,
+          prices = _this$props.prices,
+          stock = _this$props.stock;
+      var close = 0;
+
+      if (prices.length > 0) {
+        close = prices[prices.length - 1].close;
+      }
 
       if (!stock) {
         return null;
       } else {
+        // debugger
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "stock-details-div"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "stock-details-left"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "stock-graph"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, stock.companyName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_graph_graph__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+          className: "comp-name"
+        }, stock.companyName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "$", close), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_graph_graph__WEBPACK_IMPORTED_MODULE_1__["default"], {
           data: this.props.prices,
           name: "intraday-stock-graph"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
@@ -1571,7 +1593,7 @@ function (_React$Component) {
           className: "stock-about"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "About"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, stock.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "company-info"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "CEO ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, stock.CEO)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Employees ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, stock.employees)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Headquarters ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, stock.city, ", ", stock.state)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "CEO ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, stock.CEO)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Employees ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, stock.employees)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Headquarters ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, stock.city, ", ", stock.state)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Industry ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, stock.industry)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "recent-news"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Recent News"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), this.renderNews())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "stock-orders"
@@ -1692,7 +1714,19 @@ function (_React$Component) {
           symbol = _this$props.symbol,
           prices = _this$props.prices,
           key = _this$props.key,
-          shares = _this$props.shares; // debugger
+          shares = _this$props.shares;
+      var close = 0;
+
+      if (prices) {
+        close = prices[prices.length - 1].close;
+      }
+
+      var name = 'shares';
+
+      if (shares === 0) {
+        name = 'hidden';
+      } // debugger
+
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         key: key
@@ -1704,13 +1738,13 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "symbol"
       }, symbol), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "shares"
+        className: name
       }, shares, " shares")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_graph_graph_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
         data: prices,
         name: "small-graph"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "price"
-      }, "price")));
+      }, "$", close)));
     }
   }]);
 

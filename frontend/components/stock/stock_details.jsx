@@ -31,16 +31,23 @@ class StockDetails extends React.Component {
     }
 
     render() {
-        const { stock } = this.props;
+        const { prices, stock } = this.props;
+
+        let close = 0;
+        if (prices.length > 0) {
+            close = prices[prices.length - 1].close;
+        }
 
         if (!stock) {
             return null;
         } else {
+            // debugger
             return (
             <div className='stock-details-div'>
                 <div className='stock-details-left'>
                     <div className='stock-graph'>
-                        <h2>{stock.companyName}</h2>
+                        <h2 className='comp-name'>{stock.companyName}</h2>
+                        <h1>${close}</h1>
                             <Graph data={this.props.prices} name='intraday-stock-graph'/>
                             <ul className='time-list'>
                                 <li>1D</li>
@@ -60,6 +67,7 @@ class StockDetails extends React.Component {
                             <label>CEO <div>{stock.CEO}</div></label>
                             <label>Employees <div>{stock.employees}</div></label>
                             <label>Headquarters <div>{stock.city}, {stock.state}</div></label>
+                            <label>Industry <div>{stock.industry}</div></label>
                         </div>
                     </div>
                     <div className='recent-news'>
