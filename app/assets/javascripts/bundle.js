@@ -279,7 +279,6 @@ var receiveStock = function receiveStock(stock) {
 
 var fetchStocks = function fetchStocks() {
   return function (dispatch) {
-    // debugger
     return _util_stock_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchStocks"]().then(function (stocks) {
       return dispatch(receiveStocks(stocks));
     });
@@ -299,56 +298,35 @@ var fetchStock = function fetchStock(symbol) {
 /*!*************************************************!*\
   !*** ./frontend/actions/transaction_actions.js ***!
   \*************************************************/
-/*! exports provided: RECEIEVE_TRANSACTIONS, RECEIEVE_TRANSACTION, fetchTransactions, fetchTransaction, createTransaction */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIEVE_TRANSACTIONS", function() { return RECEIEVE_TRANSACTIONS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIEVE_TRANSACTION", function() { return RECEIEVE_TRANSACTION; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTransactions", function() { return fetchTransactions; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTransaction", function() { return fetchTransaction; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createTransaction", function() { return createTransaction; });
-/* harmony import */ var _util_transaction_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/transaction_api_util */ "./frontend/util/transaction_api_util.js");
-
-var RECEIEVE_TRANSACTIONS = 'RECEIEVE_TRANSACTIONS';
-var RECEIEVE_TRANSACTION = 'RECEIEVE_TRANSACTION';
-
-var receieveTransactions = function receieveTransactions(transactions) {
-  return {
-    type: RECEIEVE_TRANSACTIONS,
-    transactions: transactions
-  };
-};
-
-var receieveTransaction = function receieveTransaction(transaction) {
-  return {
-    type: RECEIEVE_TRANSACTION,
-    transaction: transaction
-  };
-};
-
-var fetchTransactions = function fetchTransactions() {
-  return function (dispatch) {
-    return _util_transaction_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchTransactions"]().then(function (transactions) {
-      return dispatch(receieveTransactions(transactions));
-    });
-  };
-};
-var fetchTransaction = function fetchTransaction(transaction) {
-  return function (dispatch) {
-    return _util_transaction_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchTransaction"](transaction).then(function (transaction) {
-      return dispatch(receieveTransaction(transaction));
-    });
-  };
-};
-var createTransaction = function createTransaction(transaction) {
-  return function (dispatch) {
-    return _util_transaction_api_util__WEBPACK_IMPORTED_MODULE_0__["createTransaction"](transaction).then(function (transaction) {
-      return dispatch(receiveTransaction(transaction));
-    });
-  };
-};
+// import * as TransactionApiUtil from '../util/transaction_api_util';
+// export const RECEIEVE_TRANSACTIONS = 'RECEIEVE_TRANSACTIONS';
+// export const RECEIEVE_TRANSACTION = 'RECEIEVE_TRANSACTION';
+// const receieveTransactions = transactions => ({
+//     type: RECEIEVE_TRANSACTIONS,
+//     transactions
+// });
+// const receieveTransaction = transaction => ({
+//     type: RECEIEVE_TRANSACTION,
+//     transaction
+// });
+// export const fetchTransactions = () => dispatch => (
+//     TransactionApiUtil.fetchTransactions().then(
+//         transactions => dispatch(receieveTransactions(transactions))
+//     )
+// );
+// export const fetchTransaction = transaction => dispatch => (
+//     TransactionApiUtil.fetchTransaction(transaction).then(
+//         transaction => dispatch(receieveTransaction(transaction))
+//     )
+// );
+// export const createTransaction = transaction => dispatch => (
+//     TransactionApiUtil.createTransaction(transaction).then(
+//         transaction => dispatch(receiveTransaction(transaction))
+//     )
+// );
 
 /***/ }),
 
@@ -711,8 +689,7 @@ function (_React$Component) {
   _createClass(Portfolio, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchStocks(); // this.props.fetchStockNews('aapl', 3);
-
+      this.props.fetchStocks();
       this.props.fetchGeneralNews();
     }
   }, {
@@ -821,10 +798,8 @@ function (_React$Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_stock_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/stock_actions */ "./frontend/actions/stock_actions.js");
-/* harmony import */ var _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/transaction_actions */ "./frontend/actions/transaction_actions.js");
-/* harmony import */ var _actions_news_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/news_actions */ "./frontend/actions/news_actions.js");
-/* harmony import */ var _portfolio__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./portfolio */ "./frontend/components/portfolio/portfolio.jsx");
-
+/* harmony import */ var _actions_news_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/news_actions */ "./frontend/actions/news_actions.js");
+/* harmony import */ var _portfolio__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./portfolio */ "./frontend/components/portfolio/portfolio.jsx");
 
 
 
@@ -834,7 +809,8 @@ var mapStateToProps = function mapStateToProps(state) {
   return {
     stocks: state.entities.stocks,
     news: state.entities.news,
-    transactions: state.entities.transactions
+    transactions: state.entities.transactions,
+    watchlist: state.entities.watchlist
   };
 };
 
@@ -843,18 +819,13 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     fetchStocks: function fetchStocks() {
       return dispatch(Object(_actions_stock_actions__WEBPACK_IMPORTED_MODULE_1__["fetchStocks"])());
     },
-    // fetchStock: symbol => dispatch(fetchStock(symbol)),
-    fetchStockNews: function fetchStockNews(symbol, last) {
-      return dispatch(Object(_actions_news_actions__WEBPACK_IMPORTED_MODULE_3__["fetchStockNews"])(symbol, last));
-    },
     fetchGeneralNews: function fetchGeneralNews() {
-      return dispatch(Object(_actions_news_actions__WEBPACK_IMPORTED_MODULE_3__["fetchGeneralNews"])());
-    } // fetchTransactions: () => dispatch(fetchTransactions())
-
+      return dispatch(Object(_actions_news_actions__WEBPACK_IMPORTED_MODULE_2__["fetchGeneralNews"])());
+    }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_portfolio__WEBPACK_IMPORTED_MODULE_4__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_portfolio__WEBPACK_IMPORTED_MODULE_3__["default"]));
 
 /***/ }),
 
@@ -1705,6 +1676,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _transactions_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./transactions_reducer */ "./frontend/reducers/entities/transactions_reducer.js");
 /* harmony import */ var _news_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./news_reducer */ "./frontend/reducers/entities/news_reducer.js");
 /* harmony import */ var _prices_reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./prices_reducer */ "./frontend/reducers/entities/prices_reducer.js");
+/* harmony import */ var _watchlist_items_reducer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./watchlist_items_reducer */ "./frontend/reducers/entities/watchlist_items_reducer.js");
+
 
 
 
@@ -1716,7 +1689,8 @@ var EntitiesReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers
   stocks: _stocks_reducer__WEBPACK_IMPORTED_MODULE_2__["default"],
   transactions: _transactions_reducer__WEBPACK_IMPORTED_MODULE_3__["default"],
   news: _news_reducer__WEBPACK_IMPORTED_MODULE_4__["default"],
-  prices: _prices_reducer__WEBPACK_IMPORTED_MODULE_5__["default"]
+  prices: _prices_reducer__WEBPACK_IMPORTED_MODULE_5__["default"],
+  watchlist: _watchlist_items_reducer__WEBPACK_IMPORTED_MODULE_6__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (EntitiesReducer);
 
@@ -1842,6 +1816,7 @@ var StocksReducer = function StocksReducer() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/transaction_actions */ "./frontend/actions/transaction_actions.js");
+/* harmony import */ var _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_actions_transaction_actions__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
 /* harmony import */ var _actions_stock_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/stock_actions */ "./frontend/actions/stock_actions.js");
 
@@ -1915,6 +1890,50 @@ var UsersReducer = function UsersReducer() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (UsersReducer);
+
+/***/ }),
+
+/***/ "./frontend/reducers/entities/watchlist_items_reducer.js":
+/*!***************************************************************!*\
+  !*** ./frontend/reducers/entities/watchlist_items_reducer.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_stock_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/stock_actions */ "./frontend/actions/stock_actions.js");
+/* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
+
+
+
+var WatchlistItemsReducer = function WatchlistItemsReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+  var nextState = Object.assign({}, state);
+
+  switch (action.type) {
+    // case RECEIVE_CURRENT_USER:
+    //     if (action.hasOwnProperty('watchlsit')) {
+    //         nextState = action.watchlist;
+    //     } 
+    //     return nextState;
+    case _actions_stock_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_STOCKS"]:
+      if (action.stocks.hasOwnProperty('watchlist')) {
+        nextState = action.stocks.watchlist;
+      } else {
+        nextState = {};
+      }
+
+      return nextState;
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (WatchlistItemsReducer);
 
 /***/ }),
 
@@ -2304,42 +2323,6 @@ var fetchIntradayPrices = function fetchIntradayPrices(symbol) {
   return $.ajax({
     url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices/?chartInterval=5&token=pk_d9fc28e6b9594efa97b112ac9c920c87"),
     method: 'GET'
-  });
-};
-
-/***/ }),
-
-/***/ "./frontend/util/transaction_api_util.js":
-/*!***********************************************!*\
-  !*** ./frontend/util/transaction_api_util.js ***!
-  \***********************************************/
-/*! exports provided: fetchTransactions, fetchTransaction, createTransaction */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTransactions", function() { return fetchTransactions; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTransaction", function() { return fetchTransaction; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createTransaction", function() { return createTransaction; });
-var fetchTransactions = function fetchTransactions() {
-  return $.ajax({
-    url: '/api/transactions',
-    method: 'GET'
-  });
-};
-var fetchTransaction = function fetchTransaction(transaction) {
-  return $.ajax({
-    url: "/api/transactions/".concat(transaction.id),
-    method: 'GET'
-  });
-};
-var createTransaction = function createTransaction(transaction) {
-  return $.ajax({
-    url: "/api/transactions",
-    method: 'POST',
-    data: {
-      transaction: transaction
-    }
   });
 };
 

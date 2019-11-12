@@ -1,5 +1,12 @@
 json.partial! 'api/users/user', user: @user
 
+# json.watchlist do
+#     user.watchlist_items do |watchlist_item|
+#         json.set! watchlist_item.id do
+#             json.partial! 'api/watchlist_items/watchlist_item', watchlist_item: watchlist_item
+#         end
+#     end
+# end
     # json.user do
     #     json.extract! @user, :id, :username
     # end 

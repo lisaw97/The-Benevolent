@@ -4,13 +4,15 @@ import StocksReducer from './stocks_reducer';
 import TransactionsReducer from './transactions_reducer';
 import NewsReducer from './news_reducer';
 import PricesReducer from './prices_reducer';
+import WatchlistItemsReducer from './watchlist_items_reducer';
 
 const EntitiesReducer = combineReducers({
     users: UsersReducer,
     stocks: StocksReducer,
     transactions: TransactionsReducer,
     news: NewsReducer,
-    prices: PricesReducer
+    prices: PricesReducer,
+    watchlist: WatchlistItemsReducer
 });
 
 export default EntitiesReducer;

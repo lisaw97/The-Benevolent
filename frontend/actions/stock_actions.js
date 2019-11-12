@@ -14,7 +14,6 @@ const receiveStock = stock => ({
 });
 
 export const fetchStocks = () => dispatch => {
-    // debugger
     return StockApiUtil.fetchStocks().then(
         stocks => dispatch(receiveStocks(stocks))
     )

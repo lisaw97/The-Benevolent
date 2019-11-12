@@ -8,7 +8,6 @@ class Portfolio extends React.Component {
 
     componentDidMount() {     
         this.props.fetchStocks();
-        // this.props.fetchStockNews('aapl', 3);
         this.props.fetchGeneralNews();
     }
     
