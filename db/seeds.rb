@@ -42,47 +42,47 @@ msft = Stock.create!(
     symbol: 'MSFT'
 )
 
-Transaction.create!(
+Transaction.create(
     user_id: guest.id,
-    stock_id: tsla.id,
+    shares: 2,
+    cost: 234.54,
+    symbol: tsla.symbol
+)
+
+Transaction.create(
+    user_id: guest.id,
+    symbol: aapl.symbol,
     shares: 2,
     cost: 234.54
 )
 
-Transaction.create!(
-    user_id: guest.id,
-    stock_id: aapl.id,
-    shares: 2,
-    cost: 234.54
-)
-
-Transaction.create!(
+Transaction.create(
     user_id: lisa.id,
-    stock_id: aapl.id,
+    symbol: aapl.symbol,
     shares: 5,
     cost: 234.54
 )
 
-Transaction.create!(
+Transaction.create(
     user_id: lisa.id,
-    stock_id: aapl.id,
+    symbol: aapl.symbol,
     shares: 3,
     cost: 234.54
 )
 
-WatchlistItem.create!(
+WatchlistItem.create(
     user_id: guest.id,
-    stock_id: msft.id,
+    symbol: msft.symbol
 )
 
-WatchlistItem.create!(
+WatchlistItem.create(
     user_id: lisa.id,
-    stock_id: tsla.id,
+    symbol: tsla.symbol,
 )
 
-WatchlistItem.create!(
+WatchlistItem.create(
     user_id: lisa.id,
-    stock_id: msft.id,
+    symbol: msft.symbol,
 )
 
 

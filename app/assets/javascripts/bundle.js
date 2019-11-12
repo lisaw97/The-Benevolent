@@ -152,6 +152,7 @@ __webpack_require__.r(__webpack_exports__);
 var RECEIVE_INTRADAY_PRICES = 'RECEIVE_INTRADAY_PRICES';
 
 var receiveIntradayPrices = function receiveIntradayPrices(prices) {
+  // debugger
   return {
     type: RECEIVE_INTRADAY_PRICES,
     prices: prices
@@ -160,6 +161,7 @@ var receiveIntradayPrices = function receiveIntradayPrices(prices) {
 
 var fetchIntradayPrices = function fetchIntradayPrices(symbol) {
   return function (dispatch) {
+    debugger;
     return _util_stock_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchIntradayPrices"](symbol).then(function (prices) {
       return dispatch(receiveIntradayPrices(prices));
     });
@@ -433,11 +435,10 @@ __webpack_require__.r(__webpack_exports__);
 
 var Graph = function Graph(_ref) {
   var data = _ref.data,
-      prices = _ref.prices,
+      name = _ref.name,
       fetchIntradayPrices = _ref.fetchIntradayPrices;
-  // debugger
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "intraday-stock-graph"
+    className: name
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["ResponsiveContainer"], {
     width: "100%",
     height: "100%"
@@ -654,6 +655,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _graph_graph__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../graph/graph */ "./frontend/components/graph/graph.jsx");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -671,6 +673,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -697,7 +700,60 @@ function (_React$Component) {
     value: function renderStocks() {
       var _this = this;
 
-      var symbols = Object.keys(this.props.stocks);
+      var symbols = Object.values(this.props.transactions);
+      symbols = symbols.map(function (item) {
+        return item.symbol;
+      }); // debugger
+      // if (symbols.length === 0) {
+      //     return null;
+      // } else { 
+
+      var prices = this.props.fetchIntradayPrices('TSLA');
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "stocks-list"
+      }, symbols.map(function (symbol, i) {
+        var data = _this.props.fetchIntradayPrices(symbol);
+
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          key: "stock-".concat(i)
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+          className: "stock",
+          to: "/stocks/".concat(symbol)
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "stock-left"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "symbol"
+        }, symbol), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "shares"
+        }, _this.calculateShares(symbol), " shares")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_graph_graph__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          data: data,
+          name: "small-graph"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "price"
+        }, "price")));
+      })); // }
+    }
+  }, {
+    key: "calculateShares",
+    value: function calculateShares(symbol) {
+      var transactions = this.props.transactions;
+      var shares = 0;
+      var trans = Object.values(transactions);
+      trans.forEach(function (transaction) {
+        if (transaction.symbol === symbol) {
+          shares = shares + transaction.shares;
+        }
+      });
+      return shares;
+    }
+  }, {
+    key: "renderWatchlist",
+    value: function renderWatchlist() {
+      var symbols = Object.values(this.props.watchlist);
+      symbols = symbols.map(function (item) {
+        return item.symbol;
+      }); // debugger
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "stocks-list"
       }, symbols.map(function (symbol, i) {
@@ -710,35 +766,16 @@ function (_React$Component) {
           className: "stock-left"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "symbol"
-        }, symbol), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "shares"
-        }, _this.calculateShares(_this.props.stocks[symbol].id), " shares")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, symbol)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "small-graph"
         }, "graph"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "price"
         }, "price")));
       }));
-    } // handleClick(symbol) {
-    //     window.location.hash = `/stocks/${symbol}`
-    // }
-
-  }, {
-    key: "calculateShares",
-    value: function calculateShares(stock_id) {
-      var transactions = this.props.transactions;
-      var shares = 0;
-      var trans = Object.values(transactions);
-      trans.forEach(function (transaction) {
-        if (transaction.stock_id === stock_id) {
-          shares = shares + transaction.shares;
-        }
-      });
-      return shares;
     }
   }, {
     key: "renderNews",
     value: function renderNews() {
-      // debugger
       if (!this.props.news) {
         return null;
       } else {
@@ -776,7 +813,7 @@ function (_React$Component) {
         className: "userStocks-div"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Stocks Owned"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), this.renderStocks()), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "watchlist-div"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Watchlist"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null))));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Watchlist"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), this.renderWatchlist())));
     }
   }]);
 
@@ -799,7 +836,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _actions_stock_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/stock_actions */ "./frontend/actions/stock_actions.js");
 /* harmony import */ var _actions_news_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/news_actions */ "./frontend/actions/news_actions.js");
-/* harmony import */ var _portfolio__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./portfolio */ "./frontend/components/portfolio/portfolio.jsx");
+/* harmony import */ var _actions_price_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/price_actions */ "./frontend/actions/price_actions.js");
+/* harmony import */ var _portfolio__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./portfolio */ "./frontend/components/portfolio/portfolio.jsx");
+
 
 
 
@@ -821,11 +860,14 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     fetchGeneralNews: function fetchGeneralNews() {
       return dispatch(Object(_actions_news_actions__WEBPACK_IMPORTED_MODULE_2__["fetchGeneralNews"])());
+    },
+    fetchIntradayPrices: function fetchIntradayPrices(symbol) {
+      return dispatch(Object(_actions_price_actions__WEBPACK_IMPORTED_MODULE_3__["fetchIntradayPrices"])(symbol));
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_portfolio__WEBPACK_IMPORTED_MODULE_3__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_portfolio__WEBPACK_IMPORTED_MODULE_4__["default"]));
 
 /***/ }),
 
@@ -949,8 +991,7 @@ function (_React$Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(e) {
-      e.preventDefault(); // debugger
-
+      e.preventDefault();
       var user = Object.assign({}, this.state);
       this.props.processForm(user);
     }
@@ -1087,7 +1128,6 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  // debugger
   return {
     processForm: function processForm(user) {
       return dispatch(Object(_actions_session_actions__WEBPACK_IMPORTED_MODULE_0__["login"])(user));
@@ -1510,7 +1550,6 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      // debugger
       var stock = this.props.stock;
 
       if (!stock) {
@@ -1523,7 +1562,8 @@ function (_React$Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "stock-graph"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, stock.companyName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_graph_graph__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          data: this.props.prices
+          data: this.props.prices,
+          name: "intraday-stock-graph"
         })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "stock-about"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "About"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, stock.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1712,11 +1752,9 @@ var NewsReducer = function NewsReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments.length > 1 ? arguments[1] : undefined;
   Object.freeze(state);
-  var nextState = Object.assign([], state);
 
   switch (action.type) {
     case _actions_news_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_GENERAL_NEWS"]:
-      // debugger
       return action.news.articles;
 
     case _actions_news_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_STOCK_NEWS"]:
@@ -1784,7 +1822,6 @@ var StocksReducer = function StocksReducer() {
     // case RECEIVE_CURRENT_USER:
     //     return action.currentUser.stock;
     case _actions_stock_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_STOCKS"]:
-      // debugger
       if (action.stocks.hasOwnProperty('stock')) {
         nextState = action.stocks.stock;
       } else {

@@ -17,7 +17,7 @@ end
 json.watchlist do
     current_user.watchlist_items.each do |watchlist_item|
         json.set! watchlist_item.id do
-            json.extract! watchlist_item, :id, :user_id, :stock_id
+            json.extract! watchlist_item, :id, :user_id, :symbol
         end  
     end
 end

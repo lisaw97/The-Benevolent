@@ -8,7 +8,6 @@ const StocksReducer = (state = {}, action) => {
         // case RECEIVE_CURRENT_USER:
         //     return action.currentUser.stock;
         case RECEIVE_STOCKS:
-            // debugger
             if (action.stocks.hasOwnProperty('stock')) {
                 nextState = action.stocks.stock;
             } else {

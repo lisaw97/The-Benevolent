@@ -31,8 +31,6 @@ class StockDetails extends React.Component {
     }
 
     render() {
-        // debugger
-
         const { stock } = this.props;
 
         if (!stock) {
@@ -43,7 +41,7 @@ class StockDetails extends React.Component {
                 <div className='stock-details-left'>
                     <div className='stock-graph'>
                         <h2>{stock.companyName}</h2>
-                        <Graph data={this.props.prices}/>
+                            <Graph data={this.props.prices} name='intraday-stock-graph'/>
                     </div>
                     <div className='stock-about'>
                         <h2>About</h2>

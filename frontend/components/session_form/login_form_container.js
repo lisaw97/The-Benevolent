@@ -11,7 +11,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => {
-    // debugger
     return {
     processForm: user => dispatch(login(user)),
     demoStateOff: demoUser => dispatch(demoStateOff(demoUser)),

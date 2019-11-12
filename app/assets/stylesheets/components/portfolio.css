@@ -71,7 +71,8 @@
 }
 
 .small-graph {
-    width: 50%;
+    width: 100px;
+    height: 100px
 }
 
 .price {
@@ -136,7 +137,7 @@
 }
 
 .watchlist-div {
-    background-color: yellow;
+    /* background-color: yellow; */
     height: 50%;
     margin: 1%;
 }

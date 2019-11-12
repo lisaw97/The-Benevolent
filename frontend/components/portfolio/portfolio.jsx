@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Graph from '../graph/graph';
 
 class Portfolio extends React.Component {
     constructor(props) {
@@ -11,21 +12,68 @@ class Portfolio extends React.Component {
         this.props.fetchGeneralNews();
     }
     
+
     renderStocks() {
-        let symbols = Object.keys(this.props.stocks);
+        let symbols = Object.values(this.props.transactions);
+        symbols = symbols.map(item => item.symbol);
+        // debugger
+        // if (symbols.length === 0) {
+        //     return null;
+        // } else { 
+        let prices = this.props.fetchIntradayPrices('TSLA');
+        return (
+            <ul className='stocks-list'>
+                {symbols.map((symbol, i) => {
+                    let data = this.props.fetchIntradayPrices(symbol);
+                    return (
+                        <li key={`stock-${i}`}>
+                            <Link className='stock' to={`/stocks/${symbol}`}>
+                            <div className='stock-left'>
+                                <div className='symbol'>{symbol}</div>
+                                <div className='shares'>{this.calculateShares(symbol)} shares</div>
+                            </div>
+                            <Graph data={data} name='small-graph'/>
+                            {/* <div className='small-graph'>graph</div> */}
+                            <div className='price'>price</div>
+                            </Link>
+                        </li>
+                    )
+                })}
+            </ul>
+        );
+    // }
         
+    }
+
+    calculateShares(symbol) {
+        const { transactions } = this.props;
+        let shares = 0;
+        let trans = Object.values(transactions);
+        trans.forEach( transaction => {
+            if (transaction.symbol === symbol) {
+                shares = shares + transaction.shares;
+            }
+        });
+        return shares;
+    }
+
+    renderWatchlist() {
+        let symbols = Object.values(this.props.watchlist);
+        symbols = symbols.map(item => item.symbol);
+
+        // debugger
         return (
             <ul className='stocks-list'>
                 {symbols.map((symbol, i) => {
                     return (
                         <li key={`stock-${i}`}>
                             <Link className='stock' to={`/stocks/${symbol}`}>
-                            <div className='stock-left'>
-                                <div className='symbol'>{symbol}</div>
-                                <div className='shares'>{this.calculateShares(this.props.stocks[symbol].id)} shares</div>
-                            </div>
-                            <div className='small-graph'>graph</div>
-                            <div className='price'>price</div>
+                                <div className='stock-left'>
+                                    <div className='symbol'>{symbol}</div>
+                                    {/* <div className='shares'>{this.calculateShares(symbol)} shares</div> */}
+                                </div>
+                                <div className='small-graph'>graph</div>
+                                <div className='price'>price</div>
                             </Link>
                         </li>
                     )
@@ -34,24 +82,7 @@ class Portfolio extends React.Component {
         );
     }
 
-    // handleClick(symbol) {
-    //     window.location.hash = `/stocks/${symbol}`
-    // }
-
-    calculateShares(stock_id) {
-        const { transactions } = this.props;
-        let shares = 0;
-        let trans = Object.values(transactions);
-        trans.forEach( transaction => {
-            if (transaction.stock_id === stock_id) {
-                shares = shares + transaction.shares;
-            }
-        });
-        return shares;
-    }
-
     renderNews() {
-        // debugger
         if (!this.props.news) {
             return null;
         } else {
@@ -98,6 +129,7 @@ class Portfolio extends React.Component {
                     <div className='watchlist-div'>
                         <h2>Watchlist</h2>
                         <hr/>
+                        {this.renderWatchlist()}
                     </div>
                 </div>
             </div>

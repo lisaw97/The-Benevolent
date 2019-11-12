@@ -17,6 +17,6 @@ class Api::WatchlistItemsController < ApplicationController
     private
 
     def watchlist_item_params 
-        params.require(:watchlist_item).permit(:stock_id)
+        params.require(:watchlist_item).permit(:symbol)
     end 
 end

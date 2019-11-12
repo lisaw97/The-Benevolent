@@ -1,10 +1,9 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer} from 'recharts';
 
-const Graph = ({data, prices, fetchIntradayPrices}) => {
-    // debugger
+const Graph = ({data, name, fetchIntradayPrices}) => {
     return (
-        <div className='intraday-stock-graph'>
+        <div className={name}>
             <ResponsiveContainer width='100%' height='100%'>
                 <LineChart
                     data={data}

@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import Graph from './graph';
 import { fetchIntradayPrices } from '../../actions/price_actions';
 const mapStateToProps = state => ({
-    prices: this.state.entities.prices
+    prices: state.entities.prices
 });
 
 const mapDispatchToProps = dispatch => ({
