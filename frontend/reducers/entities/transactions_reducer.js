@@ -16,8 +16,9 @@ const TransactionsReducer = (state = {}, action) => {
             }
             return nextState;
         case RECEIEVE_TRANSACTION:
-            nextState[action.transaction.id] = action.transaction;
-            return nextState;
+            debugger
+            // nextState[action.transaction.id] = action.transaction;
+            return action.transaction
         default:
             return state;
     }

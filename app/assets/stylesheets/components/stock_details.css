@@ -21,7 +21,7 @@
 .stock-orders {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     width: 20%;
     height: 80%;
     margin: 1%;
@@ -124,3 +124,12 @@
     height: 80%;
 }
 
+.transaction-form-div form {
+    display: flex;
+    flex-direction: column;
+}
+
+.transaction-form-div form div {
+    display: flex;
+    justify-content: space-between;
+}

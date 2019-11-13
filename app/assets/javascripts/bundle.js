@@ -301,21 +301,27 @@ var fetchStock = function fetchStock(symbol) {
 /*!*************************************************!*\
   !*** ./frontend/actions/transaction_actions.js ***!
   \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: RECEIVE_TRANSACTION, createTransaction */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-// import * as TransactionApiUtil from '../util/transaction_api_util';
-// export const RECEIEVE_TRANSACTIONS = 'RECEIEVE_TRANSACTIONS';
-// export const RECEIEVE_TRANSACTION = 'RECEIEVE_TRANSACTION';
-// const receieveTransactions = transactions => ({
-//     type: RECEIEVE_TRANSACTIONS,
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_TRANSACTION", function() { return RECEIVE_TRANSACTION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createTransaction", function() { return createTransaction; });
+/* harmony import */ var _util_transaction_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/transaction_api_util */ "./frontend/util/transaction_api_util.js");
+ // export const RECEIVE_TRANSACTIONS = 'RECEIEVE_TRANSACTIONS';
+
+var RECEIVE_TRANSACTION = 'RECEIEVE_TRANSACTION'; // const receiveTransactions = transactions => ({
+//     type: RECEIVE_TRANSACTIONS,
 //     transactions
 // });
-// const receieveTransaction = transaction => ({
-//     type: RECEIEVE_TRANSACTION,
-//     transaction
-// });
-// export const fetchTransactions = () => dispatch => (
+
+var receiveTransaction = function receiveTransaction(transaction) {
+  return {
+    type: RECEIVE_TRANSACTION,
+    transaction: transaction
+  };
+}; // export const fetchTransactions = () => dispatch => (
 //     TransactionApiUtil.fetchTransactions().then(
 //         transactions => dispatch(receieveTransactions(transactions))
 //     )
@@ -325,11 +331,15 @@ var fetchStock = function fetchStock(symbol) {
 //         transaction => dispatch(receieveTransaction(transaction))
 //     )
 // );
-// export const createTransaction = transaction => dispatch => (
-//     TransactionApiUtil.createTransaction(transaction).then(
-//         transaction => dispatch(receiveTransaction(transaction))
-//     )
-// );
+
+
+var createTransaction = function createTransaction(transaction) {
+  return function (dispatch) {
+    return _util_transaction_api_util__WEBPACK_IMPORTED_MODULE_0__["createTransaction"](transaction).then(function (transaction) {
+      return dispatch(receiveTransaction(transaction));
+    });
+  };
+};
 
 /***/ }),
 
@@ -1505,6 +1515,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _graph_graph__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../graph/graph */ "./frontend/components/graph/graph.jsx");
+/* harmony import */ var _transaction_form_transaction_form_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../transaction_form/transaction_form_container */ "./frontend/components/transaction_form/transaction_form_container.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1522,6 +1533,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -1597,7 +1609,10 @@ function (_React$Component) {
           className: "recent-news"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Recent News"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), this.renderNews())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "stock-orders"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Buy/Sell"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)));
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Buy/Sell"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_transaction_form_transaction_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          symbol: stock.symbol,
+          price: close
+        })));
       }
     }
   }]);
@@ -1861,6 +1876,151 @@ var SVGIcon = function SVGIcon(_ref) {
 
 /***/ }),
 
+/***/ "./frontend/components/transaction_form/transaction_form.jsx":
+/*!*******************************************************************!*\
+  !*** ./frontend/components/transaction_form/transaction_form.jsx ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var TransactionForm =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(TransactionForm, _React$Component);
+
+  function TransactionForm(props) {
+    var _this;
+
+    _classCallCheck(this, TransactionForm);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(TransactionForm).call(this, props));
+    _this.state = {
+      shares: 0
+    };
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(TransactionForm, [{
+    key: "update",
+    value: function update(field) {
+      var _this2 = this;
+
+      return function (e) {
+        _this2.setState(_defineProperty({}, field, e.currentTarget.value));
+      };
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      var _this$props = this.props,
+          symbol = _this$props.symbol,
+          currentUser = _this$props.currentUser;
+      var transaction = {
+        user_id: currentUser,
+        symbol: symbol,
+        shares: this.state.shares,
+        cost: this.calculateCost()
+      };
+      debugger;
+      this.props.createTransaction(transaction);
+    }
+  }, {
+    key: "calculateCost",
+    value: function calculateCost() {
+      var total = this.state.shares * this.props.price;
+      return parseFloat(Math.round(total * 100) / 100).toFixed(2);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      // debugger
+      var _this$props2 = this.props,
+          symbol = _this$props2.symbol,
+          price = _this$props2.price;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "transaction-form-div"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: this.handleSubmit
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Shares"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        onChange: this.update('shares'),
+        value: this.state.shares
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Market Price"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, price)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, " Estimated Cost"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "$ ", this.calculateCost())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "submit"
+      }, "Submit")));
+    }
+  }]);
+
+  return TransactionForm;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (TransactionForm);
+
+/***/ }),
+
+/***/ "./frontend/components/transaction_form/transaction_form_container.js":
+/*!****************************************************************************!*\
+  !*** ./frontend/components/transaction_form/transaction_form_container.js ***!
+  \****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _transaction_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./transaction_form */ "./frontend/components/transaction_form/transaction_form.jsx");
+/* harmony import */ var _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/transaction_actions */ "./frontend/actions/transaction_actions.js");
+
+
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    transactions: state.entities.transactions,
+    currentUser: state.entities.users[0]
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    createTransaction: function createTransaction(transaction) {
+      return dispatch(Object(_actions_transaction_actions__WEBPACK_IMPORTED_MODULE_2__["createTransaction"])(transaction));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_transaction_form__WEBPACK_IMPORTED_MODULE_1__["default"]));
+
+/***/ }),
+
 /***/ "./frontend/reducers/entities/entities_reducer.js":
 /*!********************************************************!*\
   !*** ./frontend/reducers/entities/entities_reducer.js ***!
@@ -1971,7 +2131,9 @@ var PricesReducer = function PricesReducer() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_stock_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/stock_actions */ "./frontend/actions/stock_actions.js");
 /* harmony import */ var _actions_price_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/price_actions */ "./frontend/actions/price_actions.js");
+/* harmony import */ var _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/transaction_actions */ "./frontend/actions/transaction_actions.js");
  // import { RECEIVE_CURRENT_USER } from '../../actions/session_actions';
+
 
 
 
@@ -2021,7 +2183,6 @@ var StocksReducer = function StocksReducer() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/transaction_actions */ "./frontend/actions/transaction_actions.js");
-/* harmony import */ var _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_actions_transaction_actions__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/session_actions */ "./frontend/actions/session_actions.js");
 /* harmony import */ var _actions_stock_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/stock_actions */ "./frontend/actions/stock_actions.js");
 
@@ -2047,8 +2208,9 @@ var TransactionsReducer = function TransactionsReducer() {
       return nextState;
 
     case _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIEVE_TRANSACTION"]:
-      nextState[action.transaction.id] = action.transaction;
-      return nextState;
+      debugger; // nextState[action.transaction.id] = action.transaction;
+
+      return action.transaction;
 
     default:
       return state;
@@ -2320,7 +2482,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_session_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./actions/session_actions */ "./frontend/actions/session_actions.js");
 /* harmony import */ var _actions_stock_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./actions/stock_actions */ "./frontend/actions/stock_actions.js");
 /* harmony import */ var _actions_price_actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./actions/price_actions */ "./frontend/actions/price_actions.js");
+/* harmony import */ var _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./actions/transaction_actions */ "./frontend/actions/transaction_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -2356,6 +2520,7 @@ document.addEventListener("DOMContentLoaded", function () {
   window.fetchStock = _actions_stock_actions__WEBPACK_IMPORTED_MODULE_5__["fetchStock"];
   window.fetchStocks = _actions_stock_actions__WEBPACK_IMPORTED_MODULE_5__["fetchStocks"];
   window.fetchIntradayPrices = _actions_price_actions__WEBPACK_IMPORTED_MODULE_6__["fetchIntradayPrices"];
+  window.createTransaction = _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_7__["createTransaction"];
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_3__["default"], {
     store: store
   }), root);
@@ -2528,6 +2693,40 @@ var fetchIntradayPrices = function fetchIntradayPrices(symbol) {
   return $.ajax({
     url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices/?chartInterval=5&token=pk_d9fc28e6b9594efa97b112ac9c920c87"),
     method: 'GET'
+  });
+};
+
+/***/ }),
+
+/***/ "./frontend/util/transaction_api_util.js":
+/*!***********************************************!*\
+  !*** ./frontend/util/transaction_api_util.js ***!
+  \***********************************************/
+/*! exports provided: createTransaction */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createTransaction", function() { return createTransaction; });
+// export const fetchTransactions = () => (
+//     $.ajax({
+//         url: '/api/transactions',
+//         method: 'GET'
+//     })
+// );
+// export const fetchTransaction = transaction => (
+//     $.ajax({
+//         url: `/api/transactions/${transaction.id}`,
+//         method: 'GET'
+//     })
+// );
+var createTransaction = function createTransaction(transaction) {
+  return $.ajax({
+    url: "/api/transactions",
+    method: 'POST',
+    data: {
+      transaction: transaction
+    }
   });
 };
 

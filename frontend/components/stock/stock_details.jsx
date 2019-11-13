@@ -1,5 +1,6 @@
 import React from 'react';
 import Graph from '../graph/graph';
+import TransactionFormContainer from '../transaction_form/transaction_form_container';
 
 class StockDetails extends React.Component {
     constructor(props) {
@@ -79,6 +80,7 @@ class StockDetails extends React.Component {
                 <div className='stock-orders'>
                     <h2>Buy/Sell</h2>
                     <hr/>
+                    <TransactionFormContainer symbol={stock.symbol} price={close}/>
                 </div>
             </div>
             )

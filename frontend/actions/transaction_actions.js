@@ -1,17 +1,17 @@
-// import * as TransactionApiUtil from '../util/transaction_api_util';
+import * as TransactionApiUtil from '../util/transaction_api_util';
 
-// export const RECEIEVE_TRANSACTIONS = 'RECEIEVE_TRANSACTIONS';
-// export const RECEIEVE_TRANSACTION = 'RECEIEVE_TRANSACTION';
+// export const RECEIVE_TRANSACTIONS = 'RECEIEVE_TRANSACTIONS';
+export const RECEIVE_TRANSACTION = 'RECEIEVE_TRANSACTION';
 
-// const receieveTransactions = transactions => ({
-//     type: RECEIEVE_TRANSACTIONS,
+// const receiveTransactions = transactions => ({
+//     type: RECEIVE_TRANSACTIONS,
 //     transactions
 // });
 
-// const receieveTransaction = transaction => ({
-//     type: RECEIEVE_TRANSACTION,
-//     transaction
-// });
+const receiveTransaction = transaction => ({
+    type: RECEIVE_TRANSACTION,
+    transaction
+});
 
 // export const fetchTransactions = () => dispatch => (
 //     TransactionApiUtil.fetchTransactions().then(
@@ -25,8 +25,8 @@
 //     )
 // );
 
-// export const createTransaction = transaction => dispatch => (
-//     TransactionApiUtil.createTransaction(transaction).then(
-//         transaction => dispatch(receiveTransaction(transaction))
-//     )
-// );
+export const createTransaction = transaction => dispatch => (
+    TransactionApiUtil.createTransaction(transaction).then(
+        transaction => dispatch(receiveTransaction(transaction))
+    )
+);

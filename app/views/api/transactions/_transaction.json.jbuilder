@@ -1,1 +1,1 @@
-# json.extract! transaction, :id, :user_id, :symbol, :shares, :cost
+json.extract! transaction, :id, :user_id, :symbol, :shares, :cost
