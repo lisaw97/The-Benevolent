@@ -27,7 +27,6 @@ class TransactionForm extends React.Component {
             shares: this.state.shares,
             cost: this.calculateCost()
         }
-        debugger
         this.props.createTransaction(transaction);
     }
 
@@ -37,8 +36,7 @@ class TransactionForm extends React.Component {
     }
 
     render() {
-        // debugger
-        const { symbol, price } = this.props;
+        const { price } = this.props;
         return (
             <div className='transaction-form-div'>
                 <form onSubmit={this.handleSubmit}>
@@ -50,7 +48,7 @@ class TransactionForm extends React.Component {
                             value={this.state.shares}
                         />
                     </div>
-                    <div>
+                    <div className='mkt-price'>
                         <label>Market Price</label>
                         <div>{price}</div>
                     </div>
@@ -58,7 +56,7 @@ class TransactionForm extends React.Component {
                         <label> Estimated Cost</label>
                         <div>$ {this.calculateCost()}</div>
                     </div>
-                    <button type="submit">Submit</button>
+                    <button type="submit">Review Order</button>
                 </form>
             </div>
         )

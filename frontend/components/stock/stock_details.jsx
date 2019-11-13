@@ -58,7 +58,7 @@ class StockDetails extends React.Component {
                                 <li>1Y</li>
                                 <li>5Y</li>
                             </ul>
-                            <hr /> 
+                            {/* <hr />  */}
                     </div>
                     <div className='stock-about'>
                         <h2>About</h2>
@@ -79,8 +79,10 @@ class StockDetails extends React.Component {
                 </div>
                 <div className='stock-orders'>
                     <h2>Buy/Sell</h2>
-                    <hr/>
+                    {/* <hr/> */}
                     <TransactionFormContainer symbol={stock.symbol} price={close}/>
+                    <div className='buying-power'>$10022.33 Buying Power Available</div>
+                {/* <button className='watchlist-button'>Add To Watchlist</button> */}
                 </div>
             </div>
             )

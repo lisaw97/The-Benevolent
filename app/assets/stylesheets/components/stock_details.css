@@ -21,18 +21,84 @@
 .stock-orders {
     display: flex;
     flex-direction: column;
-    /* justify-content: space-between; */
     width: 20%;
-    height: 80%;
-    margin: 1%;
+    height: 300px;
+    margin: 3%;
     position: fixed;
-    top: 40;
+    top: 50;
     right: 0;
     padding: 5px 5px 10px 5px;
     border: 1px solid #BFBFBF;
     box-shadow: 10px 10px 5px #aaaaaa;
-    background-color: yellow;
+    background-color: white;
 }
+
+.stock-orders h2 {
+    font-size: 25px;
+    border-bottom: 1px solid black;
+    padding-bottom: 5px;
+}
+
+.transaction-form-div form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 200px;
+    margin-bottom: 15px;
+    margin-top: 20px;
+}
+
+.transaction-form-div form div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+}
+
+.transaction-form-div form div label {
+    font-weight: bold;
+}
+
+.transaction-form-div form div input {
+    border-radius: 5px;
+    height: 20px;
+    width: 40px;
+}
+
+.mkt-price {
+    border-bottom: 1px solid black;
+    padding-bottom: 20px;
+}
+
+.mkt-price label {
+    color: var(--rh-green);
+}
+
+.transaction-form-div form button {
+    height: 30px;
+    border-radius: 5px;
+    font-family: var(--font-family);
+    font-size: 15px;
+    border: 2px solid var(--rh-green);
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.buying-power {
+    font-size: 12px;
+    color: var(--rh-green);
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid lightgrey;
+}
+/* .watchlist-button {
+    height: 30px;
+    border-radius: 5px;
+    font-family: var(--font-family);
+    font-size: 15px;
+    border: 2px solid var(--rh-green);
+    margin-top: 5px;
+} */
 
 .stock-graph {
     margin: 1%;
@@ -124,12 +190,3 @@
     height: 80%;
 }
 
-.transaction-form-div form {
-    display: flex;
-    flex-direction: column;
-}
-
-.transaction-form-div form div {
-    display: flex;
-    justify-content: space-between;
-}

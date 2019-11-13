@@ -21,7 +21,7 @@
 .stocks-div {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     width: 20%;
     height: 80%;
     margin: 1%;
@@ -32,6 +32,7 @@
     border: 1px solid #BFBFBF;
     background-color: white;
     box-shadow: 10px 10px 5px #aaaaaa;
+    overflow: scroll;
 }
 
 .stocks-list {
@@ -134,13 +135,15 @@
 }
 
 .userStocks-div {
-    height: 50%;
+    /* height: 50%; */
     margin: 1%;
+    margin-bottom: 25px;
 }
 
 .watchlist-div {
-    height: 50%;
+    /* height: 50%; */
     margin: 1%;
+    /* overflow: scroll; */
 }
 
 

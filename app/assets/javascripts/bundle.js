@@ -1601,7 +1601,7 @@ function (_React$Component) {
           name: "intraday-stock-graph"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "time-list"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1D"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1W"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "3M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1Y"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "5Y")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1D"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1W"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "3M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1Y"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "5Y"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "stock-about"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "About"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, stock.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "company-info"
@@ -1609,10 +1609,12 @@ function (_React$Component) {
           className: "recent-news"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Recent News"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), this.renderNews())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "stock-orders"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Buy/Sell"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_transaction_form_transaction_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Buy/Sell"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_transaction_form_transaction_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
           symbol: stock.symbol,
           price: close
-        })));
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "buying-power"
+        }, "$10022.33 Buying Power Available")));
       }
     }
   }]);
@@ -1949,7 +1951,6 @@ function (_React$Component) {
         shares: this.state.shares,
         cost: this.calculateCost()
       };
-      debugger;
       this.props.createTransaction(transaction);
     }
   }, {
@@ -1961,10 +1962,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      // debugger
-      var _this$props2 = this.props,
-          symbol = _this$props2.symbol,
-          price = _this$props2.price;
+      var price = this.props.price;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "transaction-form-div"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
@@ -1973,9 +1971,11 @@ function (_React$Component) {
         type: "text",
         onChange: this.update('shares'),
         value: this.state.shares
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Market Price"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, price)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, " Estimated Cost"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "$ ", this.calculateCost())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "mkt-price"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Market Price"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, price)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, " Estimated Cost"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "$ ", this.calculateCost())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit"
-      }, "Submit")));
+      }, "Review Order")));
     }
   }]);
 
