@@ -7,13 +7,14 @@ class User < ApplicationRecord
 
     has_many :transactions
     has_many :watchlist_items
+    has_many :portfolio_snapshots
     has_many :stocks,
         through: :transactions,
         source: :stock
     has_many :watched_stocks,
         through: :watchlist_items,
         source: :stock
-    
+
     def self.find_by_credentials(username, password) 
         user = User.find_by(username: username)
         user && user.is_password?(password) ? user : nil
