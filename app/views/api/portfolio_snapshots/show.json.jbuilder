@@ -1,0 +1,1 @@
+json.partial! '/api/portfolio_snapshots/portfolio_snapshot', portfolio_snapshot: @portfolio_snapshot

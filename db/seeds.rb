@@ -6,159 +6,170 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-User.delete_all
-Stock.delete_all
-Transaction.delete_all
-WatchlistItem.delete_all
+require_relative 'portfolio_snapshots'
 
-guest = User.create!(
-    username: 'guest',
-    email: 'guest@gmail.com',
-    first_name: 'Guest',
-    last_name: '1',
-    password: 'password'
-)
+ActiveRecord::Base.transaction do
+    User.delete_all
+    Stock.delete_all
+    Transaction.delete_all
+    WatchlistItem.delete_all
 
-lisa = User.create!(
-    username: 'lisa',
-    email: 'lisa@gmail.com',
-    first_name: 'Lisa',
-    last_name: 'Wen',
-    password: 'password'
-)
+    guest = User.create!(
+        username: 'guest',
+        email: 'guest@gmail.com',
+        first_name: 'Guest',
+        last_name: '1',
+        password: 'password'
+    )
 
-tsla = Stock.create!(
-    company_name: 'Tesla, Inc.',
-    symbol: 'TSLA'
-)
+    lisa = User.create!(
+        username: 'lisa',
+        email: 'lisa@gmail.com',
+        first_name: 'Lisa',
+        last_name: 'Wen',
+        password: 'password'
+    )
 
-aapl = Stock.create!(
-    company_name: 'Apple, Inc.',
-    symbol: 'AAPL'
-)
+    tsla = Stock.create!(
+        company_name: 'Tesla, Inc.',
+        symbol: 'TSLA'
+    )
 
-msft = Stock.create!(
-    company_name: 'Microsoft Corp.',
-    symbol: 'MSFT'
-)
+    aapl = Stock.create!(
+        company_name: 'Apple, Inc.',
+        symbol: 'AAPL'
+    )
 
-fb = Stock.create!(
-    company_name: 'Facebook, Inc.',
-    symbol: 'FB'
-)
+    msft = Stock.create!(
+        company_name: 'Microsoft Corp.',
+        symbol: 'MSFT'
+    )
 
-twtr = Stock.create!(
-    company_name: 'Twitter, Inc.',
-    symbol: 'TWTR'
-)
+    fb = Stock.create!(
+        company_name: 'Facebook, Inc.',
+        symbol: 'FB'
+    )
 
-v = Stock.create!(
-    company_name: 'Visa, Inc.',
-    symbol: 'V'
-)
+    twtr = Stock.create!(
+        company_name: 'Twitter, Inc.',
+        symbol: 'TWTR'
+    )
 
-c = Stock.create!(
-    company_name: 'Citigroup, Inc.',
-    symbol: 'C'
-)
+    v = Stock.create!(
+        company_name: 'Visa, Inc.',
+        symbol: 'V'
+    )
 
-baba = Stock.create!(
-    company_name: 'Alibaba Group Holding Ltd.',
-    symbol: 'BABA'
-)
+    c = Stock.create!(
+        company_name: 'Citigroup, Inc.',
+        symbol: 'C'
+    )
 
-Transaction.create(
-    user_id: guest.id,
-    shares: 2,
-    cost: 234.54,
-    symbol: tsla.symbol
-)
+    baba = Stock.create!(
+        company_name: 'Alibaba Group Holding Ltd.',
+        symbol: 'BABA'
+    )
 
-Transaction.create(
-    user_id: guest.id,
-    symbol: aapl.symbol,
-    shares: 2,
-    cost: 234.54
-)
+    Transaction.create(
+        user_id: guest.id,
+        shares: 2,
+        cost: 234.54,
+        symbol: tsla.symbol
+    )
 
-Transaction.create(
-    user_id: guest.id,
-    shares: 4,
-    cost: 234.54,
-    symbol: tsla.symbol
-)
+    Transaction.create(
+        user_id: guest.id,
+        symbol: aapl.symbol,
+        shares: 2,
+        cost: 234.54
+    )
 
-Transaction.create(
-    user_id: guest.id,
-    shares: 7,
-    cost: 186.62,
-    symbol: baba.symbol
-)
+    Transaction.create(
+        user_id: guest.id,
+        shares: 4,
+        cost: 234.54,
+        symbol: tsla.symbol
+    )
 
-Transaction.create(
-    user_id: lisa.id,
-    symbol: aapl.symbol,
-    shares: 5,
-    cost: 234.54
-)
+    Transaction.create(
+        user_id: guest.id,
+        shares: 7,
+        cost: 186.62,
+        symbol: baba.symbol
+    )
 
-Transaction.create(
-    user_id: lisa.id,
-    symbol: aapl.symbol,
-    shares: 3,
-    cost: 234.54
-)
+    Transaction.create(
+        user_id: lisa.id,
+        symbol: aapl.symbol,
+        shares: 5,
+        cost: 234.54
+    )
 
-Transaction.create(
-    user_id: lisa.id,
-    symbol: v.symbol,
-    shares: 4,
-    cost: 179.74
-)
+    Transaction.create(
+        user_id: lisa.id,
+        symbol: aapl.symbol,
+        shares: 3,
+        cost: 234.54
+    )
 
-WatchlistItem.create(
-    user_id: guest.id,
-    symbol: msft.symbol
-)
+    Transaction.create(
+        user_id: lisa.id,
+        symbol: v.symbol,
+        shares: 4,
+        cost: 179.74
+    )
 
-WatchlistItem.create(
-    user_id: guest.id,
-    symbol: c.symbol
-)
+    WatchlistItem.create(
+        user_id: guest.id,
+        symbol: msft.symbol
+    )
 
-WatchlistItem.create(
-    user_id: guest.id,
-    symbol: fb.symbol
-)
+    WatchlistItem.create(
+        user_id: guest.id,
+        symbol: c.symbol
+    )
 
-WatchlistItem.create(
-    user_id: guest.id,
-    symbol: twtr.symbol
-)
+    WatchlistItem.create(
+        user_id: guest.id,
+        symbol: fb.symbol
+    )
 
-WatchlistItem.create(
-    user_id: lisa.id,
-    symbol: tsla.symbol,
-)
+    WatchlistItem.create(
+        user_id: guest.id,
+        symbol: twtr.symbol
+    )
 
-WatchlistItem.create(
-    user_id: lisa.id,
-    symbol: msft.symbol,
-)
+    WatchlistItem.create(
+        user_id: lisa.id,
+        symbol: tsla.symbol,
+    )
 
-WatchlistItem.create(
-    user_id: lisa.id,
-    symbol: twtr.symbol,
-)
+    WatchlistItem.create(
+        user_id: lisa.id,
+        symbol: msft.symbol,
+    )
 
-WatchlistItem.create(
-    user_id: lisa.id,
-    symbol: baba.symbol,
-)
+    WatchlistItem.create(
+        user_id: lisa.id,
+        symbol: twtr.symbol,
+    )
 
-WatchlistItem.create(
-    user_id: lisa.id,
-    symbol: c.symbol,
-)
+    WatchlistItem.create(
+        user_id: lisa.id,
+        symbol: baba.symbol,
+    )
+
+    WatchlistItem.create(
+        user_id: lisa.id,
+        symbol: c.symbol,
+    )
+
+    SNAPSHOTS.each do  |snapshot|
+        date = Date.parse(snapshot[:time])
+        balance = snapshot[:balance]
+        PortfolioSnapshot.create({ date: date, balance: balance, user_id: guest.id })
+    end
+end
+
 
 
