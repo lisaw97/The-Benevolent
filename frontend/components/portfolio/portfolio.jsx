@@ -101,12 +101,10 @@ class Portfolio extends React.Component {
         return (
             <div className='portfolio-main-div'>
                 <div className='portfolio-info-div'>
+
                     <div className='portfolio-div'>
-                        {/* <h2>Balance</h2>
-                        <div>[Insert Graph Here]</div> */}
                         {/* {this.renderSnapshots()} */}
                         <div className='stock-graph'>
-                            {/* <h2 className='comp-name'>{stock.companyName}</h2> */}
                             <h1>${currBal}</h1>
                             <h3>${dollarDiff} ({percentDiff}%)</h3>
                             <GraphContainer data={snapshot_values} name='intraday-stock-graph' dataKey='balance' />
@@ -119,25 +117,27 @@ class Portfolio extends React.Component {
                                 <li>5Y</li>
                             </ul>
                         </div>
-                        {/* <GraphContainer data={this.props.snapshots} name='intraday-stock-graph' dataKey='balance'/> */}
                     </div>
-                    <div className='news-div'>
-                        <h2>Recent News</h2>
-                        <hr/>
-                        {this.renderNews()}
+
+                    <div className='stocks-div'>
+                        <div className='userStocks-div'>
+                            <h2>Stocks Owned</h2>
+                            <hr/>
+                            {this.renderStocks()}
+                        </div>
+                        <div className='watchlist-div'>
+                                <h2>Watchlist</h2>
+                                <hr/>
+                                {this.renderWatchlist()}
+                        </div>
                     </div>
+                    
                 </div>
-                <div className='stocks-div'>
-                    <div className='userStocks-div'>
-                        <h2>Stocks Owned</h2>
-                        <hr/>
-                        {this.renderStocks()}
-                    </div>
-                    <div className='watchlist-div'>
-                        <h2>Watchlist</h2>
-                        <hr/>
-                        {this.renderWatchlist()}
-                    </div>
+
+                <div className='news-div'>
+                    <h2>Recent News</h2>
+                    <hr/>
+                    {this.renderNews()}
                 </div>
             </div>
         )

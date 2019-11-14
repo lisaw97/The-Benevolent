@@ -64,6 +64,7 @@ class StockDetails extends React.Component {
             <div className='stock-details-div'>
                 
                 <div className='stock-details-left'>
+
                     <div className='stock-graph'>
                         <h2 className='comp-name'>{stock.companyName}</h2>
                         <h1>${close}</h1>
@@ -80,27 +81,32 @@ class StockDetails extends React.Component {
                                 <li>5Y</li>
                             </ul>
                     </div>
-                    <div className='stock-about'>
-                        <h2>About</h2>
-                        <hr/>
-                        <p>{stock.description}</p>
-                        <div className='company-info'>
-                            <label>CEO <div>{stock.CEO}</div></label>
-                            <label>Employees <div>{stock.employees}</div></label>
-                            <label>Headquarters <div>{stock.city}, {stock.state}</div></label>
-                            <label>Industry <div>{stock.industry}</div></label>
-                        </div>
-                    </div>
-                    <div className='recent-news'>
-                        <h2>Recent News</h2>
-                        <hr/>
-                        {this.renderNews()}
+
+                    <div className='stock-orders'>
+                        <TransactionFormContainer symbol={stock.symbol} price={close} />
+                        {/* <button className='watchlist-button'>Add To Watchlist</button> */}
+                    </div>      
+                                  
+                </div>
+
+                <div className='stock-about'>
+                    <h2>About</h2>
+                    <hr />
+                    <p>{stock.description}</p>
+                    <div className='company-info'>
+                        <label>CEO <div>{stock.CEO}</div></label>
+                        <label>Employees <div>{stock.employees}</div></label>
+                        <label>Headquarters <div>{stock.city}, {stock.state}</div></label>
+                        <label>Industry <div>{stock.industry}</div></label>
                     </div>
                 </div>
-                <div className='stock-orders'>
-                    <TransactionFormContainer symbol={stock.symbol} price={close}/>
-                    {/* <button className='watchlist-button'>Add To Watchlist</button> */}
+
+                <div className='recent-news'>
+                    <h2>Recent News</h2>
+                    <hr />
+                    {this.renderNews()}
                 </div>
+
             </div>
             )
         }

@@ -949,14 +949,14 @@ function (_React$Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "time-list"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "1D")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1W"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "3M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1Y"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "5Y")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "news-div"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Recent News"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), this.renderNews())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "stocks-div"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "userStocks-div"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Stocks Owned"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), this.renderStocks()), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "watchlist-div"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Watchlist"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), this.renderWatchlist())));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Watchlist"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), this.renderWatchlist()))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "news-div"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Recent News"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), this.renderNews()));
     }
   }]);
 
@@ -1749,17 +1749,17 @@ function (_React$Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           onClick: this.render1DGraph
         }, "1D")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1W"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "3M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1Y"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "5Y"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "stock-orders"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_transaction_form_transaction_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          symbol: stock.symbol,
+          price: close
+        }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "stock-about"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "About"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, stock.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "company-info"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "CEO ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, stock.CEO)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Employees ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, stock.employees)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Headquarters ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, stock.city, ", ", stock.state)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Industry ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, stock.industry)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "recent-news"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Recent News"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), this.renderNews())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "stock-orders"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_transaction_form_transaction_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
-          symbol: stock.symbol,
-          price: close
-        })));
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Recent News"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), this.renderNews()));
       }
     }
   }]);
