@@ -1,5 +1,4 @@
 import React from 'react';
-import { runInThisContext } from 'vm';
 
 class TransactionForm extends React.Component {
     constructor(props) {
@@ -25,7 +24,6 @@ class TransactionForm extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        this.setState({ submit: true });
         const { symbol, currentUser } = this.props;
         let shares = this.state.shares;
         if (!this.state.buy) {
@@ -38,6 +36,7 @@ class TransactionForm extends React.Component {
             cost: this.calculateCost()
         }
         this.props.createTransaction(transaction);
+        this.setState({ submit: true, shares: 0 });
     }
 
     calculateCost() {
@@ -78,7 +77,7 @@ class TransactionForm extends React.Component {
         });
         return shares;
     }
-
+    
     render() {
         const { price } = this.props;
         let buyName = 'highlight';
