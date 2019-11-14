@@ -21,7 +21,7 @@ export const fetchIntradayPrices = symbol => (
 
 export const fetch1YPrices = symbol => (
     $.ajax({
-        url: `https://cloud.iexapis.com/stable/stock/${symbol}/chart/1y/?chartInterval=5&token=pk_d9fc28e6b9594efa97b112ac9c920c87`,
+        url: `https://cloud.iexapis.com/stable/stock/${symbol}/chart/1y/?token=pk_d9fc28e6b9594efa97b112ac9c920c87`,
         method: 'GET'
     })
 )

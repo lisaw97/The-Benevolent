@@ -7,7 +7,7 @@ import StockDetails from './stock_details';
 const mapStateToProps = (state, ownProps) => ({
     stock: state.entities.stocks[ownProps.match.params.symbol],
     news: state.entities.news,
-    intradayPrices: state.entities.prices
+    prices: state.entities.prices
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -3,6 +3,13 @@ import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer} from 'rech
 
 const Graph = ({ data, name }) => {
     // debugger
+    let color = '#20CE99';
+    if (data){
+        if (data[data.length - 1].close < data[0].close) {
+            color = '#F45530';
+        }
+    }
+    
     return (
         <div className={name}>
             <ResponsiveContainer width='100%' height='100%'>
@@ -13,18 +20,9 @@ const Graph = ({ data, name }) => {
                     <XAxis hide={true} dataKey='label' />
                     <YAxis hide={true} tickLine={false} dataKey='close' type='number' domain={['dataMin', 'dataMax']} />
                     <Tooltip cursor={{ stroke: 'lightgrey', strokeWidth: 1 }} />
-                    <Line type="linear" connectNulls={true} dot={false} stroke="#82ca9d" dataKey='close'/>
+                    <Line type="linear" isAnimationActive={true} connectNulls={true} dot={false} stroke={color} dataKey='close'/>
                 </LineChart>
             </ ResponsiveContainer>
-            {/* <ul className='time-list'>
-                <li>1D</li>
-                <li>1W</li>
-                <li>1M</li>
-                <li>3M</li>
-                <li>1Y</li>
-                <li>5Y</li>
-            </ul>
-            <hr/>  */}
         </div>
     )
 }

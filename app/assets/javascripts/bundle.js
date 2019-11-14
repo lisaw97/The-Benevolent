@@ -467,6 +467,14 @@ var Graph = function Graph(_ref) {
   var data = _ref.data,
       name = _ref.name;
   // debugger
+  var color = '#20CE99';
+
+  if (data) {
+    if (data[data.length - 1].close < data[0].close) {
+      color = '#F45530';
+    }
+  }
+
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: name
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["ResponsiveContainer"], {
@@ -496,9 +504,10 @@ var Graph = function Graph(_ref) {
     }
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Line"], {
     type: "linear",
+    isAnimationActive: true,
     connectNulls: true,
     dot: false,
-    stroke: "#82ca9d",
+    stroke: color,
     dataKey: "close"
   }))));
 };
@@ -1574,10 +1583,9 @@ function (_React$Component) {
     _classCallCheck(this, StockDetails);
 
     return _possibleConstructorReturn(this, _getPrototypeOf(StockDetails).call(this, props)); // this.state = {
-    //     buy: true,
-    //     time: ""
+    //     data: this.props.prices.intraday
     // }
-    // this.setBuy = this.setBuy.bind(this);
+    // this.render1DGraph = this.render1DGraph.bind(this);
   }
 
   _createClass(StockDetails, [{
@@ -1585,7 +1593,8 @@ function (_React$Component) {
     value: function componentDidMount() {
       this.props.fetchStock(this.props.match.params.symbol);
       this.props.fetchStockNews(this.props.match.params.symbol, 3);
-      this.props.fetchIntradayPrices(this.props.match.params.symbol); // this.props.fetch1YPrices(this.props.match.params.symbol);
+      this.props.fetchIntradayPrices(this.props.match.params.symbol);
+      this.props.fetch1YPrices(this.props.match.params.symbol);
     }
   }, {
     key: "renderNews",
@@ -1602,46 +1611,39 @@ function (_React$Component) {
           src: article.image
         }));
       }));
-    } // setBuy(boolean) {
-    //     // debugger
-    //     this.setState({ buy: boolean });
-    //     return (
-    //         <div>
-    //             <div className='buying-power'>$10022.33 Buying Power Available</div>
-    //         </div>
-    //     );
-    // }
-    // renderForm() {
-    //     // debugger
-    //     if (this.state.buy) {
-    //         return (
-    //             <div className='buying-power'>$10022.33 Buying Power Available</div>
-    //         )
-    //     } else {
-    //         return (
-    //             <div>
-    //                 Hi
-    //             </div> 
-    //         )
-    //     } 
-    // }
-
+    }
+  }, {
+    key: "render1DGraph",
+    value: function render1DGraph() {// debugger
+      // return (<Graph data={this.props.prices.intraday} name='intraday-stock-graph' />)
+      // this.setState({data: this.props.prices})
+    }
   }, {
     key: "render",
     value: function render() {
       var _this$props = this.props,
-          intradayPrices = _this$props.intradayPrices,
+          prices = _this$props.prices,
           stock = _this$props.stock;
-      var close = 0;
-
-      if (intradayPrices.length > 0) {
-        close = intradayPrices[intradayPrices.length - 1].close;
-      }
 
       if (!stock) {
         return null;
       } else {
-        // debugger
+        var close = 0;
+        var dollarDiff = 0;
+        var percentDiff = 0; // debugger
+
+        if (prices.intraday) {
+          // debugger
+          if (prices.intraday.length > 0) {
+            close = prices.intraday[prices.intraday.length - 1].close;
+            var open = prices.intraday[0].close;
+            dollarDiff = close - open;
+            dollarDiff = parseFloat(Math.round(dollarDiff * 100) / 100).toFixed(2);
+            percentDiff = dollarDiff / open;
+            percentDiff = parseFloat(Math.round(percentDiff * 100) / 100).toFixed(2);
+          }
+        }
+
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "stock-details-div"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1650,12 +1652,14 @@ function (_React$Component) {
           className: "stock-graph"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
           className: "comp-name"
-        }, stock.companyName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "$", close), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_graph_graph__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          data: this.props.intradayPrices,
+        }, stock.companyName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "$", close), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", dollarDiff, " (", percentDiff, "%)"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_graph_graph__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          data: this.props.prices.intraday,
           name: "intraday-stock-graph"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "time-list"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1D"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1W"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "3M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1Y"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "5Y"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          onClick: this.render1DGraph
+        }, "1D")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1W"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "3M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1Y"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "5Y"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "stock-about"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "About"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, stock.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "company-info"
@@ -1702,7 +1706,7 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
   return {
     stock: state.entities.stocks[ownProps.match.params.symbol],
     news: state.entities.news,
-    intradayPrices: state.entities.prices
+    prices: state.entities.prices
   };
 };
 
@@ -2006,8 +2010,8 @@ function (_React$Component) {
       e.preventDefault();
       this.setState({
         submit: true
-      });
-      debugger;
+      }); // debugger
+
       var _this$props = this.props,
           symbol = _this$props.symbol,
           currentUser = _this$props.currentUser;
@@ -2235,14 +2239,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var PricesReducer = function PricesReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments.length > 1 ? arguments[1] : undefined;
   Object.freeze(state);
-  var nextState = Object.assign([], state);
+  var nextState = Object.assign({}, state);
 
   switch (action.type) {
     case _actions_price_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_INTRADAY_PRICES"]:
-      return action.prices;
+      nextState.intraday = action.prices;
+      return nextState;
+
+    case _actions_price_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_1Y_PRICES"]:
+      nextState.year = action.prices;
+      return nextState;
 
     default:
       return state;
@@ -2836,7 +2845,7 @@ var fetchIntradayPrices = function fetchIntradayPrices(symbol) {
 };
 var fetch1YPrices = function fetch1YPrices(symbol) {
   return $.ajax({
-    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/chart/1y/?chartInterval=5&token=pk_d9fc28e6b9594efa97b112ac9c920c87"),
+    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/chart/1y/?token=pk_d9fc28e6b9594efa97b112ac9c920c87"),
     method: 'GET'
   });
 };

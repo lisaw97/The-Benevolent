@@ -1,11 +1,15 @@
-import { RECEIVE_INTRADAY_PRICES } from '../../actions/price_actions';
+import { RECEIVE_INTRADAY_PRICES, RECEIVE_1Y_PRICES } from '../../actions/price_actions';
 
-const PricesReducer = (state = [], action) => {
+const PricesReducer = (state = {}, action) => {
     Object.freeze(state);
-    let nextState = Object.assign([], state);
+    let nextState = Object.assign({}, state);
     switch (action.type) {
         case RECEIVE_INTRADAY_PRICES:
-            return action.prices;
+            nextState.intraday = action.prices;
+            return nextState;
+        case RECEIVE_1Y_PRICES:
+            nextState.year = action.prices;
+            return nextState;
         default:
             return state;
     }

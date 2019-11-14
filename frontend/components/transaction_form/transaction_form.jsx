@@ -26,7 +26,7 @@ class TransactionForm extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
         this.setState({ submit: true });
-        debugger
+        // debugger
         const { symbol, currentUser } = this.props;
         let shares = this.state.shares;
         if (!this.state.buy) {
