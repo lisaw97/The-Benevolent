@@ -5,12 +5,18 @@ import TransactionFormContainer from '../transaction_form/transaction_form_conta
 class StockDetails extends React.Component {
     constructor(props) {
         super(props);
+        // this.state = {
+        //     buy: true,
+        //     time: ""
+        // }
+        // this.setBuy = this.setBuy.bind(this);
     }
 
     componentDidMount() {
         this.props.fetchStock(this.props.match.params.symbol);
         this.props.fetchStockNews(this.props.match.params.symbol, 3);
         this.props.fetchIntradayPrices(this.props.match.params.symbol);
+        // this.props.fetch1YPrices(this.props.match.params.symbol);
     }
 
     renderNews() {
@@ -31,12 +37,37 @@ class StockDetails extends React.Component {
         );
     }
 
+    // setBuy(boolean) {
+    //     // debugger
+    //     this.setState({ buy: boolean });
+    //     return (
+    //         <div>
+                
+    //             <div className='buying-power'>$10022.33 Buying Power Available</div>
+    //         </div>
+    //     );
+    // }
+
+    // renderForm() {
+    //     // debugger
+    //     if (this.state.buy) {
+    //         return (
+    //             <div className='buying-power'>$10022.33 Buying Power Available</div>
+    //         )
+    //     } else {
+    //         return (
+    //             <div>
+    //                 Hi
+    //             </div> 
+    //         )
+    //     } 
+    // }
     render() {
-        const { prices, stock } = this.props;
+        const { intradayPrices, stock } = this.props;
 
         let close = 0;
-        if (prices.length > 0) {
-            close = prices[prices.length - 1].close;
+        if (intradayPrices.length > 0) {
+            close = intradayPrices[intradayPrices.length - 1].close;
         }
 
         if (!stock) {
@@ -45,11 +76,13 @@ class StockDetails extends React.Component {
             // debugger
             return (
             <div className='stock-details-div'>
+                
                 <div className='stock-details-left'>
                     <div className='stock-graph'>
                         <h2 className='comp-name'>{stock.companyName}</h2>
                         <h1>${close}</h1>
-                            <Graph data={this.props.prices} name='intraday-stock-graph'/>
+                            {/* <button onClick={this.handleClick}>{this.state.time}</button> */}
+                            <Graph data={this.props.intradayPrices} name='intraday-stock-graph'/>
                             <ul className='time-list'>
                                 <li>1D</li>
                                 <li>1W</li>
@@ -78,10 +111,11 @@ class StockDetails extends React.Component {
                     </div>
                 </div>
                 <div className='stock-orders'>
-                    <h2>Buy/Sell</h2>
-                    {/* <hr/> */}
+                    {/* <h2 onClick={() => this.setBuy(true)}>Buy</h2>
+                    <h2 onClick={() => this.setBuy(false)}>Sell</h2> */}
                     <TransactionFormContainer symbol={stock.symbol} price={close}/>
-                    <div className='buying-power'>$10022.33 Buying Power Available</div>
+                    {/* {this.renderForm()} */}
+                    {/* <div className='buying-power'>$10022.33 Buying Power Available</div> */}
                 {/* <button className='watchlist-button'>Add To Watchlist</button> */}
                 </div>
             </div>

@@ -140,16 +140,19 @@ var fetchStockNews = function fetchStockNews(symbol, last) {
 /*!*******************************************!*\
   !*** ./frontend/actions/price_actions.js ***!
   \*******************************************/
-/*! exports provided: RECEIVE_INTRADAY_PRICES, fetchIntradayPrices */
+/*! exports provided: RECEIVE_INTRADAY_PRICES, RECEIVE_1Y_PRICES, fetchIntradayPrices, fetch1YPrices */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_INTRADAY_PRICES", function() { return RECEIVE_INTRADAY_PRICES; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_1Y_PRICES", function() { return RECEIVE_1Y_PRICES; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchIntradayPrices", function() { return fetchIntradayPrices; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetch1YPrices", function() { return fetch1YPrices; });
 /* harmony import */ var _util_stock_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/stock_api_util */ "./frontend/util/stock_api_util.js");
 
 var RECEIVE_INTRADAY_PRICES = 'RECEIVE_INTRADAY_PRICES';
+var RECEIVE_1Y_PRICES = 'RECEIVE_1Y_PRICES';
 
 var receiveIntradayPrices = function receiveIntradayPrices(symbol, prices) {
   // debugger
@@ -160,11 +163,27 @@ var receiveIntradayPrices = function receiveIntradayPrices(symbol, prices) {
   };
 };
 
+var receive1YPrices = function receive1YPrices(symbol, prices) {
+  return {
+    type: RECEIVE_1Y_PRICES,
+    symbol: symbol,
+    prices: prices
+  };
+};
+
 var fetchIntradayPrices = function fetchIntradayPrices(symbol) {
   return function (dispatch) {
     // debugger
     return _util_stock_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchIntradayPrices"](symbol).then(function (prices) {
       return dispatch(receiveIntradayPrices(symbol, prices));
+    });
+  };
+};
+var fetch1YPrices = function fetch1YPrices(symbol) {
+  return function (dispatch) {
+    // debugger
+    return _util_stock_api_util__WEBPACK_IMPORTED_MODULE_0__["fetch1YPrices"](symbol).then(function (prices) {
+      return dispatch(receive1YPrices(symbol, prices));
     });
   };
 };
@@ -760,11 +779,15 @@ function (_React$Component) {
       var uniqueSymbols = new Set(symbols);
       symbols = _toConsumableArray(uniqueSymbols);
       return symbols.map(function (symbol, i) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stock_stock_item_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          key: i,
-          symbol: symbol,
-          shares: _this.calculateShares(symbol)
-        });
+        var shares = _this.calculateShares(symbol);
+
+        if (shares > 0) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stock_stock_item_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
+            key: i,
+            symbol: symbol,
+            shares: shares
+          });
+        }
       });
     }
   }, {
@@ -779,11 +802,15 @@ function (_React$Component) {
       var uniqueSymbols = new Set(symbols);
       symbols = _toConsumableArray(uniqueSymbols);
       return symbols.map(function (symbol, i) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stock_stock_item_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          key: i,
-          symbol: symbol,
-          shares: _this2.calculateShares(symbol)
-        });
+        var shares = _this2.calculateShares(symbol);
+
+        if (shares === 0) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stock_stock_item_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
+            key: i,
+            symbol: symbol,
+            shares: shares
+          });
+        }
       });
     }
   }, {
@@ -1546,7 +1573,11 @@ function (_React$Component) {
   function StockDetails(props) {
     _classCallCheck(this, StockDetails);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(StockDetails).call(this, props));
+    return _possibleConstructorReturn(this, _getPrototypeOf(StockDetails).call(this, props)); // this.state = {
+    //     buy: true,
+    //     time: ""
+    // }
+    // this.setBuy = this.setBuy.bind(this);
   }
 
   _createClass(StockDetails, [{
@@ -1554,7 +1585,7 @@ function (_React$Component) {
     value: function componentDidMount() {
       this.props.fetchStock(this.props.match.params.symbol);
       this.props.fetchStockNews(this.props.match.params.symbol, 3);
-      this.props.fetchIntradayPrices(this.props.match.params.symbol);
+      this.props.fetchIntradayPrices(this.props.match.params.symbol); // this.props.fetch1YPrices(this.props.match.params.symbol);
     }
   }, {
     key: "renderNews",
@@ -1571,17 +1602,40 @@ function (_React$Component) {
           src: article.image
         }));
       }));
-    }
+    } // setBuy(boolean) {
+    //     // debugger
+    //     this.setState({ buy: boolean });
+    //     return (
+    //         <div>
+    //             <div className='buying-power'>$10022.33 Buying Power Available</div>
+    //         </div>
+    //     );
+    // }
+    // renderForm() {
+    //     // debugger
+    //     if (this.state.buy) {
+    //         return (
+    //             <div className='buying-power'>$10022.33 Buying Power Available</div>
+    //         )
+    //     } else {
+    //         return (
+    //             <div>
+    //                 Hi
+    //             </div> 
+    //         )
+    //     } 
+    // }
+
   }, {
     key: "render",
     value: function render() {
       var _this$props = this.props,
-          prices = _this$props.prices,
+          intradayPrices = _this$props.intradayPrices,
           stock = _this$props.stock;
       var close = 0;
 
-      if (prices.length > 0) {
-        close = prices[prices.length - 1].close;
+      if (intradayPrices.length > 0) {
+        close = intradayPrices[intradayPrices.length - 1].close;
       }
 
       if (!stock) {
@@ -1597,7 +1651,7 @@ function (_React$Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
           className: "comp-name"
         }, stock.companyName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "$", close), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_graph_graph__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          data: this.props.prices,
+          data: this.props.intradayPrices,
           name: "intraday-stock-graph"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "time-list"
@@ -1609,12 +1663,10 @@ function (_React$Component) {
           className: "recent-news"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Recent News"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), this.renderNews())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "stock-orders"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Buy/Sell"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_transaction_form_transaction_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_transaction_form_transaction_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
           symbol: stock.symbol,
           price: close
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "buying-power"
-        }, "$10022.33 Buying Power Available")));
+        })));
       }
     }
   }]);
@@ -1650,7 +1702,7 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
   return {
     stock: state.entities.stocks[ownProps.match.params.symbol],
     news: state.entities.news,
-    prices: state.entities.prices
+    intradayPrices: state.entities.prices
   };
 };
 
@@ -1664,6 +1716,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     fetchIntradayPrices: function fetchIntradayPrices(symbol) {
       return dispatch(Object(_actions_price_actions__WEBPACK_IMPORTED_MODULE_3__["fetchIntradayPrices"])(symbol));
+    },
+    fetch1YPrices: function fetch1YPrices(symbol) {
+      return dispatch(Object(_actions_price_actions__WEBPACK_IMPORTED_MODULE_3__["fetch1YPrices"])(symbol));
     }
   };
 };
@@ -1889,6 +1944,8 @@ var SVGIcon = function SVGIcon(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vm */ "./node_modules/vm-browserify/index.js");
+/* harmony import */ var vm__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vm__WEBPACK_IMPORTED_MODULE_1__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -1911,6 +1968,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var TransactionForm =
 /*#__PURE__*/
 function (_React$Component) {
@@ -1923,8 +1981,12 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(TransactionForm).call(this, props));
     _this.state = {
-      shares: 0
+      shares: 0,
+      buy: true,
+      submit: false,
+      time: ""
     };
+    _this.setBuy = _this.setBuy.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -1942,13 +2004,23 @@ function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
+      this.setState({
+        submit: true
+      });
+      debugger;
       var _this$props = this.props,
           symbol = _this$props.symbol,
           currentUser = _this$props.currentUser;
+      var shares = this.state.shares;
+
+      if (!this.state.buy) {
+        shares = shares * -1;
+      }
+
       var transaction = {
         user_id: currentUser,
         symbol: symbol,
-        shares: this.state.shares,
+        shares: shares,
         cost: this.calculateCost()
       };
       this.props.createTransaction(transaction);
@@ -1960,22 +2032,83 @@ function (_React$Component) {
       return parseFloat(Math.round(total * 100) / 100).toFixed(2);
     }
   }, {
+    key: "setBuy",
+    value: function setBuy(_boolean) {
+      this.setState({
+        buy: _boolean
+      });
+    }
+  }, {
+    key: "renderForm",
+    value: function renderForm() {
+      if (this.state.buy) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          type: "submit"
+        }, "Review Order"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "buying-power"
+        }, "$10022.33 Buying Power Available"));
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          type: "submit"
+        }, "Sell Stocks"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "buying-power"
+        }, this.calculateShares(this.props.symbol), " Shares Available"));
+      }
+    }
+  }, {
+    key: "calculateShares",
+    value: function calculateShares(symbol) {
+      var transactions = this.props.transactions;
+      var shares = 0;
+      var trans = Object.values(transactions);
+      trans.forEach(function (transaction) {
+        if (transaction.symbol === symbol) {
+          shares = shares + transaction.shares;
+        }
+      });
+      return shares;
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
       var price = this.props.price;
+      var buyName = 'highlight';
+      var sellName = 'none';
+
+      if (!this.state.buy) {
+        buyName = 'none';
+        sellName = 'highlight';
+      }
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "transaction-form-div"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: this.handleSubmit
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Shares"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "transaction-type"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+        id: buyName,
+        onClick: function onClick() {
+          return _this3.setBuy(true);
+        }
+      }, "Buy"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+        id: sellName,
+        onClick: function onClick() {
+          return _this3.setBuy(false);
+        }
+      }, "Sell")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "transaction-content"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Shares"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         onChange: this.update('shares'),
         value: this.state.shares
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "mkt-price"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Market Price"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, price)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, " Estimated Cost"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "$ ", this.calculateCost())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        type: "submit"
-      }, "Review Order")));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Market Price"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, price)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "transaction-content"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, " Estimated Cost"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "$ ", this.calculateCost())), this.renderForm()));
     }
   }]);
 
@@ -2005,7 +2138,7 @@ __webpack_require__.r(__webpack_exports__);
 var mapStateToProps = function mapStateToProps(state) {
   return {
     transactions: state.entities.transactions,
-    currentUser: state.entities.users[0]
+    currentUser: state.session.id
   };
 };
 
@@ -2151,6 +2284,11 @@ var StocksReducer = function StocksReducer() {
       nextState[action.symbol].prices = action.prices;
       return nextState;
 
+    case _actions_price_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_INTRADAY_PRICES"]:
+      // debugger
+      nextState[action.symbol].prices = action.prices;
+      return nextState;
+
     case _actions_stock_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_STOCKS"]:
       if (action.stocks.hasOwnProperty('stock')) {
         nextState = action.stocks.stock;
@@ -2207,9 +2345,9 @@ var TransactionsReducer = function TransactionsReducer() {
 
       return nextState;
 
-    case _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIEVE_TRANSACTION"]:
-      debugger; // nextState[action.transaction.id] = action.transaction;
-
+    case _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_TRANSACTION"]:
+      // debugger
+      // nextState[action.transaction.id] = action.transaction;
       return action.transaction;
 
     default:
@@ -2669,7 +2807,7 @@ var logout = function logout() {
 /*!*****************************************!*\
   !*** ./frontend/util/stock_api_util.js ***!
   \*****************************************/
-/*! exports provided: fetchStocks, fetchStock, fetchIntradayPrices */
+/*! exports provided: fetchStocks, fetchStock, fetchIntradayPrices, fetch1YPrices */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2677,6 +2815,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchStocks", function() { return fetchStocks; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchStock", function() { return fetchStock; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchIntradayPrices", function() { return fetchIntradayPrices; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetch1YPrices", function() { return fetch1YPrices; });
 var fetchStocks = function fetchStocks() {
   return $.ajax({
     url: '/api/stocks',
@@ -2692,6 +2831,12 @@ var fetchStock = function fetchStock(symbol) {
 var fetchIntradayPrices = function fetchIntradayPrices(symbol) {
   return $.ajax({
     url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/intraday-prices/?chartInterval=5&token=pk_d9fc28e6b9594efa97b112ac9c920c87"),
+    method: 'GET'
+  });
+};
+var fetch1YPrices = function fetch1YPrices(symbol) {
+  return $.ajax({
+    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/chart/1y/?chartInterval=5&token=pk_d9fc28e6b9594efa97b112ac9c920c87"),
     method: 'GET'
   });
 };
@@ -91220,6 +91365,166 @@ function valueEqual(a, b) {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (valueEqual);
+
+
+/***/ }),
+
+/***/ "./node_modules/vm-browserify/index.js":
+/*!*********************************************!*\
+  !*** ./node_modules/vm-browserify/index.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var indexOf = function (xs, item) {
+    if (xs.indexOf) return xs.indexOf(item);
+    else for (var i = 0; i < xs.length; i++) {
+        if (xs[i] === item) return i;
+    }
+    return -1;
+};
+var Object_keys = function (obj) {
+    if (Object.keys) return Object.keys(obj)
+    else {
+        var res = [];
+        for (var key in obj) res.push(key)
+        return res;
+    }
+};
+
+var forEach = function (xs, fn) {
+    if (xs.forEach) return xs.forEach(fn)
+    else for (var i = 0; i < xs.length; i++) {
+        fn(xs[i], i, xs);
+    }
+};
+
+var defineProp = (function() {
+    try {
+        Object.defineProperty({}, '_', {});
+        return function(obj, name, value) {
+            Object.defineProperty(obj, name, {
+                writable: true,
+                enumerable: false,
+                configurable: true,
+                value: value
+            })
+        };
+    } catch(e) {
+        return function(obj, name, value) {
+            obj[name] = value;
+        };
+    }
+}());
+
+var globals = ['Array', 'Boolean', 'Date', 'Error', 'EvalError', 'Function',
+'Infinity', 'JSON', 'Math', 'NaN', 'Number', 'Object', 'RangeError',
+'ReferenceError', 'RegExp', 'String', 'SyntaxError', 'TypeError', 'URIError',
+'decodeURI', 'decodeURIComponent', 'encodeURI', 'encodeURIComponent', 'escape',
+'eval', 'isFinite', 'isNaN', 'parseFloat', 'parseInt', 'undefined', 'unescape'];
+
+function Context() {}
+Context.prototype = {};
+
+var Script = exports.Script = function NodeScript (code) {
+    if (!(this instanceof Script)) return new Script(code);
+    this.code = code;
+};
+
+Script.prototype.runInContext = function (context) {
+    if (!(context instanceof Context)) {
+        throw new TypeError("needs a 'context' argument.");
+    }
+    
+    var iframe = document.createElement('iframe');
+    if (!iframe.style) iframe.style = {};
+    iframe.style.display = 'none';
+    
+    document.body.appendChild(iframe);
+    
+    var win = iframe.contentWindow;
+    var wEval = win.eval, wExecScript = win.execScript;
+
+    if (!wEval && wExecScript) {
+        // win.eval() magically appears when this is called in IE:
+        wExecScript.call(win, 'null');
+        wEval = win.eval;
+    }
+    
+    forEach(Object_keys(context), function (key) {
+        win[key] = context[key];
+    });
+    forEach(globals, function (key) {
+        if (context[key]) {
+            win[key] = context[key];
+        }
+    });
+    
+    var winKeys = Object_keys(win);
+
+    var res = wEval.call(win, this.code);
+    
+    forEach(Object_keys(win), function (key) {
+        // Avoid copying circular objects like `top` and `window` by only
+        // updating existing context properties or new properties in the `win`
+        // that was only introduced after the eval.
+        if (key in context || indexOf(winKeys, key) === -1) {
+            context[key] = win[key];
+        }
+    });
+
+    forEach(globals, function (key) {
+        if (!(key in context)) {
+            defineProp(context, key, win[key]);
+        }
+    });
+    
+    document.body.removeChild(iframe);
+    
+    return res;
+};
+
+Script.prototype.runInThisContext = function () {
+    return eval(this.code); // maybe...
+};
+
+Script.prototype.runInNewContext = function (context) {
+    var ctx = Script.createContext(context);
+    var res = this.runInContext(ctx);
+
+    if (context) {
+        forEach(Object_keys(ctx), function (key) {
+            context[key] = ctx[key];
+        });
+    }
+
+    return res;
+};
+
+forEach(Object_keys(Script.prototype), function (name) {
+    exports[name] = Script[name] = function (code) {
+        var s = Script(code);
+        return s[name].apply(s, [].slice.call(arguments, 1));
+    };
+});
+
+exports.isContext = function (context) {
+    return context instanceof Context;
+};
+
+exports.createScript = function (code) {
+    return exports.Script(code);
+};
+
+exports.createContext = Script.createContext = function (context) {
+    var copy = new Context();
+    if(typeof context === 'object') {
+        forEach(Object_keys(context), function (key) {
+            copy[key] = context[key];
+        });
+    }
+    return copy;
+};
 
 
 /***/ }),

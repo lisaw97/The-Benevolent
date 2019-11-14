@@ -19,7 +19,10 @@ class Portfolio extends React.Component {
         let uniqueSymbols = new Set(symbols);
         symbols = [...uniqueSymbols];
         return (symbols.map( (symbol, i) => {
-            return (<StockItemContainer key={i} symbol={symbol} shares={this.calculateShares(symbol)}/>)
+            let shares = this.calculateShares(symbol);
+            if (shares > 0) {
+                return (<StockItemContainer key={i} symbol={symbol} shares={shares}/>)
+            }
         }) )    
     }
 
@@ -29,7 +32,10 @@ class Portfolio extends React.Component {
         let uniqueSymbols = new Set(symbols);
         symbols = [...uniqueSymbols];
         return (symbols.map((symbol, i) => {
-            return (<StockItemContainer key={i} symbol={symbol} shares={this.calculateShares(symbol)} />)
+            let shares = this.calculateShares(symbol);
+            if (shares === 0) {
+                return (<StockItemContainer key={i} symbol={symbol} shares={shares} />)
+            }
         }))
     }
 

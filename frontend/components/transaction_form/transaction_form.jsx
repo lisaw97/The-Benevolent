@@ -1,12 +1,17 @@
 import React from 'react';
+import { runInThisContext } from 'vm';
 
 class TransactionForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            shares: 0
+            shares: 0,
+            buy: true,
+            submit: false,
+            time: ""
         }
 
+        this.setBuy = this.setBuy.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -20,11 +25,17 @@ class TransactionForm extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        this.setState({ submit: true });
+        debugger
         const { symbol, currentUser } = this.props;
+        let shares = this.state.shares;
+        if (!this.state.buy) {
+           shares = shares * -1;
+        } 
         let transaction = {
-            user_id: currentUser, 
+            user_id: currentUser,
             symbol: symbol, 
-            shares: this.state.shares,
+            shares: shares,
             cost: this.calculateCost()
         }
         this.props.createTransaction(transaction);
@@ -35,12 +46,57 @@ class TransactionForm extends React.Component {
         return parseFloat(Math.round(total * 100) / 100).toFixed(2);
     }
 
+    setBuy(boolean) {
+        this.setState({ buy: boolean });
+    }
+
+    renderForm() {
+        if (this.state.buy) {
+            return (
+                <div>
+                    <button type="submit">Review Order</button>
+                    <div className='buying-power'>$10022.33 Buying Power Available</div>
+                </div>
+            )
+        } else {
+            return (
+                <div>
+                    <button type="submit">Sell Stocks</button>
+                    <div className='buying-power'>{this.calculateShares(this.props.symbol)} Shares Available</div>
+                </div>
+            )
+        }
+    }
+
+    calculateShares(symbol) {
+        const { transactions } = this.props;
+        let shares = 0;
+        let trans = Object.values(transactions);
+        trans.forEach(transaction => {
+            if (transaction.symbol === symbol) {
+                shares = shares + transaction.shares;
+            }
+        });
+        return shares;
+    }
+
     render() {
         const { price } = this.props;
+        let buyName = 'highlight';
+        let sellName = 'none';
+        if (!this.state.buy) {
+            buyName = 'none';
+            sellName = 'highlight';
+        }
+
         return (
             <div className='transaction-form-div'>
                 <form onSubmit={this.handleSubmit}>
-                    <div>
+                    <div className='transaction-type'>
+                        <h2 id={buyName} onClick={() => this.setBuy(true)}>Buy</h2>
+                        <h2 id={sellName} onClick={() => this.setBuy(false)}>Sell</h2>
+                    </div>
+                    <div className='transaction-content'>
                         <label>Shares</label>
                         <input 
                             type="text"
@@ -52,11 +108,12 @@ class TransactionForm extends React.Component {
                         <label>Market Price</label>
                         <div>{price}</div>
                     </div>
-                    <div>
+                    <div className='transaction-content'>
                         <label> Estimated Cost</label>
                         <div>$ {this.calculateCost()}</div>
                     </div>
-                    <button type="submit">Review Order</button>
+                    {/* <button type="submit">Review Order</button> */}
+                    {this.renderForm()}
                 </form>
             </div>
         )

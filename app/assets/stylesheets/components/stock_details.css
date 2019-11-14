@@ -33,26 +33,39 @@
     background-color: white;
 }
 
-.stock-orders h2 {
-    font-size: 25px;
-    border-bottom: 1px solid black;
-    padding-bottom: 5px;
-}
-
 .transaction-form-div form {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 200px;
-    margin-bottom: 15px;
-    margin-top: 20px;
+    height: 280px;
+    margin:10px;
 }
 
-.transaction-form-div form div {
+.transaction-content, .mkt-price {
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 15px;
+}
+
+.transaction-type {
+    width: 100px;
+    display: flex;
+    justify-content: space-between;
+    /* font-size: 20px; */
+    /* border-bottom: 1px solid black;
+    padding-bottom: 10px; */
+}
+
+#highlight {
+    border-bottom: 2px solid var(--rh-green);
+    padding-bottom: 10px;
+    color: var(--rh-green);
+}
+
+#none {
+    border-bottom: 3px solid black;
+    padding-bottom: 10px;
 }
 
 .transaction-form-div form div label {
@@ -75,13 +88,14 @@
 }
 
 .transaction-form-div form button {
-    height: 30px;
+    height: 35px;
     border-radius: 5px;
     font-family: var(--font-family);
-    font-size: 15px;
+    font-size: 18px;
     border: 2px solid var(--rh-green);
     margin-top: 10px;
     margin-bottom: 10px;
+    width: 100%;
 }
 
 .buying-power {
@@ -119,7 +133,7 @@
 }
 
 .stock-about {
-    height: 30%;
+    /* height: 30%; */
     margin: 1%;
     margin-top: 0;
 }
@@ -147,7 +161,7 @@
 }
 
 .recent-news {
-    height: 30%;
+    /* height: 30%; */
     margin: 1%;
 }
 
@@ -187,6 +201,6 @@
 
 .company-news-article img {
     width: 40%;
-    height: 80%;
+    /* height: 80%; */
 }
 

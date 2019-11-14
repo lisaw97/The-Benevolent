@@ -1,4 +1,4 @@
-import { RECEIEVE_TRANSACTIONS, RECEIEVE_TRANSACTION } from '../../actions/transaction_actions';
+import { RECEIVE_TRANSACTIONS, RECEIVE_TRANSACTION } from '../../actions/transaction_actions';
 import { RECEIVE_CURRENT_USER } from '../../actions/session_actions';
 import { RECEIVE_STOCKS } from '../../actions/stock_actions';
 
@@ -15,8 +15,8 @@ const TransactionsReducer = (state = {}, action) => {
                 nextState = action.stocks;
             }
             return nextState;
-        case RECEIEVE_TRANSACTION:
-            debugger
+        case RECEIVE_TRANSACTION:
+            // debugger
             // nextState[action.transaction.id] = action.transaction;
             return action.transaction
         default:

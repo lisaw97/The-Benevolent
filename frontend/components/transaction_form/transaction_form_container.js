@@ -4,7 +4,7 @@ import { createTransaction } from '../../actions/transaction_actions';
 
 const mapStateToProps = state => ({
     transactions: state.entities.transactions,
-    currentUser: state.entities.users[0]
+    currentUser: state.session.id
 });
 
 const mapDispatchToProps = dispatch => ({
