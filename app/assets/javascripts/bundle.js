@@ -136,6 +136,55 @@ var fetchStockNews = function fetchStockNews(symbol, last) {
 
 /***/ }),
 
+/***/ "./frontend/actions/portfolio_snapshot_actions.js":
+/*!********************************************************!*\
+  !*** ./frontend/actions/portfolio_snapshot_actions.js ***!
+  \********************************************************/
+/*! exports provided: RECEIVE_SNAPSHOTS, RECEIVE_SNAPSHOT, fetchSnapshots, fetchSnapshot */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_SNAPSHOTS", function() { return RECEIVE_SNAPSHOTS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_SNAPSHOT", function() { return RECEIVE_SNAPSHOT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSnapshots", function() { return fetchSnapshots; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSnapshot", function() { return fetchSnapshot; });
+/* harmony import */ var _util_portfolio_snapshot_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/portfolio_snapshot_util */ "./frontend/util/portfolio_snapshot_util.js");
+
+var RECEIVE_SNAPSHOTS = 'RECEIVE_SNAPSHOTS';
+var RECEIVE_SNAPSHOT = 'RECEIVE_SNAPSHOT';
+
+var receiveSnapshots = function receiveSnapshots(snapshots) {
+  return {
+    type: RECEIVE_SNAPSHOTS,
+    snapshots: snapshots
+  };
+};
+
+var receiveSnapshot = function receiveSnapshot(snapshot) {
+  return {
+    type: RECEIVE_SNAPSHOT,
+    snapshot: snapshot
+  };
+};
+
+var fetchSnapshots = function fetchSnapshots() {
+  return function (dispatch) {
+    return _util_portfolio_snapshot_util__WEBPACK_IMPORTED_MODULE_0__["fetchSnapshots"]().then(function (snapshots) {
+      return dispatch(receiveSnapshots(snapshots));
+    });
+  };
+};
+var fetchSnapshot = function fetchSnapshot(id) {
+  return function (dispatch) {
+    return _util_portfolio_snapshot_util__WEBPACK_IMPORTED_MODULE_0__["fetchSnapshot"](id).then(function (snapshot) {
+      return dispatch(receiveSnapshot(snapshot));
+    });
+  };
+};
+
+/***/ }),
+
 /***/ "./frontend/actions/price_actions.js":
 /*!*******************************************!*\
   !*** ./frontend/actions/price_actions.js ***!
@@ -465,15 +514,25 @@ __webpack_require__.r(__webpack_exports__);
 
 var Graph = function Graph(_ref) {
   var data = _ref.data,
-      name = _ref.name;
-  // debugger
+      name = _ref.name,
+      dataKey = _ref.dataKey;
   var color = '#20CE99';
 
   if (data) {
-    if (data[data.length - 1].close < data[0].close) {
-      color = '#F45530';
+    // debugger
+    if (dataKey === 'close') {
+      // debugger
+      if (data[data.length - 1].close < data[0].close) {
+        color = '#F45530';
+      }
+    } else {
+      // debugger
+      if (data[data.length - 1].balance < data[0].balance) {
+        color = '#F45530';
+      }
     }
-  }
+  } // debugger
+
 
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: name
@@ -494,7 +553,7 @@ var Graph = function Graph(_ref) {
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["YAxis"], {
     hide: true,
     tickLine: false,
-    dataKey: "close",
+    dataKey: dataKey,
     type: "number",
     domain: ['dataMin', 'dataMax']
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Tooltip"], {
@@ -508,7 +567,7 @@ var Graph = function Graph(_ref) {
     connectNulls: true,
     dot: false,
     stroke: color,
-    dataKey: "close"
+    dataKey: dataKey
   }))));
 };
 
@@ -767,14 +826,22 @@ function (_React$Component) {
   function Portfolio(props) {
     _classCallCheck(this, Portfolio);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Portfolio).call(this, props));
+    return _possibleConstructorReturn(this, _getPrototypeOf(Portfolio).call(this, props)); // this.state = {
+    //     snapshots: []
+    // }
   }
 
   _createClass(Portfolio, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      // debugger
+      this.props.fetchSnapshots();
       this.props.fetchStocks();
-      this.props.fetchGeneralNews();
+      this.props.fetchGeneralNews(); // if (this.state.snapshots.length === 0) {
+      //     this.props.fetchSnapshots().then(
+      //         res => this.setState({ snapshots: Object.values(res.snapshots) })
+      //     )
+      // }
     }
   }, {
     key: "renderStocks",
@@ -804,6 +871,7 @@ function (_React$Component) {
     value: function renderWatchlist() {
       var _this2 = this;
 
+      // debugger
       var symbols = Object.values(this.props.watchlist);
       symbols = symbols.map(function (item) {
         return item.symbol;
@@ -856,15 +924,43 @@ function (_React$Component) {
       }
     }
   }, {
+    key: "renderSnapshots",
+    value: function renderSnapshots() {// debugger
+      // return (<SnapshotsContainer snapshots={this.props.snapshots} />)
+    }
+  }, {
     key: "render",
     value: function render() {
+      // debugger
+      var snapshot_values = Object.values(this.props.snapshots);
+
+      if (snapshot_values.length === 0) {
+        return null;
+      }
+
+      var snapshots = this.props.snapshots;
+      var currBal = snapshot_values[snapshot_values.length - 1].balance;
+      var open = snapshot_values[0].balance;
+      var dollarDiff = currBal - open;
+      dollarDiff = parseFloat(Math.round(dollarDiff * 100) / 100).toFixed(2);
+      var percentDiff = dollarDiff / open;
+      percentDiff = parseFloat(Math.round(percentDiff * 100) / 100).toFixed(2); // debugger
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "portfolio-main-div"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "portfolio-info-div"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "portfolio-div"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Balance"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "[Insert Graph Here]")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "stock-graph"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "$", currBal), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", dollarDiff, " (", percentDiff, "%)"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_graph_graph_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        data: snapshot_values,
+        name: "intraday-stock-graph",
+        dataKey: "balance"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "time-list"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "1D")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1W"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "3M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1Y"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "5Y")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "news-div"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Recent News"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), this.renderNews())), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "stocks-div"
@@ -896,7 +992,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_stock_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/stock_actions */ "./frontend/actions/stock_actions.js");
 /* harmony import */ var _actions_news_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/news_actions */ "./frontend/actions/news_actions.js");
 /* harmony import */ var _actions_price_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/price_actions */ "./frontend/actions/price_actions.js");
-/* harmony import */ var _portfolio__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./portfolio */ "./frontend/components/portfolio/portfolio.jsx");
+/* harmony import */ var _actions_portfolio_snapshot_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/portfolio_snapshot_actions */ "./frontend/actions/portfolio_snapshot_actions.js");
+/* harmony import */ var _portfolio__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./portfolio */ "./frontend/components/portfolio/portfolio.jsx");
+
 
 
 
@@ -908,7 +1006,8 @@ var mapStateToProps = function mapStateToProps(state) {
     stocks: state.entities.stocks,
     news: state.entities.news,
     transactions: state.entities.transactions,
-    watchlist: state.entities.watchlist
+    watchlist: state.entities.watchlist,
+    snapshots: state.entities.portfolio
   };
 };
 
@@ -922,11 +1021,14 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     fetchIntradayPrices: function fetchIntradayPrices(symbol) {
       return dispatch(Object(_actions_price_actions__WEBPACK_IMPORTED_MODULE_3__["fetchIntradayPrices"])(symbol));
+    },
+    fetchSnapshots: function fetchSnapshots() {
+      return dispatch(Object(_actions_portfolio_snapshot_actions__WEBPACK_IMPORTED_MODULE_4__["fetchSnapshots"])());
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_portfolio__WEBPACK_IMPORTED_MODULE_4__["default"]));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_portfolio__WEBPACK_IMPORTED_MODULE_5__["default"]));
 
 /***/ }),
 
@@ -1654,7 +1756,8 @@ function (_React$Component) {
           className: "comp-name"
         }, stock.companyName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "$", close), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", dollarDiff, " (", percentDiff, "%)"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_graph_graph__WEBPACK_IMPORTED_MODULE_1__["default"], {
           data: this.props.prices.intraday,
-          name: "intraday-stock-graph"
+          name: "intraday-stock-graph",
+          dataKey: "close"
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           className: "time-list"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -1817,7 +1920,8 @@ function (_React$Component) {
         className: name
       }, shares, " shares")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_graph_graph_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
         data: prices,
-        name: "small-graph"
+        name: "small-graph",
+        dataKey: "close"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "price"
       }, "$", close)));
@@ -2174,6 +2278,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _news_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./news_reducer */ "./frontend/reducers/entities/news_reducer.js");
 /* harmony import */ var _prices_reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./prices_reducer */ "./frontend/reducers/entities/prices_reducer.js");
 /* harmony import */ var _watchlist_items_reducer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./watchlist_items_reducer */ "./frontend/reducers/entities/watchlist_items_reducer.js");
+/* harmony import */ var _portfolio_snapshots_reducer__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./portfolio_snapshots_reducer */ "./frontend/reducers/entities/portfolio_snapshots_reducer.js");
+
 
 
 
@@ -2187,7 +2293,8 @@ var EntitiesReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers
   transactions: _transactions_reducer__WEBPACK_IMPORTED_MODULE_3__["default"],
   news: _news_reducer__WEBPACK_IMPORTED_MODULE_4__["default"],
   prices: _prices_reducer__WEBPACK_IMPORTED_MODULE_5__["default"],
-  watchlist: _watchlist_items_reducer__WEBPACK_IMPORTED_MODULE_6__["default"]
+  watchlist: _watchlist_items_reducer__WEBPACK_IMPORTED_MODULE_6__["default"],
+  portfolio: _portfolio_snapshots_reducer__WEBPACK_IMPORTED_MODULE_7__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (EntitiesReducer);
 
@@ -2223,6 +2330,46 @@ var NewsReducer = function NewsReducer() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (NewsReducer);
+
+/***/ }),
+
+/***/ "./frontend/reducers/entities/portfolio_snapshots_reducer.js":
+/*!*******************************************************************!*\
+  !*** ./frontend/reducers/entities/portfolio_snapshots_reducer.js ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_portfolio_snapshot_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../actions/portfolio_snapshot_actions */ "./frontend/actions/portfolio_snapshot_actions.js");
+ // const _newUser = {
+//     '2019-11-14': {
+//         id: 1,
+//         // user_id: current_user.id,
+//         date: '2019-11-14',
+//         balance: 0.00
+//     }
+// }
+
+var SnapshotReducer = function SnapshotReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+  Object.freeze(state);
+
+  switch (action.type) {
+    case _actions_portfolio_snapshot_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_SNAPSHOTS"]:
+      return action.snapshots;
+
+    case _actions_portfolio_snapshot_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_SNAPSHOT"]:
+      return action.snapshot;
+
+    default:
+      return state;
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (SnapshotReducer);
 
 /***/ }),
 
@@ -2630,7 +2777,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_stock_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./actions/stock_actions */ "./frontend/actions/stock_actions.js");
 /* harmony import */ var _actions_price_actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./actions/price_actions */ "./frontend/actions/price_actions.js");
 /* harmony import */ var _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./actions/transaction_actions */ "./frontend/actions/transaction_actions.js");
+/* harmony import */ var _actions_portfolio_snapshot_actions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./actions/portfolio_snapshot_actions */ "./frontend/actions/portfolio_snapshot_actions.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -2668,6 +2817,7 @@ document.addEventListener("DOMContentLoaded", function () {
   window.fetchStocks = _actions_stock_actions__WEBPACK_IMPORTED_MODULE_5__["fetchStocks"];
   window.fetchIntradayPrices = _actions_price_actions__WEBPACK_IMPORTED_MODULE_6__["fetchIntradayPrices"];
   window.createTransaction = _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_7__["createTransaction"];
+  window.fetchSnapshots = _actions_portfolio_snapshot_actions__WEBPACK_IMPORTED_MODULE_8__["fetchSnapshots"];
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_root__WEBPACK_IMPORTED_MODULE_3__["default"], {
     store: store
   }), root);
@@ -2726,6 +2876,38 @@ var fetchStockNews = function fetchStockNews(symbol, last) {
     method: 'GET'
   });
 };
+
+/***/ }),
+
+/***/ "./frontend/util/portfolio_snapshot_util.js":
+/*!**************************************************!*\
+  !*** ./frontend/util/portfolio_snapshot_util.js ***!
+  \**************************************************/
+/*! exports provided: fetchSnapshots, fetchSnapshot */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSnapshots", function() { return fetchSnapshots; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchSnapshot", function() { return fetchSnapshot; });
+var fetchSnapshots = function fetchSnapshots() {
+  return $.ajax({
+    url: '/api/portfolio_snapshots',
+    method: 'GET'
+  });
+};
+var fetchSnapshot = function fetchSnapshot(id) {
+  return $.ajax({
+    url: "/api/portfolio_snapshots/".concat(id),
+    method: 'GET'
+  });
+}; // export const createSnapshot = snapshot => (
+//     $.ajax({
+//         url: `/api/portfolio_snapshots`,
+//         method: 'POST',
+//         data: { snapshot }
+//     })
+// );
 
 /***/ }),
 

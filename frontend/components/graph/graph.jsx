@@ -1,14 +1,25 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer} from 'recharts';
 
-const Graph = ({ data, name }) => {
-    // debugger
+const Graph = ({ data, name, dataKey }) => {
     let color = '#20CE99';
-    if (data){
-        if (data[data.length - 1].close < data[0].close) {
-            color = '#F45530';
+    
+    if (data) {
+        // debugger
+        if (dataKey === 'close') {
+            // debugger
+            if (data[data.length - 1].close < data[0].close) {
+                color = '#F45530';
+            }
+        } else {
+            // debugger
+            if (data[data.length - 1].balance < data[0].balance) {
+                color = '#F45530';
+            }
         }
-    }
+    } 
+    
+    // debugger
     
     return (
         <div className={name}>
@@ -18,13 +29,14 @@ const Graph = ({ data, name }) => {
                     margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
                 >
                     <XAxis hide={true} dataKey='label' />
-                    <YAxis hide={true} tickLine={false} dataKey='close' type='number' domain={['dataMin', 'dataMax']} />
+                    <YAxis hide={true} tickLine={false} dataKey={dataKey} type='number' domain={['dataMin', 'dataMax']} />
                     <Tooltip cursor={{ stroke: 'lightgrey', strokeWidth: 1 }} />
-                    <Line type="linear" isAnimationActive={true} connectNulls={true} dot={false} stroke={color} dataKey='close'/>
+                    <Line type="linear" isAnimationActive={true} connectNulls={true} dot={false} stroke={color} dataKey={dataKey}/>
                 </LineChart>
             </ ResponsiveContainer>
         </div>
     )
+    
 }
 
 export default Graph;

@@ -23,7 +23,7 @@
     flex-direction: column;
     /* justify-content: space-between; */
     width: 20%;
-    height: 80%;
+    height: 650px;
     margin: 1%;
     position: fixed;
     top: 40;
@@ -84,13 +84,13 @@
 }
 
 .portfolio-div {
-    background-color: yellow;
-    height: 30%;
+    /* background-color: yellow; */
+    /* height: 30%; */
     margin: 1%;
 }
 
 .news-div {
-    height: 50%;
+    /* height: 50%; */
     margin: 1%;
 }
 

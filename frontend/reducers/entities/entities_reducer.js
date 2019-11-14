@@ -5,6 +5,7 @@ import TransactionsReducer from './transactions_reducer';
 import NewsReducer from './news_reducer';
 import PricesReducer from './prices_reducer';
 import WatchlistItemsReducer from './watchlist_items_reducer';
+import SnapshotReducer from './portfolio_snapshots_reducer';
 
 const EntitiesReducer = combineReducers({
     users: UsersReducer,
@@ -12,7 +13,8 @@ const EntitiesReducer = combineReducers({
     transactions: TransactionsReducer,
     news: NewsReducer,
     prices: PricesReducer,
-    watchlist: WatchlistItemsReducer
+    watchlist: WatchlistItemsReducer,
+    portfolio: SnapshotReducer
 });
 
 export default EntitiesReducer;

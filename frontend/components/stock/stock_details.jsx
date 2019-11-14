@@ -72,7 +72,7 @@ class StockDetails extends React.Component {
                         <h1>${close}</h1>
                         <h3>${dollarDiff} ({percentDiff}%)</h3> 
                             
-                            <Graph data={this.props.prices.intraday} name='intraday-stock-graph'/>
+                            <Graph data={this.props.prices.intraday} name='intraday-stock-graph' dataKey='close'/>
                             {/* <Graph data={this.props.prices.year} name='intraday-stock-graph'/> */}
                             <ul className='time-list'>
                                 <li><a onClick={this.render1DGraph}>1D</a></li>

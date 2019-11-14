@@ -7,6 +7,8 @@ import { signup, login, logout } from './actions/session_actions';
 import { fetchStock, fetchStocks } from './actions/stock_actions';
 import { fetchIntradayPrices } from './actions/price_actions';
 import { createTransaction } from './actions/transaction_actions';
+import { fetchSnapshots } from './actions/portfolio_snapshot_actions';
+
 document.addEventListener("DOMContentLoaded", () => {
     const root = document.getElementById('root');
     let store;
@@ -32,6 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.fetchStocks = fetchStocks;
     window.fetchIntradayPrices = fetchIntradayPrices;
     window.createTransaction = createTransaction;
+    window.fetchSnapshots = fetchSnapshots;
 
     ReactDOM.render(<Root store={store} />, root);
 });

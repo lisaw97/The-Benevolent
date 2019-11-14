@@ -11,12 +11,12 @@
     font-size: 30px;
 }
 
-.stock-details-div h3 {
+.stock-graph h3 {
     margin: 1%;
     font-weight: bold;
     font-size: 15px;
 }
-
+d
 .stock-details-left {
     display: flex;
     flex-direction: column;

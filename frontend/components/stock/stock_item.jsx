@@ -30,7 +30,7 @@ class StockItem extends React.Component {
                         <div className='symbol'>{symbol}</div>
                         <div className={name}>{shares} shares</div>
                     </div>
-                    <GraphContainer data={prices} name='small-graph' />
+                    <GraphContainer data={prices} name='small-graph' dataKey='close' />
                     <div className='price'>${close}</div>                
                 </Link>
             </li>
