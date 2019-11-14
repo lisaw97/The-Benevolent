@@ -12,7 +12,6 @@ class Portfolio extends React.Component {
     }
 
     componentDidMount() {     
-        // debugger
         this.props.fetchSnapshots();
         this.props.fetchStocks();
         this.props.fetchGeneralNews();
@@ -37,7 +36,6 @@ class Portfolio extends React.Component {
     }
 
     renderWatchlist() {
-        // debugger
         let symbols = Object.values(this.props.watchlist);
         symbols = symbols.map(item => item.symbol);
         let uniqueSymbols = new Set(symbols);
@@ -85,12 +83,10 @@ class Portfolio extends React.Component {
     }
 
     renderSnapshots() {
-        // debugger
         // return (<SnapshotsContainer snapshots={this.props.snapshots} />)
     }
 
     render() {
-        // debugger
         const snapshot_values = Object.values(this.props.snapshots);
         if (snapshot_values.length === 0) {
             return null;
@@ -102,7 +98,6 @@ class Portfolio extends React.Component {
         dollarDiff = parseFloat(Math.round(dollarDiff * 100) / 100).toFixed(2);
         let percentDiff = dollarDiff / open;
         percentDiff = parseFloat(Math.round(percentDiff * 100) / 100).toFixed(2);
-        // debugger
         return (
             <div className='portfolio-main-div'>
                 <div className='portfolio-info-div'>

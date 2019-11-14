@@ -37,7 +37,6 @@ class StockDetails extends React.Component {
     }
 
     render1DGraph() {
-        // debugger
         // return (<Graph data={this.props.prices.intraday} name='intraday-stock-graph' />)
         // this.setState({data: this.props.prices})
     }
@@ -50,9 +49,7 @@ class StockDetails extends React.Component {
             let close = 0;
             let dollarDiff = 0;
             let percentDiff = 0;
-            // debugger
             if (prices.intraday) {
-                // debugger
                 if (prices.intraday.length > 0) {
                     close = prices.intraday[prices.intraday.length - 1].close;
                     let open = prices.intraday[0].close;

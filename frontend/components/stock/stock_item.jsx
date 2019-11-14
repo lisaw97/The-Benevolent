@@ -8,7 +8,6 @@ class StockItem extends React.Component {
     }
 
     componentDidMount() {
-        // debugger
         this.props.fetchIntradayPrices(this.props.symbol);
     }
 
@@ -22,7 +21,6 @@ class StockItem extends React.Component {
         if (shares === 0) {
             name = 'hidden';
         }
-        // debugger
         return (
             <li key={key}>
                 <Link className='stock' to={`/stocks/${symbol}`}>

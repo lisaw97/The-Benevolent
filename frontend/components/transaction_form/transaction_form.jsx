@@ -26,7 +26,6 @@ class TransactionForm extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
         this.setState({ submit: true });
-        // debugger
         const { symbol, currentUser } = this.props;
         let shares = this.state.shares;
         if (!this.state.buy) {
@@ -112,7 +111,6 @@ class TransactionForm extends React.Component {
                         <label> Estimated Cost</label>
                         <div>$ {this.calculateCost()}</div>
                     </div>
-                    {/* <button type="submit">Review Order</button> */}
                     {this.renderForm()}
                 </form>
             </div>

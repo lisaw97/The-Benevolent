@@ -204,7 +204,6 @@ var RECEIVE_INTRADAY_PRICES = 'RECEIVE_INTRADAY_PRICES';
 var RECEIVE_1Y_PRICES = 'RECEIVE_1Y_PRICES';
 
 var receiveIntradayPrices = function receiveIntradayPrices(symbol, prices) {
-  // debugger
   return {
     type: RECEIVE_INTRADAY_PRICES,
     symbol: symbol,
@@ -222,7 +221,6 @@ var receive1YPrices = function receive1YPrices(symbol, prices) {
 
 var fetchIntradayPrices = function fetchIntradayPrices(symbol) {
   return function (dispatch) {
-    // debugger
     return _util_stock_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchIntradayPrices"](symbol).then(function (prices) {
       return dispatch(receiveIntradayPrices(symbol, prices));
     });
@@ -230,7 +228,6 @@ var fetchIntradayPrices = function fetchIntradayPrices(symbol) {
 };
 var fetch1YPrices = function fetch1YPrices(symbol) {
   return function (dispatch) {
-    // debugger
     return _util_stock_api_util__WEBPACK_IMPORTED_MODULE_0__["fetch1YPrices"](symbol).then(function (prices) {
       return dispatch(receive1YPrices(symbol, prices));
     });
@@ -519,20 +516,16 @@ var Graph = function Graph(_ref) {
   var color = '#20CE99';
 
   if (data) {
-    // debugger
     if (dataKey === 'close') {
-      // debugger
       if (data[data.length - 1].close < data[0].close) {
         color = '#F45530';
       }
     } else {
-      // debugger
       if (data[data.length - 1].balance < data[0].balance) {
         color = '#F45530';
       }
     }
-  } // debugger
-
+  }
 
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: name
@@ -834,7 +827,6 @@ function (_React$Component) {
   _createClass(Portfolio, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      // debugger
       this.props.fetchSnapshots();
       this.props.fetchStocks();
       this.props.fetchGeneralNews(); // if (this.state.snapshots.length === 0) {
@@ -871,7 +863,6 @@ function (_React$Component) {
     value: function renderWatchlist() {
       var _this2 = this;
 
-      // debugger
       var symbols = Object.values(this.props.watchlist);
       symbols = symbols.map(function (item) {
         return item.symbol;
@@ -925,13 +916,11 @@ function (_React$Component) {
     }
   }, {
     key: "renderSnapshots",
-    value: function renderSnapshots() {// debugger
-      // return (<SnapshotsContainer snapshots={this.props.snapshots} />)
+    value: function renderSnapshots() {// return (<SnapshotsContainer snapshots={this.props.snapshots} />)
     }
   }, {
     key: "render",
     value: function render() {
-      // debugger
       var snapshot_values = Object.values(this.props.snapshots);
 
       if (snapshot_values.length === 0) {
@@ -944,8 +933,7 @@ function (_React$Component) {
       var dollarDiff = currBal - open;
       dollarDiff = parseFloat(Math.round(dollarDiff * 100) / 100).toFixed(2);
       var percentDiff = dollarDiff / open;
-      percentDiff = parseFloat(Math.round(percentDiff * 100) / 100).toFixed(2); // debugger
-
+      percentDiff = parseFloat(Math.round(percentDiff * 100) / 100).toFixed(2);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "portfolio-main-div"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -1716,8 +1704,7 @@ function (_React$Component) {
     }
   }, {
     key: "render1DGraph",
-    value: function render1DGraph() {// debugger
-      // return (<Graph data={this.props.prices.intraday} name='intraday-stock-graph' />)
+    value: function render1DGraph() {// return (<Graph data={this.props.prices.intraday} name='intraday-stock-graph' />)
       // this.setState({data: this.props.prices})
     }
   }, {
@@ -1732,10 +1719,9 @@ function (_React$Component) {
       } else {
         var close = 0;
         var dollarDiff = 0;
-        var percentDiff = 0; // debugger
+        var percentDiff = 0;
 
         if (prices.intraday) {
-          // debugger
           if (prices.intraday.length > 0) {
             close = prices.intraday[prices.intraday.length - 1].close;
             var open = prices.intraday[0].close;
@@ -1883,7 +1869,6 @@ function (_React$Component) {
   _createClass(StockItem, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      // debugger
       this.props.fetchIntradayPrices(this.props.symbol);
     }
   }, {
@@ -1904,8 +1889,7 @@ function (_React$Component) {
 
       if (shares === 0) {
         name = 'hidden';
-      } // debugger
-
+      }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         key: key
@@ -2114,8 +2098,7 @@ function (_React$Component) {
       e.preventDefault();
       this.setState({
         submit: true
-      }); // debugger
-
+      });
       var _this$props = this.props,
           symbol = _this$props.symbol,
           currentUser = _this$props.currentUser;
@@ -2433,15 +2416,11 @@ var StocksReducer = function StocksReducer() {
   var nextState = Object.assign({}, state);
 
   switch (action.type) {
-    // case RECEIVE_CURRENT_USER:
-    //     return action.currentUser.stock;
     case _actions_price_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_INTRADAY_PRICES"]:
-      // debugger
       nextState[action.symbol].prices = action.prices;
       return nextState;
 
     case _actions_price_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_INTRADAY_PRICES"]:
-      // debugger
       nextState[action.symbol].prices = action.prices;
       return nextState;
 
@@ -2490,8 +2469,6 @@ var TransactionsReducer = function TransactionsReducer() {
   var nextState = Object.assign({}, state);
 
   switch (action.type) {
-    // case RECEIVE_CURRENT_USER:
-    //     return action.currentUser.transaction;
     case _actions_stock_actions__WEBPACK_IMPORTED_MODULE_2__["RECEIVE_STOCKS"]:
       if (action.stocks.hasOwnProperty('transaction')) {
         nextState = action.stocks.transaction;
@@ -2502,8 +2479,6 @@ var TransactionsReducer = function TransactionsReducer() {
       return nextState;
 
     case _actions_transaction_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_TRANSACTION"]:
-      // debugger
-      // nextState[action.transaction.id] = action.transaction;
       return action.transaction;
 
     default:

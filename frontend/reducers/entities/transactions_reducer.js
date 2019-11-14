@@ -6,8 +6,6 @@ const TransactionsReducer = (state = {}, action) => {
     Object.freeze(state);
     let nextState = Object.assign({}, state);
     switch (action.type) {
-        // case RECEIVE_CURRENT_USER:
-        //     return action.currentUser.transaction;
         case RECEIVE_STOCKS:
             if (action.stocks.hasOwnProperty('transaction')) {
                 nextState = action.stocks.transaction;
@@ -16,8 +14,6 @@ const TransactionsReducer = (state = {}, action) => {
             }
             return nextState;
         case RECEIVE_TRANSACTION:
-            // debugger
-            // nextState[action.transaction.id] = action.transaction;
             return action.transaction
         default:
             return state;

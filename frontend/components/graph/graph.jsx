@@ -5,22 +5,17 @@ const Graph = ({ data, name, dataKey }) => {
     let color = '#20CE99';
     
     if (data) {
-        // debugger
         if (dataKey === 'close') {
-            // debugger
             if (data[data.length - 1].close < data[0].close) {
                 color = '#F45530';
             }
         } else {
-            // debugger
             if (data[data.length - 1].balance < data[0].balance) {
                 color = '#F45530';
             }
         }
     } 
-    
-    // debugger
-    
+
     return (
         <div className={name}>
             <ResponsiveContainer width='100%' height='100%'>
@@ -36,7 +31,6 @@ const Graph = ({ data, name, dataKey }) => {
             </ ResponsiveContainer>
         </div>
     )
-    
 }
 
 export default Graph;

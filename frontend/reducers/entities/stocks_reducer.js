@@ -7,15 +7,10 @@ const StocksReducer = (state = {}, action) => {
     Object.freeze(state);
     let nextState = Object.assign({}, state);
     switch (action.type) {
-        // case RECEIVE_CURRENT_USER:
-        //     return action.currentUser.stock;
-        
         case RECEIVE_INTRADAY_PRICES:
-            // debugger
             nextState[action.symbol].prices = action.prices;
             return nextState;
         case RECEIVE_INTRADAY_PRICES:
-            // debugger
             nextState[action.symbol].prices = action.prices;
             return nextState;
         case RECEIVE_STOCKS:
