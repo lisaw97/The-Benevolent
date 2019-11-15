@@ -1,21 +1,25 @@
 import React from 'react';
-import Graph from '../graph/graph';
+import GraphContainer from '../graph/graph_container';
 import TransactionFormContainer from '../transaction_form/transaction_form_container';
 
 class StockDetails extends React.Component {
     constructor(props) {
         super(props);
-        // this.state = {
-        //     data: this.props.prices.intraday
-        // }
-        // this.render1DGraph = this.render1DGraph.bind(this);
+        this.state = {
+            oneYear: [],
+            parsedData: [],
+            time: '1D'
+        }
+        this.handleTimeChange = this.handleTimeChange.bind(this);
     }
 
     componentDidMount() {
         this.props.fetchStock(this.props.match.params.symbol);
         this.props.fetchStockNews(this.props.match.params.symbol, 3);
         this.props.fetchIntradayPrices(this.props.match.params.symbol);
-        this.props.fetch1YPrices(this.props.match.params.symbol);
+        this.props.fetch1YPrices(this.props.match.params.symbol).then(
+            res => this.setState({ oneYear: res.prices, parsedData: res.prices })
+        )
     }
 
     renderNews() {
@@ -36,31 +40,51 @@ class StockDetails extends React.Component {
         );
     }
 
-    render1DGraph() {
-        // return (<Graph data={this.props.prices.intraday} name='intraday-stock-graph' />)
-        // this.setState({data: this.props.prices})
+    handleTimeChange(e) {
+        let time = e.currentTarget.innerText;
+        if (time === '5Y') {
+            // change this
+            this.setState({ parsedData: this.props.prices.intraday, time: time })
+        } else if (time === '1Y') {
+            this.setState({ parsedData: this.state.oneYear, time: time });
+        } else if (time === '3M') {
+            this.setState({ parsedData: this.state.oneYear.slice(185), time: time });
+        } else if (time === '1M') {
+            this.setState({ parsedData: this.state.oneYear.slice(227), time: time });
+        } else if (time === '1W') {
+            this.setState({ parsedData: this.state.oneYear.slice(243), time: time });
+        } else {
+            this.setState({ parsedData: this.props.prices.intraday, time: time });
+        }
+    }
+
+    setName(time) {
+        if (this.state.time === time) {
+            return 'highlight';
+        } else {
+            return 'none';
+        }
     }
 
     render() {
-        const { prices, stock } = this.props;
-        if (!stock) {
+        const { stock } = this.props;
+        
+        if (!stock || this.state.oneYear.length === 0) {
             return null;
-        } else {
-            let close = 0;
-            let dollarDiff = 0;
-            let percentDiff = 0;
-            if (prices.intraday) {
-                if (prices.intraday.length > 0) {
-                    close = prices.intraday[prices.intraday.length - 1].close;
-                    let open = prices.intraday[0].close;
-                    dollarDiff = close - open;
-                    dollarDiff = parseFloat(Math.round(dollarDiff * 100) / 100).toFixed(2);
-                    percentDiff = dollarDiff / open;
-                    percentDiff = parseFloat(Math.round(percentDiff * 100) / 100).toFixed(2);
-                }
-            }
-            
-            return (
+        } 
+        let {parsedData} = this.state;
+        if (parsedData.length === 0) {
+            parsedData = this.props.prices.year;
+        }
+
+        let close = parsedData[parsedData.length - 1].close;
+        let open = parsedData[0].close;
+        let dollarDiff = close - open;
+        dollarDiff = parseFloat(Math.round(dollarDiff * 100) / 100).toFixed(2);
+        let percentDiff = dollarDiff / open;
+        percentDiff = parseFloat(Math.round(percentDiff * 100) / 100).toFixed(2);
+
+        return (
             <div className='stock-details-div'>
                 
                 <div className='stock-details-left'>
@@ -70,15 +94,14 @@ class StockDetails extends React.Component {
                         <h1>${close}</h1>
                         <h3>${dollarDiff} ({percentDiff}%)</h3> 
                             
-                            <Graph data={this.props.prices.intraday} name='intraday-stock-graph' dataKey='close'/>
-                            {/* <Graph data={this.props.prices.year} name='intraday-stock-graph'/> */}
+                            <GraphContainer data={this.state.parsedData} name='intraday-stock-graph' dataKey='close'/>
                             <ul className='time-list'>
-                                <li><a onClick={this.render1DGraph}>1D</a></li>
-                                <li>1W</li>
-                                <li>1M</li>
-                                <li>3M</li>
-                                <li>1Y</li>
-                                <li>5Y</li>
+                            <li className={this.setName('1D')} onClick={this.handleTimeChange}>1D</li>
+                            <li className={this.setName('1W')} onClick={this.handleTimeChange}>1W</li>
+                            <li className={this.setName('1M')} onClick={this.handleTimeChange}>1M</li>
+                            <li className={this.setName('3M')} onClick={this.handleTimeChange}>3M</li>
+                            <li className={this.setName('1Y')} onClick={this.handleTimeChange}>1Y</li>
+                            <li className={this.setName('5Y')} onClick={this.handleTimeChange}>5Y</li>
                             </ul>
                     </div>
 
@@ -106,11 +129,8 @@ class StockDetails extends React.Component {
                     <hr />
                     {this.renderNews()}
                 </div>
-
             </div>
-            )
-        }
-        
+        )
     }
 }
 

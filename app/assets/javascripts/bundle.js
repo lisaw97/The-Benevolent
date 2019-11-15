@@ -1718,7 +1718,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _graph_graph__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../graph/graph */ "./frontend/components/graph/graph.jsx");
+/* harmony import */ var _graph_graph_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../graph/graph_container */ "./frontend/components/graph/graph_container.js");
 /* harmony import */ var _transaction_form_transaction_form_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../transaction_form/transaction_form_container */ "./frontend/components/transaction_form/transaction_form_container.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -1730,9 +1730,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -1748,21 +1748,34 @@ function (_React$Component) {
   _inherits(StockDetails, _React$Component);
 
   function StockDetails(props) {
+    var _this;
+
     _classCallCheck(this, StockDetails);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(StockDetails).call(this, props)); // this.state = {
-    //     data: this.props.prices.intraday
-    // }
-    // this.render1DGraph = this.render1DGraph.bind(this);
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(StockDetails).call(this, props));
+    _this.state = {
+      oneYear: [],
+      parsedData: [],
+      time: '1D'
+    };
+    _this.handleTimeChange = _this.handleTimeChange.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(StockDetails, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      var _this2 = this;
+
       this.props.fetchStock(this.props.match.params.symbol);
       this.props.fetchStockNews(this.props.match.params.symbol, 3);
       this.props.fetchIntradayPrices(this.props.match.params.symbol);
-      this.props.fetch1YPrices(this.props.match.params.symbol);
+      this.props.fetch1YPrices(this.props.match.params.symbol).then(function (res) {
+        return _this2.setState({
+          oneYear: res.prices,
+          parsedData: res.prices
+        });
+      });
     }
   }, {
     key: "renderNews",
@@ -1781,64 +1794,117 @@ function (_React$Component) {
       }));
     }
   }, {
-    key: "render1DGraph",
-    value: function render1DGraph() {// return (<Graph data={this.props.prices.intraday} name='intraday-stock-graph' />)
-      // this.setState({data: this.props.prices})
+    key: "handleTimeChange",
+    value: function handleTimeChange(e) {
+      var time = e.currentTarget.innerText;
+
+      if (time === '5Y') {
+        // change this
+        this.setState({
+          parsedData: this.props.prices.intraday,
+          time: time
+        });
+      } else if (time === '1Y') {
+        this.setState({
+          parsedData: this.state.oneYear,
+          time: time
+        });
+      } else if (time === '3M') {
+        this.setState({
+          parsedData: this.state.oneYear.slice(185),
+          time: time
+        });
+      } else if (time === '1M') {
+        this.setState({
+          parsedData: this.state.oneYear.slice(227),
+          time: time
+        });
+      } else if (time === '1W') {
+        this.setState({
+          parsedData: this.state.oneYear.slice(243),
+          time: time
+        });
+      } else {
+        this.setState({
+          parsedData: this.props.prices.intraday,
+          time: time
+        });
+      }
+    }
+  }, {
+    key: "setName",
+    value: function setName(time) {
+      if (this.state.time === time) {
+        return 'highlight';
+      } else {
+        return 'none';
+      }
     }
   }, {
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          prices = _this$props.prices,
-          stock = _this$props.stock;
+      var stock = this.props.stock;
 
-      if (!stock) {
+      if (!stock || this.state.oneYear.length === 0) {
         return null;
-      } else {
-        var close = 0;
-        var dollarDiff = 0;
-        var percentDiff = 0;
-
-        if (prices.intraday) {
-          if (prices.intraday.length > 0) {
-            close = prices.intraday[prices.intraday.length - 1].close;
-            var open = prices.intraday[0].close;
-            dollarDiff = close - open;
-            dollarDiff = parseFloat(Math.round(dollarDiff * 100) / 100).toFixed(2);
-            percentDiff = dollarDiff / open;
-            percentDiff = parseFloat(Math.round(percentDiff * 100) / 100).toFixed(2);
-          }
-        }
-
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "stock-details-div"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "stock-details-left"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "stock-graph"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
-          className: "comp-name"
-        }, stock.companyName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "$", close), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", dollarDiff, " (", percentDiff, "%)"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_graph_graph__WEBPACK_IMPORTED_MODULE_1__["default"], {
-          data: this.props.prices.intraday,
-          name: "intraday-stock-graph",
-          dataKey: "close"
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-          className: "time-list"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-          onClick: this.render1DGraph
-        }, "1D")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1W"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "3M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1Y"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "5Y"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "stock-orders"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_transaction_form_transaction_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
-          symbol: stock.symbol,
-          price: close
-        }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "stock-about"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "About"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, stock.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "company-info"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "CEO ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, stock.CEO)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Employees ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, stock.employees)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Headquarters ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, stock.city, ", ", stock.state)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Industry ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, stock.industry)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "recent-news"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Recent News"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), this.renderNews()));
       }
+
+      var parsedData = this.state.parsedData;
+
+      if (parsedData.length === 0) {
+        parsedData = this.props.prices.year;
+      }
+
+      var close = parsedData[parsedData.length - 1].close;
+      var open = parsedData[0].close;
+      var dollarDiff = close - open;
+      dollarDiff = parseFloat(Math.round(dollarDiff * 100) / 100).toFixed(2);
+      var percentDiff = dollarDiff / open;
+      percentDiff = parseFloat(Math.round(percentDiff * 100) / 100).toFixed(2);
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "stock-details-div"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "stock-details-left"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "stock-graph"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+        className: "comp-name"
+      }, stock.companyName), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "$", close), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", dollarDiff, " (", percentDiff, "%)"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_graph_graph_container__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        data: this.state.parsedData,
+        name: "intraday-stock-graph",
+        dataKey: "close"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "time-list"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: this.setName('1D'),
+        onClick: this.handleTimeChange
+      }, "1D"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: this.setName('1W'),
+        onClick: this.handleTimeChange
+      }, "1W"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: this.setName('1M'),
+        onClick: this.handleTimeChange
+      }, "1M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: this.setName('3M'),
+        onClick: this.handleTimeChange
+      }, "3M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: this.setName('1Y'),
+        onClick: this.handleTimeChange
+      }, "1Y"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: this.setName('5Y'),
+        onClick: this.handleTimeChange
+      }, "5Y"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "stock-orders"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_transaction_form_transaction_form_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        symbol: stock.symbol,
+        price: close
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "stock-about"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "About"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, stock.description), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "company-info"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "CEO ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, stock.CEO)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Employees ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, stock.employees)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Headquarters ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, stock.city, ", ", stock.state)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Industry ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, stock.industry)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "recent-news"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Recent News"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), this.renderNews()));
     }
   }]);
 
