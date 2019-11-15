@@ -6,20 +6,24 @@ import StockItemContainer from '../stock/stock_item_container';
 class Portfolio extends React.Component {
     constructor(props) {
         super(props);
-        // this.state = {
-        //     snapshots: []
-        // }
+        this.state = {
+            fiveYears: [],
+            snapshots: [],
+            time: '5Y'
+        }
+        this.handleTimeChange = this.handleTimeChange.bind(this);
     }
 
     componentDidMount() {     
-        this.props.fetchSnapshots();
+        // this.props.fetchSnapshots();
+
         this.props.fetchStocks();
         this.props.fetchGeneralNews();
-        // if (this.state.snapshots.length === 0) {
-        //     this.props.fetchSnapshots().then(
-        //         res => this.setState({ snapshots: Object.values(res.snapshots) })
-        //     )
-        // }
+        if (this.state.snapshots.length === 0) {
+            this.props.fetchSnapshots().then(
+                res => this.setState({ fiveYears: Object.values(res.snapshots) })
+            )
+        }
     }
 
     renderStocks() {
@@ -82,39 +86,69 @@ class Portfolio extends React.Component {
         } 
     }
 
-    renderSnapshots() {
-        // return (<SnapshotsContainer snapshots={this.props.snapshots} />)
+    handleTimeChange(e) {
+        let time = e.currentTarget.innerText;
+        if (time === '5Y') {
+            this.setState({ snapshots: Object.values(this.props.snapshots), time: time })
+        } else if (time === '1Y') {
+            let startId = this.props.snapshots['2018-01-19'].id;
+            this.setState({ snapshots: this.state.fiveYears.slice(startId), time: time });
+        } else if (time === '3M') {
+            let startId = this.props.snapshots['2018-10-19'].id;
+            this.setState({ snapshots: this.state.fiveYears.slice(startId), time: time });
+        } else if (time === '1M') {
+            let startId = this.props.snapshots['2018-12-19'].id;
+            this.setState({ snapshots: this.state.fiveYears.slice(startId), time: time });
+        } else if (time === '1W') {
+            let startId = this.props.snapshots['2019-01-11'].id;
+            this.setState({ snapshots: this.state.fiveYears.slice(startId), time: time });
+        } else {
+            let startId = this.props.snapshots['2019-01-18'].id;
+            this.setState({ snapshots: this.state.fiveYears.slice(startId), time: time });
+        }
+    }
+
+    setName(time) {
+        if (this.state.time === time) {
+            return 'highlight';
+        } else {
+            return 'none';
+        }
     }
 
     render() {
-        const snapshot_values = Object.values(this.props.snapshots);
-        if (snapshot_values.length === 0) {
+        let { snapshots } = this.state;
+        if (Object.values(this.props.snapshots).length === 0) {
             return null;
         } 
-        const {snapshots} = this.props;
-        let currBal = snapshot_values[snapshot_values.length - 1].balance;
-        let open = snapshot_values[0].balance;
+        if (snapshots.length === 0) {
+            snapshots = Object.values(this.props.snapshots);
+        }
+        let currBal = snapshots[snapshots.length - 1].balance;
+        let open = snapshots[0].balance;
         let dollarDiff = currBal - open;
         dollarDiff = parseFloat(Math.round(dollarDiff * 100) / 100).toFixed(2);
         let percentDiff = dollarDiff / open;
         percentDiff = parseFloat(Math.round(percentDiff * 100) / 100).toFixed(2);
+        
         return (
             <div className='portfolio-main-div'>
                 <div className='portfolio-info-div'>
 
                     <div className='portfolio-div'>
                         {/* {this.renderSnapshots()} */}
+
                         <div className='stock-graph'>
                             <h1>${currBal}</h1>
                             <h3>${dollarDiff} ({percentDiff}%)</h3>
-                            <GraphContainer data={snapshot_values} name='intraday-stock-graph' dataKey='balance' />
+                            <GraphContainer data={snapshots} name='intraday-stock-graph' dataKey='balance' />
                             <ul className='time-list'>
-                                <li><a>1D</a></li>
-                                <li>1W</li>
-                                <li>1M</li>
-                                <li>3M</li>
-                                <li>1Y</li>
-                                <li>5Y</li>
+                                {/* <li className={this.setName('1D')} onClick={this.handleTimeChange}>1D</li> */}
+                                <li className={this.setName('1W')} onClick={this.handleTimeChange}>1W</li>
+                                <li className={this.setName('1M')} onClick={this.handleTimeChange}>1M</li>
+                                <li className={this.setName('3M')} onClick={this.handleTimeChange}>3M</li>
+                                <li className={this.setName('1Y')} onClick={this.handleTimeChange}>1Y</li>
+                                <li className={this.setName('5Y')} onClick={this.handleTimeChange}>5Y</li>
                             </ul>
                         </div>
                     </div>

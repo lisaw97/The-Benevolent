@@ -17,7 +17,7 @@
     display: flex;
     /* flex-direction: column; */
     justify-content: space-between;
-    width: 75%;
+    width: 1200px;
     margin: 1%;
 }
 
@@ -93,9 +93,20 @@
     margin-top: 71px;
 }
 
+.highlight {
+    border-bottom: 2px solid var(--rh-green);
+    padding-bottom: 10px;
+    color: var(--rh-green);
+}
+
+.none {
+    border-bottom: 2px solid black;
+    padding-bottom: 10px;
+}
+
 .news-div {
     /* height: 50%; */
-    width: 75%;
+    width: 1200px;
     margin: 1%;
 }
 

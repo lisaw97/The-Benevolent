@@ -798,9 +798,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -817,28 +817,41 @@ function (_React$Component) {
   _inherits(Portfolio, _React$Component);
 
   function Portfolio(props) {
+    var _this;
+
     _classCallCheck(this, Portfolio);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Portfolio).call(this, props)); // this.state = {
-    //     snapshots: []
-    // }
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Portfolio).call(this, props));
+    _this.state = {
+      fiveYears: [],
+      snapshots: [],
+      time: '5Y'
+    };
+    _this.handleTimeChange = _this.handleTimeChange.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(Portfolio, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.fetchSnapshots();
+      var _this2 = this;
+
+      // this.props.fetchSnapshots();
       this.props.fetchStocks();
-      this.props.fetchGeneralNews(); // if (this.state.snapshots.length === 0) {
-      //     this.props.fetchSnapshots().then(
-      //         res => this.setState({ snapshots: Object.values(res.snapshots) })
-      //     )
-      // }
+      this.props.fetchGeneralNews();
+
+      if (this.state.snapshots.length === 0) {
+        this.props.fetchSnapshots().then(function (res) {
+          return _this2.setState({
+            fiveYears: Object.values(res.snapshots)
+          });
+        });
+      }
     }
   }, {
     key: "renderStocks",
     value: function renderStocks() {
-      var _this = this;
+      var _this3 = this;
 
       var symbols = Object.values(this.props.transactions);
       symbols = symbols.map(function (item) {
@@ -847,7 +860,7 @@ function (_React$Component) {
       var uniqueSymbols = new Set(symbols);
       symbols = _toConsumableArray(uniqueSymbols);
       return symbols.map(function (symbol, i) {
-        var shares = _this.calculateShares(symbol);
+        var shares = _this3.calculateShares(symbol);
 
         if (shares > 0) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stock_stock_item_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -861,7 +874,7 @@ function (_React$Component) {
   }, {
     key: "renderWatchlist",
     value: function renderWatchlist() {
-      var _this2 = this;
+      var _this4 = this;
 
       var symbols = Object.values(this.props.watchlist);
       symbols = symbols.map(function (item) {
@@ -870,7 +883,7 @@ function (_React$Component) {
       var uniqueSymbols = new Set(symbols);
       symbols = _toConsumableArray(uniqueSymbols);
       return symbols.map(function (symbol, i) {
-        var shares = _this2.calculateShares(symbol);
+        var shares = _this4.calculateShares(symbol);
 
         if (shares === 0) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_stock_stock_item_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -915,21 +928,71 @@ function (_React$Component) {
       }
     }
   }, {
-    key: "renderSnapshots",
-    value: function renderSnapshots() {// return (<SnapshotsContainer snapshots={this.props.snapshots} />)
+    key: "handleTimeChange",
+    value: function handleTimeChange(e) {
+      var time = e.currentTarget.innerText;
+
+      if (time === '5Y') {
+        this.setState({
+          snapshots: Object.values(this.props.snapshots),
+          time: time
+        });
+      } else if (time === '1Y') {
+        var startId = this.props.snapshots['2018-01-19'].id;
+        this.setState({
+          snapshots: this.state.fiveYears.slice(startId),
+          time: time
+        });
+      } else if (time === '3M') {
+        var _startId = this.props.snapshots['2018-10-19'].id;
+        this.setState({
+          snapshots: this.state.fiveYears.slice(_startId),
+          time: time
+        });
+      } else if (time === '1M') {
+        var _startId2 = this.props.snapshots['2018-12-19'].id;
+        this.setState({
+          snapshots: this.state.fiveYears.slice(_startId2),
+          time: time
+        });
+      } else if (time === '1W') {
+        var _startId3 = this.props.snapshots['2019-01-11'].id;
+        this.setState({
+          snapshots: this.state.fiveYears.slice(_startId3),
+          time: time
+        });
+      } else {
+        var _startId4 = this.props.snapshots['2019-01-18'].id;
+        this.setState({
+          snapshots: this.state.fiveYears.slice(_startId4),
+          time: time
+        });
+      }
+    }
+  }, {
+    key: "setName",
+    value: function setName(time) {
+      if (this.state.time === time) {
+        return 'highlight';
+      } else {
+        return 'none';
+      }
     }
   }, {
     key: "render",
     value: function render() {
-      var snapshot_values = Object.values(this.props.snapshots);
+      var snapshots = this.state.snapshots;
 
-      if (snapshot_values.length === 0) {
+      if (Object.values(this.props.snapshots).length === 0) {
         return null;
       }
 
-      var snapshots = this.props.snapshots;
-      var currBal = snapshot_values[snapshot_values.length - 1].balance;
-      var open = snapshot_values[0].balance;
+      if (snapshots.length === 0) {
+        snapshots = Object.values(this.props.snapshots);
+      }
+
+      var currBal = snapshots[snapshots.length - 1].balance;
+      var open = snapshots[0].balance;
       var dollarDiff = currBal - open;
       dollarDiff = parseFloat(Math.round(dollarDiff * 100) / 100).toFixed(2);
       var percentDiff = dollarDiff / open;
@@ -943,12 +1006,27 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "stock-graph"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "$", currBal), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", dollarDiff, " (", percentDiff, "%)"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_graph_graph_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        data: snapshot_values,
+        data: snapshots,
         name: "intraday-stock-graph",
         dataKey: "balance"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "time-list"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", null, "1D")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1W"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "3M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "1Y"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "5Y")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: this.setName('1W'),
+        onClick: this.handleTimeChange
+      }, "1W"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: this.setName('1M'),
+        onClick: this.handleTimeChange
+      }, "1M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: this.setName('3M'),
+        onClick: this.handleTimeChange
+      }, "3M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: this.setName('1Y'),
+        onClick: this.handleTimeChange
+      }, "1Y"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: this.setName('5Y'),
+        onClick: this.handleTimeChange
+      }, "5Y")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "stocks-div"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "userStocks-div"
