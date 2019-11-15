@@ -1,6 +1,7 @@
 import React from 'react';
 import GraphContainer from '../graph/graph_container';
 import TransactionFormContainer from '../transaction_form/transaction_form_container';
+// import Odometer from 'react-odometerjs';
 
 class StockDetails extends React.Component {
     constructor(props) {
@@ -11,6 +12,7 @@ class StockDetails extends React.Component {
             time: '1D'
         }
         this.handleTimeChange = this.handleTimeChange.bind(this);
+        this.handleMouseover = this.handleMouseover.bind(this);
     }
 
     componentDidMount() {
@@ -20,7 +22,6 @@ class StockDetails extends React.Component {
         this.props.fetch1YPrices(this.props.match.params.symbol).then(
             res => this.setState({ oneYear: res.prices, parsedData: res.prices })
         )
-
     }
 
     renderNews() {
@@ -68,6 +69,10 @@ class StockDetails extends React.Component {
         }
     }
 
+    handleMouseover() {
+        
+    }
+
     render() {
         const { stock } = this.props;
         
@@ -93,10 +98,11 @@ class StockDetails extends React.Component {
 
                     <div className='stock-graph'>
                         <h2 className='comp-name'>{stock.companyName}</h2>
-                        <h1>${close}</h1>
-                        <h3>${dollarDiff} ({percentDiff}%)</h3> 
+                        {/* <h1>${close}</h1> */}
+                        {/* <h1>$<Odometer value={this.handleMouseover} format="(,ddd).dd"/></h1>
+                        <h3>${dollarDiff} ({percentDiff}%)</h3>  */}
                             
-                            <GraphContainer data={this.state.parsedData} name='intraday-stock-graph' dataKey='close'/>
+                            <GraphContainer close={close} dollarDiff={dollarDiff} percentDiff={percentDiff} data={this.state.parsedData} name='intraday-stock-graph' dataKey='close'/>
                             <ul className='time-list'>
                             <li className={this.setName('1D')} onClick={this.handleTimeChange}>1D</li>
                             <li className={this.setName('1W')} onClick={this.handleTimeChange}>1W</li>
