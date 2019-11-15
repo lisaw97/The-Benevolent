@@ -139,9 +139,9 @@ class Portfolio extends React.Component {
                         {/* {this.renderSnapshots()} */}
 
                         <div className='stock-graph'>
-                            <h1>${currBal}</h1>
-                            <h3>${dollarDiff} ({percentDiff}%)</h3>
-                            <GraphContainer data={snapshots} name='intraday-stock-graph' dataKey='balance' />
+                            {/* <h1>${currBal}</h1> */}
+                            {/* <h3>${dollarDiff} ({percentDiff}%)</h3> */}
+                            <GraphContainer close={currBal} dollarDiff={dollarDiff} percentDiff={percentDiff} data={snapshots} name='intraday-stock-graph' dataKey='balance' />
                             <ul className='time-list'>
                                 {/* <li className={this.setName('1D')} onClick={this.handleTimeChange}>1D</li> */}
                                 <li className={this.setName('1W')} onClick={this.handleTimeChange}>1W</li>

@@ -569,9 +569,15 @@ function (_React$Component) {
   _createClass(Graph, [{
     key: "handleMouseMove",
     value: function handleMouseMove(e) {
-      this.setState({
-        hoverPrice: e.activePayload[0].payload.close
-      });
+      if (this.props.dataKey === 'close') {
+        this.setState({
+          hoverPrice: e.activePayload[0].payload.close
+        });
+      } else {
+        this.setState({
+          hoverPrice: e.activePayload[0].payload.balance
+        });
+      }
     }
   }, {
     key: "render",
@@ -597,13 +603,23 @@ function (_React$Component) {
         }
       }
 
+      var hidden = '';
+
+      if (this.props.name != 'intraday-stock-graph') {
+        hidden = 'hidden';
+      }
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: name
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "$", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_odometerjs__WEBPACK_IMPORTED_MODULE_2___default.a, {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+        className: hidden
+      }, "$", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_odometerjs__WEBPACK_IMPORTED_MODULE_2___default.a, {
         className: "odometer",
         value: this.state.hoverPrice,
         format: "(,ddd).dd"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", dollarDiff, " (", percentDiff, "%)"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["ResponsiveContainer"], {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+        className: hidden
+      }, "$", dollarDiff, " (", percentDiff, "%)"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["ResponsiveContainer"], {
         width: "100%",
         height: "100%"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
@@ -1085,7 +1101,10 @@ function (_React$Component) {
         className: "portfolio-div"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "stock-graph"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "$", currBal), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "$", dollarDiff, " (", percentDiff, "%)"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_graph_graph_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_graph_graph_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        close: currBal,
+        dollarDiff: dollarDiff,
+        percentDiff: percentDiff,
         data: snapshots,
         name: "intraday-stock-graph",
         dataKey: "balance"

@@ -13,9 +13,16 @@ class Graph extends React.Component {
     }
     
     handleMouseMove(e) {
-        this.setState({
-            hoverPrice: e.activePayload[0].payload.close
-        })
+        if (this.props.dataKey === 'close') {
+            this.setState({
+                hoverPrice: e.activePayload[0].payload.close
+            })
+        } else {
+            this.setState({
+                hoverPrice: e.activePayload[0].payload.balance
+            })
+        }
+        
     }
 
     render() {
@@ -34,12 +41,23 @@ class Graph extends React.Component {
             }
         } 
 
+        let hidden = '';
+        if (this.props.name != 'intraday-stock-graph') {
+            hidden = 'hidden'
+        }
         return (
             <div className={name}>
                 
                 {/* <h1>${close}</h1> */}
-                <h1>$<Odometer className='odometer' value={this.state.hoverPrice} format="(,ddd).dd" /></h1>
-                <h3>${dollarDiff} ({percentDiff}%)</h3> 
+                {/* {if (this.props.name === 'intraday-stock-graph') { */}
+                    {/* return ( */}
+                        {/* <div> */}
+                            <h1 className={hidden}>$<Odometer className='odometer' value={this.state.hoverPrice} format="(,ddd).dd" /></h1>
+                            <h3 className={hidden}>${dollarDiff} ({percentDiff}%)</h3> 
+                        {/* </div> */}
+                    {/* ) */}
+                {/* }} */}
+                
                 
                 <ResponsiveContainer width='100%' height='100%'>
                     <LineChart

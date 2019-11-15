@@ -5,6 +5,7 @@
   *zoom: 1;
   *display: inline;
   position: relative;
+  margin-bottom: 8px;
 }
 .odometer.odometer-auto-theme .odometer-digit, .odometer.odometer-theme-default .odometer-digit {
   display: inline-block;
