@@ -10,9 +10,9 @@ const StocksReducer = (state = {}, action) => {
         case RECEIVE_INTRADAY_PRICES:
             nextState[action.symbol].prices = action.prices;
             return nextState;
-        case RECEIVE_INTRADAY_PRICES:
-            nextState[action.symbol].prices = action.prices;
-            return nextState;
+        // case RECEIVE_INTRADAY_PRICES:
+        //     nextState[action.symbol].prices = action.prices;
+        //     return nextState;
         case RECEIVE_STOCKS:
             if (action.stocks.hasOwnProperty('stock')) {
                 nextState = action.stocks.stock;

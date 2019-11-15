@@ -1,4 +1,4 @@
-import { RECEIVE_INTRADAY_PRICES, RECEIVE_1Y_PRICES } from '../../actions/price_actions';
+import { RECEIVE_INTRADAY_PRICES, RECEIVE_1Y_PRICES, RECEIVE_5Y_PRICES } from '../../actions/price_actions';
 
 const PricesReducer = (state = {}, action) => {
     Object.freeze(state);
@@ -8,6 +8,9 @@ const PricesReducer = (state = {}, action) => {
             nextState.intraday = action.prices;
             return nextState;
         case RECEIVE_1Y_PRICES:
+            nextState.year = action.prices;
+            return nextState;
+        case RECEIVE_5Y_PRICES:
             nextState.year = action.prices;
             return nextState;
         default:

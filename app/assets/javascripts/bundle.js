@@ -189,19 +189,22 @@ var fetchSnapshot = function fetchSnapshot(id) {
 /*!*******************************************!*\
   !*** ./frontend/actions/price_actions.js ***!
   \*******************************************/
-/*! exports provided: RECEIVE_INTRADAY_PRICES, RECEIVE_1Y_PRICES, fetchIntradayPrices, fetch1YPrices */
+/*! exports provided: RECEIVE_INTRADAY_PRICES, RECEIVE_1Y_PRICES, RECEIVE_5Y_PRICES, fetchIntradayPrices, fetch1YPrices, fetch5YPrices */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_INTRADAY_PRICES", function() { return RECEIVE_INTRADAY_PRICES; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_1Y_PRICES", function() { return RECEIVE_1Y_PRICES; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_5Y_PRICES", function() { return RECEIVE_5Y_PRICES; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchIntradayPrices", function() { return fetchIntradayPrices; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetch1YPrices", function() { return fetch1YPrices; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetch5YPrices", function() { return fetch5YPrices; });
 /* harmony import */ var _util_stock_api_util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util/stock_api_util */ "./frontend/util/stock_api_util.js");
 
 var RECEIVE_INTRADAY_PRICES = 'RECEIVE_INTRADAY_PRICES';
 var RECEIVE_1Y_PRICES = 'RECEIVE_1Y_PRICES';
+var RECEIVE_5Y_PRICES = 'RECEIVE_5Y_PRICES';
 
 var receiveIntradayPrices = function receiveIntradayPrices(symbol, prices) {
   return {
@@ -219,6 +222,14 @@ var receive1YPrices = function receive1YPrices(symbol, prices) {
   };
 };
 
+var receive5YPrices = function receive5YPrices(symbol, prices) {
+  return {
+    type: RECEIVE_5Y_PRICES,
+    symbol: symbol,
+    prices: prices
+  };
+};
+
 var fetchIntradayPrices = function fetchIntradayPrices(symbol) {
   return function (dispatch) {
     return _util_stock_api_util__WEBPACK_IMPORTED_MODULE_0__["fetchIntradayPrices"](symbol).then(function (prices) {
@@ -230,6 +241,13 @@ var fetch1YPrices = function fetch1YPrices(symbol) {
   return function (dispatch) {
     return _util_stock_api_util__WEBPACK_IMPORTED_MODULE_0__["fetch1YPrices"](symbol).then(function (prices) {
       return dispatch(receive1YPrices(symbol, prices));
+    });
+  };
+};
+var fetch5YPrices = function fetch5YPrices(symbol) {
+  return function (dispatch) {
+    return _util_stock_api_util__WEBPACK_IMPORTED_MODULE_0__["fetch5YPrices"](symbol).then(function (prices) {
+      return dispatch(receive5YPrices(symbol, prices));
     });
   };
 };
@@ -1796,13 +1814,16 @@ function (_React$Component) {
   }, {
     key: "handleTimeChange",
     value: function handleTimeChange(e) {
+      var _this3 = this;
+
       var time = e.currentTarget.innerText;
 
       if (time === '5Y') {
-        // change this
-        this.setState({
-          parsedData: this.props.prices.intraday,
-          time: time
+        this.props.fetch5YPrices(this.props.match.params.symbol).then(function (res) {
+          return _this3.setState({
+            parsedData: res.prices,
+            time: time
+          });
         });
       } else if (time === '1Y') {
         this.setState({
@@ -1956,6 +1977,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     fetch1YPrices: function fetch1YPrices(symbol) {
       return dispatch(Object(_actions_price_actions__WEBPACK_IMPORTED_MODULE_3__["fetch1YPrices"])(symbol));
+    },
+    fetch5YPrices: function fetch5YPrices(symbol) {
+      return dispatch(Object(_actions_price_actions__WEBPACK_IMPORTED_MODULE_3__["fetch5YPrices"])(symbol));
     }
   };
 };
@@ -2525,6 +2549,10 @@ var PricesReducer = function PricesReducer() {
       nextState.year = action.prices;
       return nextState;
 
+    case _actions_price_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_5Y_PRICES"]:
+      nextState.year = action.prices;
+      return nextState;
+
     default:
       return state;
   }
@@ -2561,10 +2589,9 @@ var StocksReducer = function StocksReducer() {
     case _actions_price_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_INTRADAY_PRICES"]:
       nextState[action.symbol].prices = action.prices;
       return nextState;
-
-    case _actions_price_actions__WEBPACK_IMPORTED_MODULE_1__["RECEIVE_INTRADAY_PRICES"]:
-      nextState[action.symbol].prices = action.prices;
-      return nextState;
+    // case RECEIVE_INTRADAY_PRICES:
+    //     nextState[action.symbol].prices = action.prices;
+    //     return nextState;
 
     case _actions_stock_actions__WEBPACK_IMPORTED_MODULE_0__["RECEIVE_STOCKS"]:
       if (action.stocks.hasOwnProperty('stock')) {
@@ -3115,7 +3142,7 @@ var logout = function logout() {
 /*!*****************************************!*\
   !*** ./frontend/util/stock_api_util.js ***!
   \*****************************************/
-/*! exports provided: fetchStocks, fetchStock, fetchIntradayPrices, fetch1YPrices */
+/*! exports provided: fetchStocks, fetchStock, fetchIntradayPrices, fetch1YPrices, fetch5YPrices */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3124,6 +3151,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchStock", function() { return fetchStock; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchIntradayPrices", function() { return fetchIntradayPrices; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetch1YPrices", function() { return fetch1YPrices; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetch5YPrices", function() { return fetch5YPrices; });
 var fetchStocks = function fetchStocks() {
   return $.ajax({
     url: '/api/stocks',
@@ -3145,6 +3173,12 @@ var fetchIntradayPrices = function fetchIntradayPrices(symbol) {
 var fetch1YPrices = function fetch1YPrices(symbol) {
   return $.ajax({
     url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/chart/1y/?token=pk_d9fc28e6b9594efa97b112ac9c920c87"),
+    method: 'GET'
+  });
+};
+var fetch5YPrices = function fetch5YPrices(symbol) {
+  return $.ajax({
+    url: "https://cloud.iexapis.com/stable/stock/".concat(symbol, "/chart/5y/?token=pk_d9fc28e6b9594efa97b112ac9c920c87"),
     method: 'GET'
   });
 };
@@ -61491,7 +61525,7 @@ exports.default = _ResizeDetector2.default;
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

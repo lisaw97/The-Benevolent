@@ -20,6 +20,7 @@ class StockDetails extends React.Component {
         this.props.fetch1YPrices(this.props.match.params.symbol).then(
             res => this.setState({ oneYear: res.prices, parsedData: res.prices })
         )
+
     }
 
     renderNews() {
@@ -43,8 +44,9 @@ class StockDetails extends React.Component {
     handleTimeChange(e) {
         let time = e.currentTarget.innerText;
         if (time === '5Y') {
-            // change this
-            this.setState({ parsedData: this.props.prices.intraday, time: time })
+            this.props.fetch5YPrices(this.props.match.params.symbol).then(
+                res => this.setState({ parsedData: res.prices, time: time })
+            )
         } else if (time === '1Y') {
             this.setState({ parsedData: this.state.oneYear, time: time });
         } else if (time === '3M') {
