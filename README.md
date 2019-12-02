@@ -9,4 +9,4 @@ A single-page Robinhood clone, where users can obtain company information, recen
 **React, Redux, Ruby on Rails, PostgreSQL, Webpack**
 
 *Recharts*
-![Stock Details Page](public/Screen Shot 2019-12-02 at 1.22.37 PM.png)
+![Stock Details Page](/public/Screen Shot 2019-12-02 at 1.22.37 PM.png)
