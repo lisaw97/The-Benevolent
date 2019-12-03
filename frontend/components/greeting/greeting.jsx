@@ -27,13 +27,13 @@ class Greeting extends React.Component {
     renderContact() {
         return (
           <div className="contact">
-            <a href="https://github.com/lisaw97">
+            <a target="_blank" href="https://github.com/lisaw97">
               <Octicon icon={MarkGithub} size="30px" />
             </a>
-            <a href="mailto: lisawen0614@gmail.com">
+            <a target="_blank" href="mailto: lisawen0614@gmail.com">
               <Octicon icon={Mail} size="30px" />
             </a>
-            <a href="https://www.linkedin.com/in/lisa-wen-006378133/">
+            <a target="_blank" href="https://www.linkedin.com/in/lisa-wen-006378133/">
               <IoLogoLinkedin size="30px" />
             </a>
           </div>
