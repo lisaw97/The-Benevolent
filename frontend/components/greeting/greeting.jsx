@@ -24,25 +24,51 @@ class Greeting extends React.Component {
         window.location.hash = '/login';
     }
 
+    renderContact() {
+        return (
+          <div className="contact">
+            <a href="https://github.com/lisaw97">
+              <Octicon icon={MarkGithub} size="30px" />
+            </a>
+            <a href="mailto: lisawen0614@gmail.com">
+              <Octicon icon={Mail} size="30px" />
+            </a>
+            <a href="https://www.linkedin.com/in/lisa-wen-006378133/">
+              <IoLogoLinkedin size="30px" />
+            </a>
+          </div>
+        );
+    }
+
     render() {
         const { currentUser } = this.props;
         if (currentUser) {
             return (
-                <form className='greeting-div'>
-                    <Link className='rh-logo' to='/portfolio'><SVGIcon name='icon' width={35} height={30} />Welcome, {currentUser.first_name}</Link>
-                    <div onClick={this.handleSubmit}><Link className='logout-button' to='/'>Log Out</Link></div>
-                </form>
-            ) 
+              <form className="greeting-div">
+                <div className="greeting-left">
+                  <Link className="rh-logo" to="/portfolio">
+                    <SVGIcon name="icon" width={35} height={30} />
+                    Welcome, {currentUser.first_name}
+                  </Link>
+                  {this.renderContact()}
+                </div>
+                <div onClick={this.handleSubmit}>
+                  <Link className="logout-button" to="/">
+                    Log Out
+                  </Link>
+                </div>
+              </form>
+            ); 
         } else {
             return (
               <div className="greeting-div">
-                <Link className="rh-logo" to="/">
-                  Robinhood Clone
-                  <SVGIcon name="icon" width={35} height={30} />
-                </Link>
-                <Octicon icon={MarkGithub} size="30px" />
-                <Octicon icon={Mail} size="30px" />
-                <IoLogoLinkedin size="30px" />
+                <div className="greeting-left">
+                  <Link className="rh-logo" to="/">
+                    <SVGIcon name="icon" width={35} height={30} />
+                    Robinhood Clone
+                  </Link>
+                  {this.renderContact()}
+                </div>
                 <div className="signup-login-buttons">
                   <div>
                     <Link className="signup-button" to="/signup">

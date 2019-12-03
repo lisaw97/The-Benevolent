@@ -97,3 +97,28 @@
 .hide {
     visibility: hidden;
 }
+
+.greeting-left {
+    display: flex;
+}
+
+.contact {
+    width: 100px;
+    margin: 20px;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.contact a {
+    width: 25px;
+    margin-top: 5px;
+    margin-bottom: 0;
+    color: black;
+    color: var(--rh-green);
+    color: green;
+}
+
+.contact a:hover {
+    color: var(--rh-green);
+}
