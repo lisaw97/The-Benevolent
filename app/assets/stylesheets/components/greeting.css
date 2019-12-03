@@ -114,9 +114,7 @@
     width: 25px;
     margin-top: 5px;
     margin-bottom: 0;
-    color: black;
-    color: var(--rh-green);
-    color: green;
+    color: darkslategrey;
 }
 
 .contact a:hover {
