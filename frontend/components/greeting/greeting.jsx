@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import SVGIcon from '../svg/svg_icons';
+import Octicon, { Mail, MarkGithub } from "@primer/octicons-react";
+import { IoLogoLinkedin } from "react-icons/io";
 
 class Greeting extends React.Component {
     constructor(props) {
@@ -33,15 +35,33 @@ class Greeting extends React.Component {
             ) 
         } else {
             return (
-                <div className='greeting-div'>
-                    <Link className='rh-logo' to='/'>Robinhood Clone<SVGIcon name='icon' width={35} height={30}/></Link>
-                    <div className='signup-login-buttons'>
-                        <div><Link className='signup-button' to='/signup'>Sign Up</Link></div>
-                        <div><Link className='login-button' to='/login'>Log In</Link></div>
-                        <div><button className='demo-button' onClick={this.handleDemo}>Demo</button></div>
-                    </div>
+              <div className="greeting-div">
+                <Link className="rh-logo" to="/">
+                  Robinhood Clone
+                  <SVGIcon name="icon" width={35} height={30} />
+                </Link>
+                <Octicon icon={MarkGithub} size="30px" />
+                <Octicon icon={Mail} size="30px" />
+                <IoLogoLinkedin size="30px" />
+                <div className="signup-login-buttons">
+                  <div>
+                    <Link className="signup-button" to="/signup">
+                      Sign Up
+                    </Link>
+                  </div>
+                  <div>
+                    <Link className="login-button" to="/login">
+                      Log In
+                    </Link>
+                  </div>
+                  <div>
+                    <button className="demo-button" onClick={this.handleDemo}>
+                      Demo
+                    </button>
+                  </div>
                 </div>
-            )
+              </div>
+            );
         }
         
     }
