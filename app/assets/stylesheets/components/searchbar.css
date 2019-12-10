@@ -1,0 +1,16 @@
+.searchbar {
+  position: fixed;
+  top: 93px;
+  left: 180px;
+  width: 400px;
+  height: 35px;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  color: lightgrey;
+  margin: 5px;
+}

@@ -1,7 +1,6 @@
 import React from 'react';
 import GraphContainer from '../graph/graph_container';
 import TransactionFormContainer from '../transaction_form/transaction_form_container';
-// import Odometer from 'react-odometerjs';
 
 class StockDetails extends React.Component {
     constructor(props) {
@@ -12,7 +11,6 @@ class StockDetails extends React.Component {
             time: '1D'
         }
         this.handleTimeChange = this.handleTimeChange.bind(this);
-        this.handleMouseover = this.handleMouseover.bind(this);
     }
 
     componentDidMount() {
@@ -67,10 +65,6 @@ class StockDetails extends React.Component {
         } else {
             return 'none';
         }
-    }
-
-    handleMouseover() {
-        
     }
 
     render() {
