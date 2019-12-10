@@ -20,11 +20,9 @@
 .byebug_history
 
 /config/master.key
+# Ignore encrypted secrets key file.
+/config/secrets.yml.key
 
 node_modules/
 bundle.js
 bundle.js.map
-# Ignore encrypted secrets key file.
-config/secrets.yml.key
-
-.env

@@ -8,6 +8,7 @@ import { fetchStock, fetchStocks } from './actions/stock_actions';
 import { fetchIntradayPrices } from './actions/price_actions';
 import { createTransaction } from './actions/transaction_actions';
 import { fetchSnapshots } from './actions/portfolio_snapshot_actions';
+import { fetchGeneralNews, fetchStockNews} from './util/news_api_util';
 
 document.addEventListener("DOMContentLoaded", () => {
     const root = document.getElementById('root');
@@ -24,7 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
         store = configureStore();
     }
-    
     window.login = login;
     window.signup = signup;
     window.logout = logout;
@@ -35,6 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
     window.fetchIntradayPrices = fetchIntradayPrices;
     window.createTransaction = createTransaction;
     window.fetchSnapshots = fetchSnapshots;
-
+    window.fetchGeneralNews = fetchGeneralNews;
     ReactDOM.render(<Root store={store} />, root);
 });
