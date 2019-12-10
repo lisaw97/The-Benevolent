@@ -21,6 +21,11 @@
     margin: 1%;
 }
 
+h1.balance-title {
+    font-size: 30px;
+    margin-left: 23px;
+}
+
 .stocks-div {
     display: flex;
     flex-direction: column;

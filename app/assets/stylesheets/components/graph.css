@@ -22,3 +22,10 @@
     margin-right: 5%;
 }
 
+h3.green {
+    color: var(--rh-green);
+}
+
+h3.red {
+    color: red;
+}

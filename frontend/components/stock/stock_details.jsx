@@ -98,11 +98,8 @@ class StockDetails extends React.Component {
 
                     <div className='stock-graph'>
                         <h2 className='comp-name'>{stock.companyName}</h2>
-                        {/* <h1>${close}</h1> */}
-                        {/* <h1>$<Odometer value={this.handleMouseover} format="(,ddd).dd"/></h1>
-                        <h3>${dollarDiff} ({percentDiff}%)</h3>  */}
                             
-                            <GraphContainer close={close} dollarDiff={dollarDiff} percentDiff={percentDiff} data={this.state.parsedData} name='intraday-stock-graph' dataKey='close'/>
+                            <GraphContainer close={close} open={open} dollarDiff={dollarDiff} percentDiff={percentDiff} data={this.state.parsedData} name='intraday-stock-graph' dataKey='close'/>
                             <ul className='time-list'>
                             <li className={this.setName('1D')} onClick={this.handleTimeChange}>1D</li>
                             <li className={this.setName('1W')} onClick={this.handleTimeChange}>1W</li>

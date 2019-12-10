@@ -105,14 +105,15 @@
 .contact {
     width: 100px;
     margin: 20px;
+    margin-left: 10px;
     display: flex;
     justify-content: space-between;
     text-align: center;
 }
 
 .contact a {
-    width: 25px;
-    margin-top: 5px;
+    width: 35px;
+    margin: 5px;
     margin-bottom: 0;
     color: darkslategrey;
 }

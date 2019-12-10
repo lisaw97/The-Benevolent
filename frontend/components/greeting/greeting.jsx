@@ -28,13 +28,13 @@ class Greeting extends React.Component {
         return (
           <div className="contact">
             <a target="_blank" href="https://github.com/lisaw97">
-              <Octicon icon={MarkGithub} size="30px" />
+              <Octicon icon={MarkGithub} size="medium"/>
             </a>
             <a target="_blank" href="mailto: lisawen0614@gmail.com">
-              <Octicon icon={Mail} size="30px" />
+              <Octicon icon={Mail} size="medium" />
             </a>
             <a target="_blank" href="https://www.linkedin.com/in/lisa-wen-006378133/">
-              <IoLogoLinkedin size="30px" />
+              <IoLogoLinkedin size="35" />
             </a>
           </div>
         );

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import GraphContainer from '../graph/graph_container';
 import StockItemContainer from '../stock/stock_item_container';
 
@@ -15,8 +14,6 @@ class Portfolio extends React.Component {
     }
 
     componentDidMount() {     
-        // this.props.fetchSnapshots();
-
         this.props.fetchStocks();
         this.props.fetchGeneralNews();
         if (this.state.snapshots.length === 0) {
@@ -134,14 +131,10 @@ class Portfolio extends React.Component {
         return (
             <div className='portfolio-main-div'>
                 <div className='portfolio-info-div'>
-
                     <div className='portfolio-div'>
-                        {/* {this.renderSnapshots()} */}
-
+                        <h1 className="balance-title">Balance</h1>
                         <div className='stock-graph'>
-                            {/* <h1>${currBal}</h1> */}
-                            {/* <h3>${dollarDiff} ({percentDiff}%)</h3> */}
-                            <GraphContainer close={currBal} dollarDiff={dollarDiff} percentDiff={percentDiff} data={snapshots} name='intraday-stock-graph' dataKey='balance' />
+                            <GraphContainer close={currBal} open={open} dollarDiff={dollarDiff} percentDiff={percentDiff} data={snapshots} name='intraday-stock-graph' dataKey='balance' />
                             <ul className='time-list'>
                                 {/* <li className={this.setName('1D')} onClick={this.handleTimeChange}>1D</li> */}
                                 <li className={this.setName('1W')} onClick={this.handleTimeChange}>1W</li>
