@@ -8,12 +8,12 @@ class Searchbar extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   
-  // handleSubmit(e, data) {
-  //   e.preventDefault();
-  //   debugger
-  //   // return <Link to={`/stocks/${data.value}`} />
-  //   // window.location.hash = `/stocks/${data.value}`;
-  // }
+  handleSubmit(e, data) {
+    e.preventDefault();
+    // debugger
+    // return <Link to={`/stocks/${data.value}`} />
+    // window.location.hash = `/stocks/${data.value}`;
+  }
 
   getSymbols() {
     let symbols = [];
