@@ -16,6 +16,7 @@ class Stock < ApplicationRecord
     has_many :users,
         through: :transactions,
         source: :user
+        
     has_many :watchers,
         through: :watchlist_items,
         source: :user

@@ -8,13 +8,11 @@ import LoginFormContainer from './session_form/login_form_container';
 import SignupFormContainer from './session_form/signup_form_container';
 import StockDetailsContainer from './stock/stock_details_container';
 import PortfolioContainer from './portfolio/portfolio_container';
-import SearchbarContainer from './searchbar/searchbar_container';
 
 const App = () => (
     <div className='main-div'>
         <header>
             <GreetingContainer />
-            <SearchbarContainer />
         </header>
         <Route exact path='/' component={SplashContainer} />
         <Route exact path='/portfolio' component={PortfolioContainer} />

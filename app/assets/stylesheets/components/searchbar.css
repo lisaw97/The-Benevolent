@@ -1,16 +1,21 @@
-.searchbar {
-  position: fixed;
-  top: 93px;
-  left: 180px;
-  width: 400px;
-  height: 35px;
-  border: 1px solid lightgrey;
-  border-radius: 5px;
+.searchbar-container {
   display: flex;
-  align-items: center;
+  background-color: white;
+  height: 30px;
+  /* box-sizing: border-box;
+  border: 2px solid #ccc; */
 }
 
-.search-icon {
-  color: lightgrey;
-  margin: 5px;
+.searchbar-container button {
+  /* background-color: white; */
+}
+
+.searchbar input{
+  width: 180px;
+  height: 30px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  /* border-radius: 4px; */
+  font-size: 16px;
+  padding: 12px 20px 12px 12px;
 }
