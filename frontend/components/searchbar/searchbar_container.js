@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import Searchbar from './searchbar';
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state) => ({
   allStocks: state.entities.stocks.allStocks
 });
 

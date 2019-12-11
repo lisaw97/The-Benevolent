@@ -8,18 +8,19 @@ class Searchbar extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   
-  handleSubmit(e, data) {
-    e.preventDefault();
-    // debugger
-    // return <Link to={`/stocks/${data.value}`} />
-    // window.location.hash = `/stocks/${data.value}`;
-  }
+  // handleSubmit(e, data) {
+  //   e.preventDefault();
+  //   // debugger
+  //   // return <Link to={`/stocks/${data.value}`} />
+  //   // window.location.hash = `/stocks/${data.value}`;
+  // }
 
   getSymbols() {
     let symbols = [];
     const { allStocks } = this.props;
+    debugger
     const allSymbols = Object.keys(allStocks);
-    for (let i = 0; i < allSymbols.length; i++) {
+    for (let i = 0; i < allSymbols.length; i += 100) {
       let stock = allStocks[allSymbols[i]];
       symbols.push({
         key: stock.symbol,
@@ -37,7 +38,7 @@ class Searchbar extends React.Component {
     if (this.props.allStocks) {
       symbols = this.getSymbols();
     }
-
+    debugger
     return (
       <div className="searchbar-container">
           <Dropdown
@@ -46,7 +47,7 @@ class Searchbar extends React.Component {
             search
             selection
             options={symbols}
-            onChange={this.handleSubmit}
+            // onChange={this.handleSubmit}
           />
       </div>
     )
