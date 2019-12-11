@@ -1,9 +1,11 @@
+
 .searchbar-container {
-  display: flex;
-  background-color: white;
-  height: 30px;
-  /* box-sizing: border-box;
-  border: 2px solid #ccc; */
+    position: fixed;
+    top: 80px;
+    left: 300px;  
+    background-color: white;
+    height: 30px;
+    width: 400px;
 }
 
 .searchbar-container button {

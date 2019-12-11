@@ -1,5 +1,3 @@
-// const STOCK_API_KEY = process.env.REACT_APP_STOCK_API;
-const STOCK_API_KEY="";
 export const fetchStocks = () => (
     $.ajax({
         url: '/api/stocks',

@@ -1,7 +1,5 @@
 import { RECEIVE_STOCKS, RECEIVE_STOCK } from '../../actions/stock_actions';
-// import { RECEIVE_CURRENT_USER } from '../../actions/session_actions';
-import { RECEIVE_INTRADAY_PRICES, RECEIVE_1Y_PRICES } from '../../actions/price_actions';
-import { RECEIVE_TRANSACTION } from '../../actions/transaction_actions';
+import { RECEIVE_INTRADAY_PRICES} from '../../actions/price_actions';
 
 const StocksReducer = (state = {}, action) => {
     Object.freeze(state);
@@ -10,15 +8,13 @@ const StocksReducer = (state = {}, action) => {
         case RECEIVE_INTRADAY_PRICES:
             nextState[action.symbol].prices = action.prices;
             return nextState;
-        // case RECEIVE_INTRADAY_PRICES:
-        //     nextState[action.symbol].prices = action.prices;
-        //     return nextState;
         case RECEIVE_STOCKS:
             if (action.stocks.hasOwnProperty('stock')) {
                 nextState = action.stocks.stock;
             } else {
                 nextState = action.stocks;
             }
+            nextState["allStocks"] = action.stocks.allStocks;
             return nextState;
         case RECEIVE_STOCK:
             nextState[action.stock.symbol] = action.stock;

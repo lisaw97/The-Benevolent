@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import SVGIcon from '../svg/svg_icons';
 import Octicon, { Mail, MarkGithub } from "@primer/octicons-react";
 import { IoLogoLinkedin } from "react-icons/io";
-import SearchbarContainer from '../searchbar/searchbar_container';
+// import SearchbarContainer from '../searchbar/searchbar_container';
 
 class Greeting extends React.Component {
     constructor(props) {
@@ -53,7 +53,7 @@ class Greeting extends React.Component {
                   </Link>
                   {this.renderContact()}
                 </div>
-                <SearchbarContainer />
+                {/* <SearchbarContainer /> */}
                 <div onClick={this.handleSubmit}>
                   <Link className="logout-button" to="/">
                     Log Out

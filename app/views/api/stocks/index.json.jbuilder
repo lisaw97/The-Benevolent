@@ -1,3 +1,11 @@
+json.allStocks do
+    @all_stocks.each do |stock|
+        json.set! stock.symbol do
+            json.extract! stock, :id, :company_name, :symbol
+        end
+    end
+end
+
 json.stock do 
     @stocks.each do |stock|
         json.set! stock.symbol do 
