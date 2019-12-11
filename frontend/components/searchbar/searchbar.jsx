@@ -5,7 +5,7 @@ import { Link, Redirect } from 'react-router-dom';
 class Searchbar extends React.Component {
   constructor(props) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    // this.handleSubmit = this.handleSubmit.bind(this);
   }
   
   // handleSubmit(e, data) {
@@ -18,7 +18,7 @@ class Searchbar extends React.Component {
   getSymbols() {
     let symbols = [];
     const { allStocks } = this.props;
-    debugger
+    // debugger
     const allSymbols = Object.keys(allStocks);
     for (let i = 0; i < allSymbols.length; i += 100) {
       let stock = allStocks[allSymbols[i]];
@@ -38,7 +38,7 @@ class Searchbar extends React.Component {
     if (this.props.allStocks) {
       symbols = this.getSymbols();
     }
-    debugger
+    // debugger
     return (
       <div className="searchbar-container">
           <Dropdown
