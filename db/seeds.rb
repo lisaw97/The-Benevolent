@@ -7,12 +7,26 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 require_relative 'portfolio_snapshots'
+require 'csv';
 
 ActiveRecord::Base.transaction do
     User.delete_all
     Stock.delete_all
     Transaction.delete_all
     WatchlistItem.delete_all
+    PortfolioSnapshot.delete_all
+
+    nasdaq_csv = File.read(Rails.root.join('db', 'nasdaq.csv'))    
+    nasdaq = CSV.parse(nasdaq_csv, :headers => true, :encoding => 'ISO-8859-1')
+    nasdaq.each do |row|
+        stock = Stock.create!(symbol: row["Symbol"], company_name: row["Company Name"])
+    end
+
+    nyse_csv = File.read(Rails.root.join('db', 'nyse.csv'))
+    nyse = CSV.parse(nyse_csv, :headers => true, :encoding => 'ISO-8859-1')
+    nyse.each do |row|
+        stock = Stock.create!(symbol: row["Symbol"], company_name: row["Company Name"])
+    end
 
     guest = User.create!(
         username: 'guest',
@@ -30,56 +44,56 @@ ActiveRecord::Base.transaction do
         password: 'password'
     )
 
-    tsla = Stock.create!(
-        company_name: 'Tesla, Inc.',
-        symbol: 'TSLA'
-    )
+    # tsla = Stock.create!(
+    #     company_name: 'Tesla, Inc.',
+    #     symbol: 'TSLA'
+    # )
 
-    aapl = Stock.create!(
-        company_name: 'Apple, Inc.',
-        symbol: 'AAPL'
-    )
+    # aapl = Stock.create!(
+    #     company_name: 'Apple, Inc.',
+    #     symbol: 'AAPL'
+    # )
 
-    msft = Stock.create!(
-        company_name: 'Microsoft Corp.',
-        symbol: 'MSFT'
-    )
+    # msft = Stock.create!(
+    #     company_name: 'Microsoft Corp.',
+    #     symbol: 'MSFT'
+    # )
 
-    fb = Stock.create!(
-        company_name: 'Facebook, Inc.',
-        symbol: 'FB'
-    )
+    # fb = Stock.create!(
+    #     company_name: 'Facebook, Inc.',
+    #     symbol: 'FB'
+    # )
 
-    twtr = Stock.create!(
-        company_name: 'Twitter, Inc.',
-        symbol: 'TWTR'
-    )
+    # twtr = Stock.create!(
+    #     company_name: 'Twitter, Inc.',
+    #     symbol: 'TWTR'
+    # )
 
-    v = Stock.create!(
-        company_name: 'Visa, Inc.',
-        symbol: 'V'
-    )
+    # v = Stock.create!(
+    #     company_name: 'Visa, Inc.',
+    #     symbol: 'V'
+    # )
 
-    c = Stock.create!(
-        company_name: 'Citigroup, Inc.',
-        symbol: 'C'
-    )
+    # c = Stock.create!(
+    #     company_name: 'Citigroup, Inc.',
+    #     symbol: 'C'
+    # )
 
-    baba = Stock.create!(
-        company_name: 'Alibaba Group Holding Ltd.',
-        symbol: 'BABA'
-    )
+    # baba = Stock.create!(
+    #     company_name: 'Alibaba Group Holding Ltd.',
+    #     symbol: 'BABA'
+    # )
 
     Transaction.create(
         user_id: guest.id,
         shares: 2,
         cost: 234.54,
-        symbol: tsla.symbol
+        symbol: 'TSLA'
     )
 
     Transaction.create(
         user_id: guest.id,
-        symbol: aapl.symbol,
+        symbol: 'AAPL',
         shares: 2,
         cost: 234.54
     )
@@ -88,80 +102,80 @@ ActiveRecord::Base.transaction do
         user_id: guest.id,
         shares: 4,
         cost: 234.54,
-        symbol: tsla.symbol
+        symbol: 'TSLA'
     )
 
     Transaction.create(
         user_id: guest.id,
         shares: 7,
         cost: 186.62,
-        symbol: baba.symbol
+        symbol: 'BABA'
     )
 
     Transaction.create(
         user_id: lisa.id,
-        symbol: aapl.symbol,
+        symbol: 'AAPL',
         shares: 5,
         cost: 234.54
     )
 
     Transaction.create(
         user_id: lisa.id,
-        symbol: aapl.symbol,
+        symbol: 'AAPL',
         shares: 3,
         cost: 234.54
     )
 
     Transaction.create(
         user_id: lisa.id,
-        symbol: v.symbol,
+        symbol: 'V',
         shares: 4,
         cost: 179.74
     )
 
     WatchlistItem.create(
         user_id: guest.id,
-        symbol: msft.symbol
+        symbol: 'MSFT'
     )
 
     WatchlistItem.create(
         user_id: guest.id,
-        symbol: c.symbol
+        symbol: 'C'
     )
 
     WatchlistItem.create(
         user_id: guest.id,
-        symbol: fb.symbol
+        symbol: 'FB'
     )
 
     WatchlistItem.create(
         user_id: guest.id,
-        symbol: twtr.symbol
+        symbol: 'TWTR'
     )
 
     WatchlistItem.create(
         user_id: lisa.id,
-        symbol: tsla.symbol,
+        symbol: 'TSLA',
     )
 
     WatchlistItem.create(
         user_id: lisa.id,
-        symbol: msft.symbol,
+        symbol: 'MSFT',
     )
 
     WatchlistItem.create(
         user_id: lisa.id,
-        symbol: twtr.symbol,
+        symbol: 'TWTR',
     )
 
     WatchlistItem.create(
         user_id: lisa.id,
-        symbol: baba.symbol,
+        symbol: 'BABA',
     )
 
     WatchlistItem.create(
         user_id: lisa.id,
-        symbol: c.symbol,
+        symbol: 'C',
     )
 
     SNAPSHOTS.each do  |snapshot|
