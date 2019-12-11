@@ -1,5 +1,6 @@
 import React from 'react';
 import { Dropdown } from 'semantic-ui-react';
+import { Link, Redirect } from 'react-router-dom';
 
 class Searchbar extends React.Component {
   constructor(props) {
@@ -7,15 +8,15 @@ class Searchbar extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   
-  handleSubmit(e, data) {
-    e.preventDefault();
-    window.location.hash = `/stocks/${data.value}`;
-  }
+  // handleSubmit(e, data) {
+  //   e.preventDefault();
+  //   debugger
+  //   // return <Link to={`/stocks/${data.value}`} />
+  //   // window.location.hash = `/stocks/${data.value}`;
+  // }
 
   getSymbols() {
-    let symbols = [
-      { key: "", value: "--", text: "" },
-    ];
+    let symbols = [];
     const { allStocks } = this.props;
     const allSymbols = Object.keys(allStocks);
     for (let i = 0; i < allSymbols.length; i++) {
@@ -23,7 +24,9 @@ class Searchbar extends React.Component {
       symbols.push({
         key: stock.symbol,
         value: stock.symbol,
-        text: `${stock.symbol}    ${stock.company_name}`
+        text: `${stock.symbol}    ${stock.company_name}`,
+        as: Link,
+        to: `/stocks/${stock.symbol}`
       });
     }
     return symbols
@@ -38,7 +41,7 @@ class Searchbar extends React.Component {
     return (
       <div className="searchbar-container">
           <Dropdown
-            placeholder='Select Symbol'
+            placeholder='Search'
             fluid
             search
             selection

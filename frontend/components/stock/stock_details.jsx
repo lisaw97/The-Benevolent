@@ -69,7 +69,7 @@ class StockDetails extends React.Component {
 
     render() {
         const { stock } = this.props;
-        
+        // debugger
         if (!stock || this.state.oneYear.length === 0) {
             return null;
         } 

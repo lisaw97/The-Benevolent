@@ -1,11 +1,11 @@
-
 .searchbar-container {
     position: fixed;
-    top: 80px;
-    left: 300px;  
+    top: 4px;
+    left: 450px;
     background-color: white;
     height: 30px;
     width: 400px;
+    z-index: 2;
 }
 
 .searchbar-container button {

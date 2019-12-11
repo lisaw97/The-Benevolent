@@ -17,6 +17,7 @@ const StocksReducer = (state = {}, action) => {
             nextState["allStocks"] = action.stocks.allStocks;
             return nextState;
         case RECEIVE_STOCK:
+            
             nextState[action.stock.symbol] = action.stock;
             return nextState;
         default:
