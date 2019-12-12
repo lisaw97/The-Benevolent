@@ -16,7 +16,7 @@ const App = () => (
         <header>
             <GreetingContainer />
             <SearchbarContainer />
-
+            <ModalContainer />
         </header>
         <Route exact path='/' component={SplashContainer} />
         <Route exact path='/portfolio' component={PortfolioContainer} />

@@ -3,7 +3,10 @@ import modal_container from './modal_container';
 
 const Modal = () => {
   const closeModal = () => {
-    document.getElementById("modal").style.display = "none";
+    let modal = document.getElementById("modal");
+    if (modal) {
+      modal.style.display = "none";
+    }
   }
   
   return (
