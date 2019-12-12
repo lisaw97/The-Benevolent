@@ -37,8 +37,9 @@ class TransactionForm extends React.Component {
         }
         this.props.createTransaction(transaction);
         this.setState({ submit: true, shares: 0 });
-        let modal = document.getElementById("modal");
-        modal.style.display = "block";
+        // let modal = document.getElementById("modal");
+        // debugger
+        // modal.style.display = "block";
     }
 
     calculateCost() {
