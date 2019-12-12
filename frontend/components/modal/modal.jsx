@@ -1,10 +1,10 @@
 import React from 'react';
-import modal_container from './modal_container';
 
 const Modal = () => {
   const closeModal = () => {
     let modal = document.getElementById("modal");
     if (modal) {
+      debugger
       modal.style.display = "none";
     }
   }
@@ -12,7 +12,7 @@ const Modal = () => {
   return (
     <div id="modal" className="modal">
       <div className="modal-content">
-        <span class="close" onClick={closeModal()}>&times;</span>
+        <span class="close" onClick={closeModal}>&times;</span>
         <p>YAY</p>
       </div>
     </div>
