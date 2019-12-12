@@ -14,9 +14,7 @@ class Graph extends React.Component {
     }
     
     handleMouseMove(e) {
-        // debugger
         if (this.props.dataKey === 'close') {
-            // debugger
             this.setState({
                 hoverPrice: e.activePayload[0].payload.close,
                 hoverDollarDiff: e.activePayload[0].payload.close - this.props.open,
@@ -27,7 +25,6 @@ class Graph extends React.Component {
                 hoverDollarDiff: e.activePayload[0].payload.balance - this.props.open
             })
         }
-        
     }
 
     render() {
@@ -48,20 +45,16 @@ class Graph extends React.Component {
             }
         } 
 
-        
-        
         if (this.props.name != 'intraday-stock-graph') {
             hidden = 'hidden'
         }
-        // debugger
         return (
             <div className={name}>
                 <h1 className={hidden}>$<Odometer className='odometer' value={this.state.hoverPrice} format="(,ddd).dd" /></h1>
                 <h3 className={hidden}>
                     $<Odometer className='odometer' value={this.state.hoverDollarDiff} format="(,ddd).dd" /> 
                     (<Odometer className='odometer' value={this.state.hoverDollarDiff / open} format="(,ddd).dd" />%)
-                </h3>
-                {/* <h3 className={hidden}>${dollarDiff} ({percentDiff}%)</h3>                  */}
+                </h3>             
                 
                 <ResponsiveContainer width='100%' height='100%'>
                     <LineChart
@@ -78,8 +71,7 @@ class Graph extends React.Component {
                 </ ResponsiveContainer>
             </div>
         )
-    }
-    
+    } 
 }
 
 export default Graph;

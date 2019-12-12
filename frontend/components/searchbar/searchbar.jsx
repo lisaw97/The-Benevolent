@@ -33,7 +33,7 @@ class Searchbar extends React.Component {
     if (this.props.allStocks) {
       symbols = this.getSymbols();
     }
-    // debugger
+
     return (
       <div className="searchbar-container">
           <Dropdown
