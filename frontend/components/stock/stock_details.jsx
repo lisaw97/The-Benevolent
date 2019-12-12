@@ -22,6 +22,12 @@ class StockDetails extends React.Component {
         )
     }
 
+    componentWillReceiveProps(nextProp) {
+        if (this.props.match.params.symbol != nextProp.match.params.symbol) {
+            window.location.reload(false)
+        }
+    }
+
     renderNews() {
         return (
             <ul className='company-news-list'>
