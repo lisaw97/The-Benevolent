@@ -11,11 +11,3 @@ export const fetchSnapshot = id => (
         method: 'GET'
     })
 );
-
-// export const createSnapshot = snapshot => (
-//     $.ajax({
-//         url: `/api/portfolio_snapshots`,
-//         method: 'POST',
-//         data: { snapshot }
-//     })
-// );

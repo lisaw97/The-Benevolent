@@ -13,7 +13,6 @@ const receiveIntradayPrices = (symbol, prices) => {
 };
 
 const receive1YPrices = (symbol, prices) => {
-    // debugger
     return ({
         type: RECEIVE_1Y_PRICES,
         symbol,
@@ -36,7 +35,6 @@ export const fetchIntradayPrices = symbol => dispatch => {
 };
 
 export const fetch1YPrices = symbol => dispatch => {
-    // debugger
     return StockApiUtil.fetch1YPrices(symbol).then(
         prices => dispatch(receive1YPrices(symbol, prices))
     )

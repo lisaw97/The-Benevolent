@@ -4,7 +4,6 @@ const Modal = () => {
   const closeModal = () => {
     let modal = document.getElementById("modal");
     if (modal) {
-      // debugger
       modal.style.display = "none";
     }
   }

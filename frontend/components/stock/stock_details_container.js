@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { fetchStockNews } from '../../actions/news_actions';
-import { fetchStock } from '../../actions/stock_actions';
+import { fetchStock, fetchStocks } from '../../actions/stock_actions';
 import { fetchIntradayPrices, fetch1YPrices, fetch5YPrices } from '../../actions/price_actions';
 import StockDetails from './stock_details';
 
@@ -11,6 +11,7 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+    fetchStocks: () => dispatch(fetchStocks()),
     fetchStock: symbol => dispatch(fetchStock(symbol)),
     fetchStockNews: (symbol, last) => dispatch(fetchStockNews(symbol, last)),
     fetchIntradayPrices: symbol => dispatch(fetchIntradayPrices(symbol)),

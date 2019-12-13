@@ -1,6 +1,5 @@
 import React from 'react';
 import { Dropdown } from 'semantic-ui-react';
-import { Link, Redirect } from 'react-router-dom';
 
 class Searchbar extends React.Component {
   constructor(props) {
@@ -29,7 +28,7 @@ class Searchbar extends React.Component {
   }
 
   render() {
-    let symbols;
+    let symbols = [];
     if (this.props.allStocks) {
       symbols = this.getSymbols();
     }

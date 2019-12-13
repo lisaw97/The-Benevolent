@@ -13,17 +13,14 @@ class StockDetails extends React.Component {
         this.handleTimeChange = this.handleTimeChange.bind(this);
     }
 
-    componentDidMount() {
+    componentDidMount() { 
         this.props.fetchStock(this.props.match.params.symbol);
         this.props.fetchStockNews(this.props.match.params.symbol, 3);
         this.props.fetchIntradayPrices(this.props.match.params.symbol);
-        this.props.fetch1YPrices(this.props.match.params.symbol).then(
-            
-            res => {
-                // debugger
-                return this.setState({ oneYear: res.prices.chart, parsedData: res.prices.chart })
-            }
+        this.props.fetch1YPrices(this.props.match.params.symbol).then(     
+            res => this.setState({ oneYear: res.prices.chart, parsedData: res.prices.chart })
         )
+        this.props.fetchStocks();
     }
 
     componentWillReceiveProps(nextProp) {
@@ -79,11 +76,9 @@ class StockDetails extends React.Component {
 
     render() {
         const { stock } = this.props;
-        // debugger
         if (!stock || this.state.oneYear.length === 0) {
             return null;
         } 
-        // debugger
         let {parsedData} = this.state;
         if (parsedData.length === 0) {
             parsedData = this.props.prices.year;
@@ -117,7 +112,6 @@ class StockDetails extends React.Component {
 
                     <div className='stock-orders'>
                         <TransactionFormContainer symbol={stock.symbol} price={close} />
-                        {/* <button className='watchlist-button'>Add To Watchlist</button> */}
                     </div>      
                                   
                 </div>

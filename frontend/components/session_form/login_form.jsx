@@ -110,7 +110,6 @@ class LoginForm extends React.Component {
                                             </Link>
                         </p>
                         <button className='session-button' type="submit">{formLabel}</button>
-                        {/* <button className='session-demo-button' onClick={this.displayDemoUser('guest', 0)}>Demo</button> */}
                         {this.renderErrors()}
                     </div>
                 </form>

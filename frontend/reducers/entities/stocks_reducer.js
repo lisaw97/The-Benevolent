@@ -6,26 +6,22 @@ const StocksReducer = (state = {}, action) => {
     let nextState = Object.assign({}, state);
     switch (action.type) {
         case RECEIVE_INTRADAY_PRICES:
-            // debugger
             if (nextState.currentStock) {
                 nextState.currentStock.prices = action.prices;
             } else {
                 nextState[action.symbol].prices = action.prices;
             }
-            // debugger
             return nextState;
         case RECEIVE_STOCKS:
+            let current = nextState.currentStock;
             if (action.stocks.hasOwnProperty('stock')) {
                 nextState = action.stocks.stock;
-            } else {
-                nextState = action.stocks;
-            }
+            } 
+            nextState["currentStock"] = current;
             nextState["allStocks"] = action.stocks.allStocks;
             return nextState;
         case RECEIVE_STOCK:
-            // nextState[action.stock.symbol] = action.stock;
             nextState["currentStock"] = action.stock;
-            // debugger
             return nextState;
         default:
             return state;

@@ -1,4 +1,4 @@
-const stock_key = "pk_645da6a8eef04c0dab46c472075506d6";
+const stock_key = "pk_0bb2b9065996478c82fa4583b57d589b ";
 export const fetchStocks = () => (
     $.ajax({
         url: '/api/stocks',

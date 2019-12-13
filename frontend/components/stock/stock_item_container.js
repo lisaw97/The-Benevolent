@@ -3,7 +3,6 @@ import { fetchIntradayPrices } from '../../actions/price_actions';
 import StockItem from './stock_item';
 
 const mapStateToProps = (state, ownProps) => ({
-    // prices: state.entities.prices
     prices: state.entities.stocks[ownProps.symbol].prices
 });
 

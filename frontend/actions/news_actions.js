@@ -1,4 +1,3 @@
-// import * as StockApiUtil from '../util/stock_api_util';
 import * as NewsApiUtil from '../util/news_api_util';
 
 export const RECEIVE_GENERAL_NEWS = 'RECEIVE_GENERAL_NEWS';
