@@ -18,7 +18,11 @@ class StockDetails extends React.Component {
         this.props.fetchStockNews(this.props.match.params.symbol, 3);
         this.props.fetchIntradayPrices(this.props.match.params.symbol);
         this.props.fetch1YPrices(this.props.match.params.symbol).then(
-            res => this.setState({ oneYear: res.prices, parsedData: res.prices })
+            
+            res => {
+                // debugger
+                return this.setState({ oneYear: res.prices.chart, parsedData: res.prices.chart })
+            }
         )
     }
 
@@ -75,10 +79,11 @@ class StockDetails extends React.Component {
 
     render() {
         const { stock } = this.props;
-
+        // debugger
         if (!stock || this.state.oneYear.length === 0) {
             return null;
         } 
+        // debugger
         let {parsedData} = this.state;
         if (parsedData.length === 0) {
             parsedData = this.props.prices.year;

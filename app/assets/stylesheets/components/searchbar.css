@@ -8,16 +8,11 @@
     z-index: 2;
 }
 
-.searchbar-container button {
-  /* background-color: white; */
-}
-
 .searchbar input{
   width: 180px;
   height: 30px;
   box-sizing: border-box;
   border: 2px solid #ccc;
-  /* border-radius: 4px; */
   font-size: 16px;
   padding: 12px 20px 12px 12px;
 }

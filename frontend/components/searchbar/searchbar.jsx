@@ -17,7 +17,7 @@ class Searchbar extends React.Component {
     let symbols = [];
     const { allStocks } = this.props;
     const allSymbols = Object.keys(allStocks);
-    for (let i = 0; i < allSymbols.length; i += 100) {
+    for (let i = 0; i < allSymbols.length; i += 5) {
       let stock = allStocks[allSymbols[i]];
       symbols.push({
         key: stock.symbol,

@@ -6,8 +6,10 @@ const PricesReducer = (state = {}, action) => {
     switch (action.type) {
         case RECEIVE_INTRADAY_PRICES:
             nextState.intraday = action.prices;
+            // debugger
             return nextState;
         case RECEIVE_1Y_PRICES:
+            // debugger
             nextState.year = action.prices;
             return nextState;
         case RECEIVE_5Y_PRICES:

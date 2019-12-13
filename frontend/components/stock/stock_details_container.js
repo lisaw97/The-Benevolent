@@ -5,7 +5,7 @@ import { fetchIntradayPrices, fetch1YPrices, fetch5YPrices } from '../../actions
 import StockDetails from './stock_details';
 
 const mapStateToProps = (state, ownProps) => ({
-    stock: state.entities.stocks[ownProps.match.params.symbol],
+    stock: state.entities.stocks.currentStock,
     news: state.entities.news,
     prices: state.entities.prices
 });

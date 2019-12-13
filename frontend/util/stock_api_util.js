@@ -19,12 +19,12 @@ export const fetchIntradayPrices = symbol => (
     })
 )
 
-export const fetch1YPrices = symbol => (
-    $.ajax({
-        url: `https://cloud.iexapis.com/stable/stock/${symbol}/chart/1y/?token=pk_04d56a063f084eb5954568547bf119cc`,
-        method: 'GET'
-    })
-)
+export const fetch1YPrices = symbol =>
+         $.ajax({
+           //    url: `https://cloud.iexapis.com/stable/stock/${symbol}/intraday-prices/?chartInterval=5&token=pk_04d56a063f084eb5954568547bf119cc`,
+           url: `https://cloud.iexapis.com/stable/stock/${symbol}/batch?&types=chart&range=1Y&token=pk_645da6a8eef04c0dab46c472075506d6`,
+           method: "GET"
+         });
 
 export const fetch5YPrices = symbol => (
     $.ajax({
