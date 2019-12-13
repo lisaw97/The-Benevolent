@@ -13,7 +13,7 @@ const Modal = () => {
     <div id="modal" className="modal">
       <div className="modal-content">
         <span className="close" onClick={closeModal}>&times;</span>
-        <p>YAY</p>
+        <p>Your order has been placed!</p>
       </div>
     </div>
   );

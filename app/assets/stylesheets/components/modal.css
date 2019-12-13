@@ -12,18 +12,30 @@
 }
 
 .modal-content {
-  background-color: skyblue;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%;
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    position: fixed;
+    top: 9px;
+    left: 378px;
+    box-shadow: 5px 5px 5px grey;
 }
 
 .close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
+    color: #aaa;
+    /* float: right; */
+    font-size: 40px;
+    font-weight: bold;
+    position: fixed;
+    top: 175px;
+    right: 310px;
 }
 
 .close:hover,
