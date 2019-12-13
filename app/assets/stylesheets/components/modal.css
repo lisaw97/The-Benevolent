@@ -14,28 +14,36 @@
 .modal-content {
     background-color: white;
     margin: 15% auto;
-    padding: 20px;
+    padding: 10px;
     border: 1px solid #888;
     width: 40%;
     height: 20%;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    /* justify-content: center; */
+    /* align-items: center; */
     font-size: 30px;
-    position: fixed;
-    top: 9px;
-    left: 378px;
+    /* position: fixed; */
+    /* top: 9px; */
+    /* left: 378px; */
     box-shadow: 5px 5px 5px grey;
+}
+
+p:last-child {
+    margin-bottom: 0;
+    text-align: center;
 }
 
 .close {
     color: #aaa;
     /* float: right; */
-    font-size: 40px;
+    font-size: 30px;
     font-weight: bold;
-    position: fixed;
-    top: 175px;
-    right: 310px;
+    text-align: right;
+    /* height: 5px; */
+    /* position: fixed; */
+    /* top: 175px; */
+    /* right: 327px; */
 }
 
 .close:hover,
