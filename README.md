@@ -15,7 +15,7 @@ A single-page Robinhood clone, where users can obtain real-time price data and a
 
 ## Features
 
-**Splash Page and User Authentication**
+**Splash Page & User Authentication**
 
 *BCrypt*
 
@@ -40,9 +40,9 @@ A single-page Robinhood clone, where users can obtain real-time price data and a
 
 * Parse and display current and historial stock prices and company information on specified stocks utilizing IEX Stock API. 
 * Obtain and display recent news related to specified stock utilizing News API.
-* Allow user to buy/sell shares of stock at the current market price and reflects share change on portfolio page after the transaction.
 
 ![Stock Page](/public/stock-page.gif)
+
 
 The stock price graph displays current and historial prices based on the time period user chooses. This feature is completed with the least amount of API calls possible to improve efficiency of website in terms of memory and speed. 
 
@@ -68,9 +68,36 @@ handleTimeChange(e) {
         } else {
             this.setState({ parsedData: this.props.prices.intraday, time: time });
         }
-    }
+}
 ```
 
-**Search Bar**
+**Search Bar & Transaction**
 
 * Allow users to search stocks by their ticker symbol and company name.
+* Allow user to buy/sell shares of stock at the current market price and reflects share change on portfolio page after the transaction.
+
+![Transaction](/public/transaction.gif)
+
+
+Once an buy/sell transaction is placed (user clicks on submit button), the following function checks to see if it is a buy or sell transaction and adjusts share ownership accordingly. A new transaction is created with the updated information and saved to the database through the `createTransaction(transaction)` function passed in through the `props`. The function then resets the `local state` and opens up a `modal`, confirming that the order was successful.
+
+```javascript
+handleSubmit(e) {
+        e.preventDefault();
+        const { symbol, currentUser } = this.props;
+        let shares = this.state.shares;
+        if (!this.state.buy) {
+           shares = shares * -1;
+        } 
+        let transaction = {
+            user_id: currentUser,
+            symbol: symbol, 
+            shares: shares,
+            cost: this.calculateCost()
+        }
+        this.props.createTransaction(transaction);
+        this.setState({ submit: true, shares: 0 });
+        let modal = document.getElementById("modal");
+        modal.style.display = "block";
+}
+```
