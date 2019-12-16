@@ -8,12 +8,23 @@ A single-page Robinhood clone, where users can obtain company information, recen
 
 **React, Redux, Ruby on Rails, PostgreSQL, Webpack**
 
+
+## Functions 
+
+
+**Splash Page and User Authentication**
+
+![Splash Page](/public/splash-page.gif)
+
+**Portfolio Page**
 *Recharts, Odometer*
 
 * Used Recharts and Odometer library to create dynamic and interactive price graphs, which displays prices according to parsed data on hover over graphs.
 
 ![Portfolio Page](/public/portfolio-page.gif)
 
+
+**Stock Show Page**
 *IEX Stock API, News API*
 
 * Parsed and displayed up-to-date stock prices and company information on specified stocks utilizing IEX Stock API. 
