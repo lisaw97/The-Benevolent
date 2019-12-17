@@ -1,6 +1,6 @@
 # The Benevolent
 
-[Live Demo](https://rh-robinhood-clone.herokuapp.com/)
+[Live Demo](https://the-benevolent.herokuapp.com/#/)
 
 The Benevolent is a single-page Robinhood clone, where users can obtain real-time price data and additional information of stocks listed on US stock exchanges and perform buy/sell transactions on those stocks.
 
