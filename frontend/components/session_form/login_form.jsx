@@ -86,7 +86,7 @@ class LoginForm extends React.Component {
         return (
             <div className='session-form-div'>
                 <form className='transparent-background' onSubmit={this.handleSubmit}>
-                    <h1 className='login-form-h1'>Welcome to Robinhood</h1>
+                    <h1 className='login-form-h1'>Welcome to The Benevolent</h1>
                     <div className='session-inputs-div'>
                         <label className='login-label'>Username</label>
                         <input
@@ -105,7 +105,7 @@ class LoginForm extends React.Component {
                             // required
                         />
                         <p className='session-link-p'>
-                            New to Robinhood? <Link className='session-nav-link' to={`/${navLink}`}>
+                            New to The Benevolent? <Link className='session-nav-link' to={`/${navLink}`}>
                                 {navLinkLabel} to complete your application
                                             </Link>
                         </p>

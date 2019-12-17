@@ -67,7 +67,7 @@ class Greeting extends React.Component {
                 <div className="greeting-left">
                   <Link className="rh-logo" to="/">
                     <SVGIcon name="icon" width={35} height={30} />
-                    Robinhood Clone
+                    The Benevolent
                   </Link>
                   {this.renderContact()}
                 </div>

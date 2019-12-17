@@ -54,7 +54,7 @@ class SignupForm extends React.Component {
             <div className='signup-form-div'>
                 <form onSubmit={this.handleSubmit}>
                     <h1 className='form-h1'>Make Your Money Move</h1>
-                    <h2 className='form-h2'>Robinhood lets you invest in companies you love, commission-free</h2>
+                    <h2 className='form-h2'>The Benevolent lets you invest in companies you love, commission-free</h2>
                     <div className='signup-inputs-div'>
                         <div className='name'>
                             <input
